@@ -29,7 +29,7 @@
             --text-primary: #ecf0f1;
             --text-secondary: #bdc3c7;
             --bg-primary: #1a1a1a;
-            --bg-secondary: #2c2c2c;
+            --bg-secondary: #2c2c2c;cd /home/sk-sazid/Desktop/Portfolio/nextjs-portfolio && npm install framer-motion lucide-react @radix-ui/react-scroll-area @radix-ui/react-toast clsx tailwind-merge
             --bg-tertiary: #3a3a3a;
             --shadow-light: 0 5px 25px rgba(0, 0, 0, 0.3);
             --shadow-medium: 0 10px 40px rgba(0, 0, 0, 0.4);
@@ -755,10 +755,10 @@
             font-size: 0.95rem;
             margin-bottom: 1.5rem;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            flex-direction: column;
+            gap: 0.3rem;
             background: var(--bg-tertiary);
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 1.2rem;
             border-radius: 25px;
             width: fit-content;
             font-weight: 500;
@@ -767,6 +767,89 @@
         .timeline-item .duration::before {
             content: '📅';
             font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        .duration-main {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .duration-length {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .timeline-details {
+            margin-top: 1rem;
+        }
+
+        .position-type {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .achievements {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid var(--bg-tertiary);
+        }
+
+        .achievements h4 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .achievements h4::before {
+            content: '🎯';
+            font-size: 1rem;
+        }
+
+        .achievements ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .achievements li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--bg-tertiary);
+            position: relative;
+            padding-left: 1.5rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .achievements li:last-child {
+            border-bottom: none;
+        }
+
+        .achievements li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .achievements li strong {
+            color: var(--primary-color);
+            font-weight: 600;
         }
 
         .timeline-item p {
@@ -1130,6 +1213,31 @@
                 transform: translateX(10px);
             }
 
+            .timeline-details {
+                margin-top: 1rem;
+            }
+
+            .achievements {
+                padding: 1rem;
+            }
+
+            .achievements h4 {
+                font-size: 1rem;
+            }
+
+            .achievements li {
+                padding: 0.5rem 0;
+                font-size: 0.9rem;
+            }
+
+            .duration-main {
+                font-size: 0.9rem;
+            }
+
+            .duration-length {
+                font-size: 0.8rem;
+            }
+
             .section {
                 padding: 3rem 5%;
             }
@@ -1191,7 +1299,40 @@
 
             .timeline-item .duration {
                 font-size: 0.85rem;
+                padding: 0.6rem 1rem;
+            }
+
+            .duration-main {
+                font-size: 0.85rem;
+            }
+
+            .duration-length {
+                font-size: 0.75rem;
+            }
+
+            .position-type {
+                font-size: 0.8rem;
                 padding: 0.4rem 0.8rem;
+            }
+
+            .achievements {
+                padding: 1rem;
+                margin-top: 0.8rem;
+            }
+
+            .achievements h4 {
+                font-size: 0.95rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .achievements li {
+                padding: 0.4rem 0;
+                font-size: 0.85rem;
+                padding-left: 1.2rem;
+            }
+
+            .timeline-details {
+                margin-top: 0.8rem;
             }
 
             .profile-image {
@@ -1706,40 +1847,129 @@
         </div>
         <div class="timeline">
             <div class="timeline-item">
-                <h3>Problem Solver</h3>
-                <div class="company">Codeforces (sksazid)</div>
-                <div class="duration">03/2022 - Present</div>
-                <p>Almost 1230 problems are solved in Codeforces using Python, Swift, C, and C++. Consistently improving problem-solving skills and algorithmic thinking through competitive programming.</p>
-            </div>
-            <div class="timeline-item">
-                <h3>Problem Solver</h3>
-                <div class="company">Vjudge</div>
-                <div class="duration">03/2022 - Present</div>
-                <p>Solved 590+ good problems till now. Diversified problem-solving experience across multiple online judges and platforms, enhancing versatility in algorithmic approaches.</p>
-            </div>
-            <div class="timeline-item">
-                <h3>Problem Solver</h3>
-                <div class="company">Codechef</div>
-                <div class="duration">03/2022 - Present</div>
-                <p>Solve around 235 problems and actively participate in monthly contests. Regular participation in competitive programming contests to sharpen logical thinking and coding skills.</p>
-            </div>
-            <div class="timeline-item">
-                <h3>Java Developer</h3>
-                <div class="company">Game and UI design using JavaFX</div>
-                <div class="duration">04/2022 - Present</div>
-                <p>A word matching game. Designed and developed interactive games using JavaFX, focusing on user experience and clean, maintainable code architecture.</p>
-            </div>
-            <div class="timeline-item">
-                <h3>Android Developer</h3>
-                <div class="company">Various types of Native Android applications</div>
-                <div class="duration">01/2023 - Present</div>
-                <p>Restaurant Management & Order application. Developed multiple Android applications focusing on business solutions, implementing modern Android development practices and user-centric design.</p>
-            </div>
-            <div class="timeline-item">
-                <h3>Data Science & ML</h3>
+                <h3>Data Science & ML Engineer</h3>
                 <div class="company">Python-based Projects</div>
-                <div class="duration">03/2020 - Present</div>
-                <p>I have been working with Python libraries such as Keras, NumPy, Matplotlib, and Pandas for a long time. Specialized in data analysis, machine learning model development, and data visualization.</p>
+                <div class="duration">
+                    <span class="duration-main">March 2020 - Present</span>
+                    <span class="duration-length">(5+ Years)</span>
+                </div>
+                <div class="timeline-details">
+                    <div class="position-type">📊 Full-time Focus</div>
+                    <div class="achievements">
+                        <h4>Key Achievements:</h4>
+                        <ul>
+                            <li>Advanced proficiency in Python libraries: Keras, NumPy, Matplotlib, Pandas</li>
+                            <li>Specialized in data analysis and machine learning model development</li>
+                            <li>Created comprehensive data visualization dashboards</li>
+                            <li>Implemented predictive models for real-world applications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <h3>Competitive Programming Specialist</h3>
+                <div class="company">Codeforces (Handle: sksazid)</div>
+                <div class="duration">
+                    <span class="duration-main">March 2022 - Present</span>
+                    <span class="duration-length">(2+ Years, 9 Months)</span>
+                </div>
+                <div class="timeline-details">
+                    <div class="position-type">🏆 Active Competitor</div>
+                    <div class="achievements">
+                        <h4>Key Achievements:</h4>
+                        <ul>
+                            <li><strong>1230+ problems solved</strong> using Python, Swift, C, and C++</li>
+                            <li>Consistent rating improvement through regular practice</li>
+                            <li>Strong algorithmic thinking and problem-solving expertise</li>
+                            <li>Participated in multiple contests and challenges</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Multi-Platform Problem Solver</h3>
+                <div class="company">Vjudge & Online Judges</div>
+                <div class="duration">
+                    <span class="duration-main">March 2022 - Present</span>
+                    <span class="duration-length">(2+ Years, 9 Months)</span>
+                </div>
+                <div class="timeline-details">
+                    <div class="position-type">🌐 Cross-Platform Expert</div>
+                    <div class="achievements">
+                        <h4>Key Achievements:</h4>
+                        <ul>
+                            <li><strong>590+ problems solved</strong> across multiple platforms</li>
+                            <li>Diversified experience with various algorithmic approaches</li>
+                            <li>Enhanced versatility in competitive programming</li>
+                            <li>Cross-platform problem-solving expertise</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Contest Participant & Problem Solver</h3>
+                <div class="company">CodeChef Platform</div>
+                <div class="duration">
+                    <span class="duration-main">March 2022 - Present</span>
+                    <span class="duration-length">(2+ Years, 9 Months)</span>
+                </div>
+                <div class="timeline-details">
+                    <div class="position-type">🎯 Monthly Contestant</div>
+                    <div class="achievements">
+                        <h4>Key Achievements:</h4>
+                        <ul>
+                            <li><strong>235+ problems solved</strong> with contest participation</li>
+                            <li>Active participation in monthly programming contests</li>
+                            <li>Sharpened logical thinking and coding efficiency</li>
+                            <li>Consistent performance improvement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Android Application Developer</h3>
+                <div class="company">Native Android Development</div>
+                <div class="duration">
+                    <span class="duration-main">January 2023 - Present</span>
+                    <span class="duration-length">(2+ Years)</span>
+                </div>
+                <div class="timeline-details">
+                    <div class="position-type">📱 Mobile Solutions</div>
+                    <div class="achievements">
+                        <h4>Key Projects:</h4>
+                        <ul>
+                            <li><strong>Restaurant Management System</strong> - Order processing and inventory</li>
+                            <li>Modern Android development practices implementation</li>
+                            <li>User-centric design and business solution focus</li>
+                            <li>Java/Kotlin proficiency with SQLite integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>JavaFX Game Developer</h3>
+                <div class="company">Desktop Game Development</div>
+                <div class="duration">
+                    <span class="duration-main">April 2022 - Present</span>
+                    <span class="duration-length">(2+ Years, 8 Months)</span>
+                </div>
+                <div class="timeline-details">
+                    <div class="position-type">🎮 Game Development</div>
+                    <div class="achievements">
+                        <h4>Key Projects:</h4>
+                        <ul>
+                            <li><strong>Word Matching Game</strong> - Interactive educational game</li>
+                            <li>JavaFX GUI design and development</li>
+                            <li>Clean, maintainable code architecture</li>
+                            <li>User experience optimization</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
