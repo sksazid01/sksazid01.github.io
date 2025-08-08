@@ -71,6 +71,10 @@ export default function Projects() {
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Some of my notable work and contributions
+            <br />
+            <span className="text-base text-blue-600 dark:text-blue-400 font-medium">
+              ⬇️ Check out "🔥 Live GitHub Projects" below for real-time repositories
+            </span>
           </p>
         </motion.div>
 

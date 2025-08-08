@@ -59,4 +59,10 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 120px; /* Account for fixed header */
+}
+
+/* Enhance scrolling for specific sections */
+#github-projects {
+  scroll-margin-top: 120px;
 }

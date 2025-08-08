@@ -50,6 +50,7 @@ export default function DynamicProjects({ repos, loading }: DynamicProjectsProps
 
   return (
     <motion.div 
+      id="github-projects"
       className="col-span-full mt-12"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

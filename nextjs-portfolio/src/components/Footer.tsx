@@ -46,6 +46,7 @@ export default function Footer() {
     { name: 'Skills', href: '#skills' },
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Live GitHub', href: '#github-projects' },
     { name: 'Contact', href: '#contact' }
   ]
 

@@ -2,13 +2,15 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Moon, Sun, Volume2, VolumeX, Menu, X } from 'lucide-react'
+import { Moon, Sun, Volume2, VolumeX, Menu, X, Monitor } from 'lucide-react'
+import { useTheme } from './ThemeProvider'
 
 export default function Header() {
-  const [isDark, setIsDark] = useState(false)
+  const { theme, setTheme } = useTheme()
   const [isSoundEnabled, setIsSoundEnabled] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const [showThemeMenu, setShowThemeMenu] = useState(false)
 
   const navLinks = [
     { href: '#home', label: 'Home' },
@@ -16,7 +18,14 @@ export default function Header() {
     { href: '#skills', label: 'Skills' },
     { href: '#experience', label: 'Experience' },
     { href: '#projects', label: 'Projects' },
+    { href: '#github-projects', label: 'Live GitHub' },
     { href: '#contact', label: 'Contact' },
+  ]
+
+  const themes = [
+    { id: 'light', name: 'Light', icon: Sun },
+    { id: 'dark', name: 'Dark', icon: Moon },
+    { id: 'system', name: 'System', icon: Monitor }
   ]
 
   useEffect(() => {
@@ -37,11 +46,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const toggleTheme = () => {
-    setIsDark(!isDark)
-    document.documentElement.classList.toggle('dark')
-  }
-
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
@@ -49,6 +53,17 @@ export default function Header() {
     }
     setIsMobileMenuOpen(false)
   }
+
+  const getThemeIcon = () => {
+    switch (theme) {
+      case 'light': return Sun
+      case 'dark': return Moon
+      case 'system': return Monitor
+      default: return Moon
+    }
+  }
+
+  const ThemeIcon = getThemeIcon()
 
   return (
     <motion.header
@@ -110,18 +125,45 @@ export default function Header() {
               )}
             </motion.button>
 
-            <motion.button
-              onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {isDark ? (
-                <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            {/* Enhanced Theme Selector */}
+            <div className="relative">
+              <motion.button
+                onClick={() => setShowThemeMenu(!showThemeMenu)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                title={`Current theme: ${theme}`}
+              >
+                <ThemeIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              </motion.button>
+
+              {/* Theme Dropdown */}
+              {showThemeMenu && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                  className="absolute right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 min-w-[120px]"
+                >
+                  {themes.map((themeOption) => (
+                    <motion.button
+                      key={themeOption.id}
+                      onClick={() => {
+                        setTheme(themeOption.id as any)
+                        setShowThemeMenu(false)
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+                        theme === themeOption.id ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
+                      }`}
+                      whileHover={{ x: 2 }}
+                    >
+                      <themeOption.icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{themeOption.name}</span>
+                    </motion.button>
+                  ))}
+                </motion.div>
               )}
-            </motion.button>
+            </div>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -166,6 +208,14 @@ export default function Header() {
           </motion.div>
         )}
       </nav>
+
+      {/* Click outside to close theme menu */}
+      {showThemeMenu && (
+        <div
+          className="fixed inset-0 z-[-1]"
+          onClick={() => setShowThemeMenu(false)}
+        />
+      )}
     </motion.header>
   )
 }
