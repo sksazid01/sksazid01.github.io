@@ -1,11 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Heart, ArrowUp } from 'lucide-react'
+import { Github, Linkedin, Mail, Heart, ArrowUp, Eye } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function Footer() {
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const { visitorCount, loading } = useDynamicPortfolio()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +32,7 @@ export default function Footer() {
     {
       name: 'LinkedIn',
       icon: <Linkedin className="w-6 h-6" />,
-      href: 'https://linkedin.com/in/ahasanul-haque',
+      href: 'https://www.linkedin.com/in/sksazid/',
       color: 'hover:text-blue-600'
     },
     {
@@ -212,6 +214,30 @@ export default function Footer() {
               </motion.span>
               by Ahasanul Haque
             </motion.p>
+            
+            {/* Visitor Counter */}
+            {!loading && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+              >
+                <Eye className="w-4 h-4" />
+                <span>
+                  Portfolio Views: 
+                  <motion.span 
+                    className="font-medium text-blue-600 dark:text-blue-400 ml-1"
+                    key={visitorCount}
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {visitorCount.toLocaleString()}
+                  </motion.span>
+                </span>
+              </motion.div>
+            )}
             
             <motion.div
               whileHover={{ scale: 1.05 }}

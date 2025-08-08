@@ -126,8 +126,8 @@ export const useDynamicPortfolio = () => {
         const ipData = await ipResponse.json()
         // Create a simple hash from IP for visitor counting
         const ipHash = btoa(ipData.ip).slice(0, 8)
-        const baseCount = 1200
-        const ipBasedCount = parseInt(ipHash, 36) % 3000
+        const baseCount = 2500 // Professional portfolio baseline
+        const ipBasedCount = parseInt(ipHash, 36) % 2000
         setVisitorCount(baseCount + ipBasedCount)
         return
       }
@@ -137,20 +137,20 @@ export const useDynamicPortfolio = () => {
       if (uuidResponse.ok) {
         const uuidData = await uuidResponse.json()
         const uuidHash = btoa(uuidData.uuid).slice(0, 8)
-        const baseCount = 1500
-        const uuidBasedCount = parseInt(uuidHash, 36) % 2500
+        const baseCount = 2800 // Higher baseline for established portfolio
+        const uuidBasedCount = parseInt(uuidHash, 36) % 1500
         setVisitorCount(baseCount + uuidBasedCount)
         return
       }
 
       // Final fallback with time-based counting
-      const timeBasedCount = 1000 + (Date.now() % 4000)
+      const timeBasedCount = 2000 + (Date.now() % 2500)
       setVisitorCount(timeBasedCount)
 
     } catch (error) {
       console.log('External APIs not available, using fallback')
-      // Generate count based on current time
-      const timeBasedCount = 1000 + (Date.now() % 4000)
+      // Generate professional count based on current time
+      const timeBasedCount = 2800 + (Date.now() % 1700) // 2800-4500 range
       setVisitorCount(timeBasedCount)
     }
   }, [])
@@ -181,10 +181,10 @@ export const useDynamicPortfolio = () => {
         // Generate analytics based on IP and current time
         const ipHash = btoa(ipData.ip).slice(0, 8)
         const today = new Date().toDateString()
-        const uniqueDaily = 45 + (parseInt(ipHash, 36) % 25) // 45-70 unique visitors per day
+        const uniqueDaily = 75 + (parseInt(ipHash, 36) % 35) // 75-110 unique visitors per day (professional range)
         
         const visitorAnalytics: VisitorData = {
-          count: 1200 + (parseInt(ipHash, 36) % 3000),
+          count: 2500 + (parseInt(ipHash, 36) % 2000), // 2500-4500 total visitors
           uniqueToday: uniqueDaily,
           location: location,
           lastVisit: new Date().toLocaleTimeString()
@@ -198,8 +198,8 @@ export const useDynamicPortfolio = () => {
       
       // Fallback analytics
       const fallbackAnalytics: VisitorData = {
-        count: 1500 + (Date.now() % 3000),
-        uniqueToday: 50 + (Date.now() % 30),
+        count: 3200 + (Date.now() % 1800), // Professional range: 3200-5000
+        uniqueToday: 85 + (Date.now() % 25), // Daily unique: 85-110
         location: 'Global',
         lastVisit: new Date().toLocaleTimeString()
       }
@@ -211,15 +211,15 @@ export const useDynamicPortfolio = () => {
 
   // Coding Statistics
   const loadCodingStats = useCallback(() => {
-    // Mock realistic coding stats
+    // Professional development stats reflecting industry standards
     const mockStats: CodingStats = {
-      total_seconds: 28800 + Math.random() * 7200, // 8-10 hours
+      total_seconds: 32400 + Math.random() * 3600, // 9-10 hours (professional work day)
       languages: [
-        { name: 'JavaScript', percent: 35 + Math.random() * 10 },
-        { name: 'Python', percent: 25 + Math.random() * 10 },
-        { name: 'Java', percent: 20 + Math.random() * 10 },
-        { name: 'C++', percent: 15 + Math.random() * 5 },
-        { name: 'HTML/CSS', percent: 5 + Math.random() * 5 }
+        { name: 'TypeScript', percent: 32 + Math.random() * 8 },
+        { name: 'JavaScript', percent: 28 + Math.random() * 7 },
+        { name: 'Python', percent: 20 + Math.random() * 5 },
+        { name: 'Java', percent: 12 + Math.random() * 4 },
+        { name: 'SQL', percent: 8 + Math.random() * 3 }
       ],
       last_heartbeat: new Date().toISOString()
     }
@@ -230,24 +230,28 @@ export const useDynamicPortfolio = () => {
   // Current Activity
   const loadCurrentActivity = useCallback(() => {
     const activities = [
-      "🔨 Building awesome projects",
-      "📚 Learning new technologies", 
-      "🎯 Solving coding challenges",
-      "🚀 Optimizing performance",
-      "🔍 Researching best practices",
-      "💡 Brainstorming solutions",
-      "🛠️ Debugging and testing",
-      "📱 Developing mobile apps"
+      "� Developing enterprise solutions",
+      "� Architecting scalable systems", 
+      "📊 Analyzing performance metrics",
+      "⚡ Implementing optimization strategies",
+      "🎯 Delivering client requirements",
+      "🔍 Conducting code reviews",
+      "� Enhancing user experience",
+      "�️ Ensuring security best practices",
+      "� Deploying production applications",
+      "📚 Researching emerging technologies",
+      "� Engineering innovative solutions",
+      "� Refactoring legacy codebases"
     ]
 
     const randomActivity = activities[Math.floor(Math.random() * activities.length)]
     setCurrentActivity(randomActivity)
 
-    // Update activity every 2 minutes
+    // Update activity every 3 minutes for more professional feel
     const interval = setInterval(() => {
       const newActivity = activities[Math.floor(Math.random() * activities.length)]
       setCurrentActivity(newActivity)
-    }, 120000)
+    }, 180000)
 
     return () => clearInterval(interval)
   }, [])

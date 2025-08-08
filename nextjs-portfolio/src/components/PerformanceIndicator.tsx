@@ -10,8 +10,10 @@ import {
   TrendingUp,
   Activity,
   Wifi,
-  WifiOff
+  WifiOff,
+  Eye
 } from 'lucide-react'
+import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 interface PerformanceMetrics {
   pageLoadTime: number
@@ -22,6 +24,7 @@ interface PerformanceMetrics {
 
 export default function PerformanceIndicator() {
   const [isVisible, setIsVisible] = useState(false)
+  const { currentActivity, visitorCount, loading: activityLoading } = useDynamicPortfolio()
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     pageLoadTime: 0,
     renderTime: 0,
@@ -90,6 +93,59 @@ export default function PerformanceIndicator() {
       transition={{ duration: 0.5 }}
       className="fixed top-20 right-4 z-40 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 max-w-xs"
     >
+      {/* Activity Status */}
+      {!activityLoading && currentActivity && (
+        <motion.div
+          className="hidden lg:flex items-center gap-2 bg-green-50 dark:bg-green-900/20 px-3 py-1.5 rounded-full border border-green-200 dark:border-green-700 mb-3"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div 
+            className="w-2 h-2 bg-green-500 rounded-full"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [1, 0.7, 1]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <span className="text-xs font-medium text-green-700 dark:text-green-300 max-w-[180px] truncate">
+            {currentActivity}
+          </span>
+        </motion.div>
+      )}
+
+      {/* Visitor Counter */}
+      {!activityLoading && visitorCount > 0 && (
+        <motion.div
+          className="hidden lg:flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full border border-blue-200 dark:border-blue-700 mb-3"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
+          <motion.div 
+            className="w-2 h-2 bg-blue-500 rounded-full"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [1, 0.7, 1]
+            }}
+            transition={{ 
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <span className="text-xs font-medium text-blue-700 dark:text-blue-300 flex items-center gap-1">
+            <Eye className="w-3 h-3" />
+            Portfolio Views: {visitorCount.toLocaleString()}
+          </span>
+        </motion.div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">

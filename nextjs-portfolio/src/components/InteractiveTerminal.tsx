@@ -81,7 +81,7 @@ View live projects: Navigate to "🔥 Live GitHub Projects" section`,
       output: `Contact Information:
 Email: ahasanulhaque20@gmail.com
 GitHub: github.com/sksazid01
-LinkedIn: linkedin.com/in/ahasanul-haque
+LinkedIn: https://www.linkedin.com/in/sksazid/
 Location: Sylhet, Bangladesh
 Status: Open to opportunities`,
       type: 'success' as const

@@ -3,11 +3,8 @@
 import { motion } from 'framer-motion'
 import { ChevronDown, Mail, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
-import CurrentActivity from './CurrentActivity'
-import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function Hero() {
-  const { currentActivity, visitorCount, loading } = useDynamicPortfolio()
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
@@ -42,7 +39,7 @@ export default function Hero() {
               className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
             >
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 bg-clip-text text-transparent animate-pulse">
-                Md Ahasanul Haque
+              Sazid
               </span>
             </motion.h1>
             
@@ -91,13 +88,6 @@ export default function Hero() {
                 </span>
               </motion.button>
             </motion.div>
-            
-            {/* Current Activity Widget */}
-            <CurrentActivity 
-              activity={currentActivity} 
-              visitorCount={visitorCount} 
-              loading={loading} 
-            />
           </motion.div>
 
           {/* Profile Image */}
@@ -123,10 +113,15 @@ export default function Hero() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="w-full h-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-600 dark:to-gray-800 flex items-center justify-center">
-                    <div className="w-32 h-32 bg-gray-400 dark:bg-gray-500 rounded-full mb-8"></div>
-                  </div>
+                <div className="w-full h-full rounded-full overflow-hidden">
+                  <Image
+                    src="/sksazid.png"
+                    alt="Sazid - Quick Learner"
+                    width={320}
+                    height={320}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
                 </div>
                 
                 {/* Glow Effect */}
