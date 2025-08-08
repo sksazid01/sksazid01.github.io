@@ -2,8 +2,12 @@
 
 import { motion } from 'framer-motion'
 import { ExternalLink, Github, ShoppingCart, Smartphone, Gamepad2, BarChart3 } from 'lucide-react'
+import DynamicProjects from './DynamicProjects'
+import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function Projects() {
+  const { githubRepos, loading } = useDynamicPortfolio()
+  
   const projects = [
     {
       title: "E-commerce Marketplace",
@@ -164,6 +168,9 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
+        
+        {/* Dynamic GitHub Projects */}
+        <DynamicProjects repos={githubRepos} loading={loading} />
       </div>
     </section>
   )

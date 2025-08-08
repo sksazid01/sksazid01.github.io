@@ -3,8 +3,11 @@
 import { motion } from 'framer-motion'
 import { ChevronDown, Mail, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
+import CurrentActivity from './CurrentActivity'
+import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function Hero() {
+  const { currentActivity, visitorCount, loading } = useDynamicPortfolio()
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
@@ -88,6 +91,13 @@ export default function Hero() {
                 </span>
               </motion.button>
             </motion.div>
+            
+            {/* Current Activity Widget */}
+            <CurrentActivity 
+              activity={currentActivity} 
+              visitorCount={visitorCount} 
+              loading={loading} 
+            />
           </motion.div>
 
           {/* Profile Image */}

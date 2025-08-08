@@ -2,8 +2,12 @@
 
 import { motion } from 'framer-motion'
 import { GraduationCap, Trophy, Code, Database, Globe, Star, Target, BookOpen } from 'lucide-react'
+import GitHubStatsWidget from './GitHubStatsWidget'
+import CodingStatsWidget from './CodingStatsWidget'
+import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function About() {
+  const { githubStats, codingStats, loading } = useDynamicPortfolio()
   const highlights = [
     {
       icon: <GraduationCap className="w-6 h-6" />,
@@ -164,6 +168,12 @@ export default function About() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Dynamic GitHub Stats Widget */}
+        <GitHubStatsWidget stats={githubStats} loading={loading} />
+        
+        {/* Dynamic Coding Stats Widget */}
+        <CodingStatsWidget stats={codingStats} loading={loading} />
       </div>
     </section>
   )
