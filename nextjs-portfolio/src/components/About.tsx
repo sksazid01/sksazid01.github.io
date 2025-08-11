@@ -11,59 +11,59 @@ export default function About() {
   const highlights = [
     {
       icon: <GraduationCap className="w-6 h-6" />,
-      title: "Computer Science Engineering Student",
-      description: "Shahjalal University of Engineering and Technology",
+      title: "BSc in Engineering",
+      description: "Shahjalal University of Engineering and Technology (Computer Science and Engineering)",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Trophy className="w-6 h-6" />,
-      title: "Competitive Programming",
-      description: "1230+ problems solved across multiple platforms with expertise in algorithmic problem-solving",
+      title: "Problem Solving Expert",
+      description: "650+ problems solved in CodeForces, 325+ in Vjudge platform using C, C++, Python, and Swift",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: <Code className="w-6 h-6" />,
-      title: "Full-Stack Development",
-      description: "Web & mobile application expertise with modern frameworks and technologies",
+      title: "Multi-Platform Developer",
+      description: "325+ good problems solved in Vjudge platform with diverse programming challenges",
       color: "from-green-500 to-emerald-500"
     },
     {
       icon: <Database className="w-6 h-6" />,
       title: "Data Science & ML",
-      description: "Hands-on machine learning experience with real-world applications",
+      description: "Working with Python libraries like Keras, NumPy, Matplotlib for long-term projects",
       color: "from-orange-500 to-red-500"
     },
     {
       icon: <Globe className="w-6 h-6" />,
-      title: "Programming Languages",
-      description: "Python, Java, C++, JavaScript with production-level proficiency",
+      title: "Technical Proficiency",
+      description: "Python, Java, JavaScript, Kotlin, C++, Android Development, UI: Jetpack Compose, Data Science, Machine Learning",
       color: "from-indigo-500 to-purple-500"
     },
     {
       icon: <Star className="w-6 h-6" />,
-      title: "Professional Edge",
-      description: "Multilingual communication skills (English, Bangla, Hindi) for global collaboration",
+      title: "Language Skills",
+      description: "Native Bangla, Professional Working Proficiency in English and Hindi",
       color: "from-pink-500 to-rose-500"
     },
     {
       icon: <Target className="w-6 h-6" />,
-      title: "Innovation Focus",
-      description: "Passionate about building impactful technology solutions that solve real-world problems",
+      title: "SUST Programming Camp",
+      description: "Competitive Programming Training Camp participant (03/2022 - Present)",
       color: "from-cyan-500 to-blue-500"
     },
     {
       icon: <BookOpen className="w-6 h-6" />,
-      title: "Academic Excellence",
-      description: "Strong foundation in Computer Science fundamentals and emerging technologies",
+      title: "Academic Projects",
+      description: "E-commerce Marketplace, Club Management System, JavaFX Game Development",
       color: "from-teal-500 to-green-500"
     }
   ]
 
   const stats = [
-    { number: "1230+", label: "Problems Solved" },
-    { number: "590+", label: "Projects Completed" },
-    { number: "235+", label: "Challenges Won" },
-    { number: "2+", label: "Years Experience" }
+    { number: "650+", label: "CodeForces Problems" },
+    { number: "325+", label: "Vjudge Problems" },
+    { number: "1000+", label: "Total Problems Solved" },
+    { number: "3+", label: "Years Programming" }
   ]
 
   const containerVariants = {
@@ -171,6 +171,61 @@ export default function About() {
 
         {/* Dynamic GitHub Stats Widget */}
         <GitHubStatsWidget stats={githubStats} loading={loading} />
+        
+        {/* Competitive Programming Links */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50"
+        >
+          <h3 className="text-2xl font-bold text-center mb-8">
+            <span className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+              🏆 Competitive Programming Profiles
+            </span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.a
+              href="https://codeforces.com/profile/sksazid"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-gradient-to-r from-red-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.05, y: -5 }}
+            >
+              <div className="text-3xl font-bold mb-2">650+</div>
+              <div className="text-sm opacity-90 mb-2">Problems Solved</div>
+              <div className="font-semibold">CodeForces</div>
+              <div className="text-xs opacity-75 mt-1">@sksazid</div>
+            </motion.a>
+            
+            <motion.a
+              href="https://vjudge.net/user/sksazid"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-gradient-to-r from-blue-500 to-purple-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.05, y: -5 }}
+            >
+              <div className="text-3xl font-bold mb-2">325+</div>
+              <div className="text-sm opacity-90 mb-2">Good Problems</div>
+              <div className="font-semibold">VJudge</div>
+              <div className="text-xs opacity-75 mt-1">@sksazid</div>
+            </motion.a>
+            
+            <motion.a
+              href="https://www.codechef.com/users/sksazid"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-gradient-to-r from-yellow-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.05, y: -5 }}
+            >
+              <div className="text-3xl font-bold mb-2">⭐</div>
+              <div className="text-sm opacity-90 mb-2">Active Profile</div>
+              <div className="font-semibold">CodeChef</div>
+              <div className="text-xs opacity-75 mt-1">@sksazid</div>
+            </motion.a>
+          </div>
+        </motion.div>
         
         {/* Dynamic Coding Stats Widget */}
         <CodingStatsWidget stats={codingStats} loading={loading} />

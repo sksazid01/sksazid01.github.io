@@ -11,43 +11,59 @@ export default function Projects() {
   const projects = [
     {
       title: "E-commerce Marketplace",
-      description: "A comprehensive e-commerce platform built with modern web technologies. Features include user authentication, product catalog, shopping cart, and secure payment processing.",
+      description: "A comprehensive e-commerce platform developed as an academic project. Features include user management, product catalog, shopping cart functionality, and secure transaction processing.",
       icon: <ShoppingCart className="w-12 h-12" />,
-      technologies: ["Django", "Python", "JavaScript", "PostgreSQL"],
+      technologies: ["Django", "Python", "JavaScript", "PostgreSQL", "HTML/CSS"],
       color: "from-blue-500 to-cyan-500",
+      timeline: "02/2023 - 07/2023",
       links: {
         github: "#",
         demo: "#"
       }
     },
     {
-      title: "Restaurant Management App",
-      description: "Native Android application for restaurant management and order processing. Includes inventory management, order tracking, and customer management features.",
+      title: "Restaurant Management & Order Application",
+      description: "Native Android application for restaurant management and order processing. Built with modern Android development practices using Jetpack Compose for UI and efficient order tracking system.",
       icon: <Smartphone className="w-12 h-12" />,
-      technologies: ["Android", "Java", "Kotlin", "SQLite"],
+      technologies: ["Android", "Kotlin", "Jetpack Compose", "Room Database", "MVVM"],
       color: "from-green-500 to-emerald-500",
+      timeline: "07/2023 - Present",
       links: {
         github: "#",
         demo: "#"
       }
     },
     {
-      title: "Word Matching Game",
-      description: "Interactive word matching game developed using JavaFX. Features engaging UI/UX design, multiple difficulty levels, and score tracking system.",
+      title: "Word Matching Game (JavaFX)",
+      description: "Interactive word matching game developed using JavaFX with engaging UI/UX design. Features multiple difficulty levels, score tracking system, and smooth animations.",
       icon: <Gamepad2 className="w-12 h-12" />,
-      technologies: ["Java", "JavaFX", "FXML", "CSS"],
+      technologies: ["Java", "JavaFX", "FXML", "CSS", "Scene Builder"],
       color: "from-purple-500 to-pink-500",
+      timeline: "04/2023 - 06/2023",
       links: {
         github: "#",
         demo: "#"
       }
     },
     {
-      title: "Data Analysis Dashboard",
-      description: "Python-based data analysis and visualization dashboard using machine learning algorithms. Provides insights through interactive charts and predictive models.",
+      title: "Club Management System",
+      description: "Full-stack web application for managing club activities and member interactions. Includes member registration, event management, and administrative dashboard with real-time updates.",
       icon: <BarChart3 className="w-12 h-12" />,
-      technologies: ["Python", "Pandas", "NumPy", "Matplotlib", "Keras"],
+      technologies: ["React", "Node.js", "MongoDB", "Express", "JWT"],
       color: "from-orange-500 to-red-500",
+      timeline: "01/2025 - 07/2025",
+      links: {
+        github: "#",
+        demo: "#"
+      }
+    },
+    {
+      title: "Data Science & ML Tasks",
+      description: "Working on long-term data science and machine learning projects using Python libraries. Includes data analysis, visualization, and predictive modeling with real-world datasets.",
+      icon: <BarChart3 className="w-12 h-12" />,
+      technologies: ["Python", "Keras", "NumPy", "Matplotlib", "Pandas", "Scikit-learn"],
+      color: "from-cyan-500 to-blue-500",
+      timeline: "03/2023 - Present",
       links: {
         github: "#"
       }
@@ -119,9 +135,16 @@ export default function Projects() {
 
               {/* Project Content */}
               <div className="p-8">
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {project.title}
-                </h3>
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  {project.timeline && (
+                    <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
+                      {project.timeline}
+                    </span>
+                  )}
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                   {project.description}

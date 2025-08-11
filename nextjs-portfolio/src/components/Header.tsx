@@ -10,7 +10,6 @@ export default function Header() {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
-  const [showThemeMenu, setShowThemeMenu] = useState(false)
 
   const navLinks = [
     { href: '#home', label: 'Home' },
@@ -22,48 +21,53 @@ export default function Header() {
     { href: '#contact', label: 'Contact' },
   ]
 
-  const themes = [
-    { id: 'light', name: 'Light', icon: Sun },
-    { id: 'dark', name: 'Dark', icon: Moon },
-    { id: 'system', name: 'System', icon: Monitor }
-  ]
-
   useEffect(() => {
     const handleScroll = () => {
       const sections = navLinks.map(link => link.href.substring(1))
+      
+      // Special handling for github-projects which is nested inside projects
+      const githubProjectsElement = document.getElementById('github-projects')
+      if (githubProjectsElement) {
+        const githubRect = githubProjectsElement.getBoundingClientRect()
+        // If github-projects section is in view, prioritize it
+        if (githubRect.top <= 200 && githubRect.bottom >= 200) {
+          setActiveSection('github-projects')
+          return
+        }
+      }
+      
+      // Regular section detection for other sections
       const current = sections.find(section => {
         const element = document.getElementById(section)
-        if (element) {
+        if (element && section !== 'github-projects') {
           const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
+          return rect.top <= 150 && rect.bottom >= 150
         }
         return false
       })
+      
       if (current) setActiveSection(current)
     }
 
     window.addEventListener('scroll', handleScroll)
+    handleScroll() // Call once to set initial state
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [navLinks])
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      // For github-projects, scroll a bit higher to ensure it's properly in view
+      const offset = href === '#github-projects' ? -100 : 0
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset + offset
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      })
     }
     setIsMobileMenuOpen(false)
   }
-
-  const getThemeIcon = () => {
-    switch (theme) {
-      case 'light': return Sun
-      case 'dark': return Moon
-      case 'system': return Monitor
-      default: return Moon
-    }
-  }
-
-  const ThemeIcon = getThemeIcon()
 
   return (
     <motion.header
@@ -125,45 +129,20 @@ export default function Header() {
               )}
             </motion.button>
 
-            {/* Enhanced Theme Selector */}
-            <div className="relative">
-              <motion.button
-                onClick={() => setShowThemeMenu(!showThemeMenu)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                title={`Current theme: ${theme}`}
-              >
-                <ThemeIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-              </motion.button>
-
-              {/* Theme Dropdown */}
-              {showThemeMenu && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className="absolute right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 min-w-[120px]"
-                >
-                  {themes.map((themeOption) => (
-                    <motion.button
-                      key={themeOption.id}
-                      onClick={() => {
-                        setTheme(themeOption.id as any)
-                        setShowThemeMenu(false)
-                      }}
-                      className={`w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
-                        theme === themeOption.id ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
-                      }`}
-                      whileHover={{ x: 2 }}
-                    >
-                      <themeOption.icon className="w-4 h-4" />
-                      <span className="text-sm font-medium">{themeOption.name}</span>
-                    </motion.button>
-                  ))}
-                </motion.div>
+            {/* Simple Theme Toggle */}
+            <motion.button
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {theme === 'light' ? (
+                <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              ) : (
+                <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300" />
               )}
-            </div>
+            </motion.button>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -208,14 +187,6 @@ export default function Header() {
           </motion.div>
         )}
       </nav>
-
-      {/* Click outside to close theme menu */}
-      {showThemeMenu && (
-        <div
-          className="fixed inset-0 z-[-1]"
-          onClick={() => setShowThemeMenu(false)}
-        />
-      )}
     </motion.header>
   )
 }

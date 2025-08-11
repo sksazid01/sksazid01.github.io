@@ -39,7 +39,7 @@ export default function Hero() {
               className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
             >
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 bg-clip-text text-transparent animate-pulse">
-              Sazid
+              Md Ahasanul Haque
               </span>
             </motion.h1>
             
@@ -116,7 +116,7 @@ export default function Hero() {
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <Image
                     src="/sksazid.png"
-                    alt="Sazid - Quick Learner"
+                    alt="Md Ahasanul Haque - Problem Solver and Quick Learner"
                     width={320}
                     height={320}
                     className="w-full h-full object-cover"

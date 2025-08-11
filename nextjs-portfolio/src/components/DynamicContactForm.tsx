@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Send, CheckCircle, AlertCircle } from 'lucide-react'
+import EmailService from '../services/EmailService'
 
 export default function DynamicContactForm() {
   const [formData, setFormData] = useState({
@@ -16,34 +17,93 @@ export default function DynamicContactForm() {
     message: string
   }>({ type: null, message: '' })
 
+  // Initialize EmailService
+  const emailService = EmailService.getInstance()
+
+  useEffect(() => {
+    emailService.initialize()
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
+    console.log('=== CONTACT FORM SUBMISSION ===')
+    console.log('Form data:', formData)
+
+    // Validate form data
+    const validation = emailService.validateEmailData(formData)
+    if (!validation.isValid) {
+      setFeedback({
+        type: 'error',
+        message: '❌ ' + validation.errors.join(', ')
+      })
+      setIsSubmitting(false)
+      return
+    }
+
     try {
-      // Using Formspree for form handling
-      const response = await fetch('https://formspree.io/f/xjkwpwgr', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      // Send email using EmailService
+      const result = await emailService.sendEmail({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        title: 'Portfolio Contact Form'
       })
 
-      if (response.ok) {
+      if (result.success) {
+        console.log('✅ Email sent successfully:', result)
         setFeedback({
           type: 'success',
-          message: '✅ Message sent successfully! I\'ll get back to you soon.'
+          message: '✅ Message sent successfully! I will get back to you soon.'
         })
         setFormData({ name: '', email: '', message: '' })
       } else {
-        throw new Error('Failed to send message')
+        throw new Error(result.message)
       }
-    } catch (error) {
-      setFeedback({
-        type: 'error',
-        message: '❌ Failed to send message. Please try again or contact me directly.'
-      })
+
+    } catch (emailError) {
+      console.error('❌ EmailJS Error:', emailError)
+      
+      // Try Formspree as backup
+      try {
+        console.log('🔄 Trying Formspree as backup...')
+        const formspreeResponse = await fetch('https://formspree.io/f/xjkwpwgr', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            subject: `Portfolio Contact: Message from ${formData.name}`,
+            _replyto: formData.email
+          }),
+        })
+
+        console.log('Formspree response status:', formspreeResponse.status)
+        
+        if (formspreeResponse.ok) {
+          console.log('✅ Formspree success!')
+          setFeedback({
+            type: 'success',
+            message: '✅ Message sent successfully via backup service! I will get back to you soon.'
+          })
+          setFormData({ name: '', email: '', message: '' })
+        } else {
+          const errorText = await formspreeResponse.text()
+          console.error('Formspree error response:', errorText)
+          throw new Error(`Formspree failed with status ${formspreeResponse.status}`)
+        }
+      } catch (formspreeError) {
+        console.error('❌ Formspree also failed:', formspreeError)
+        
+        setFeedback({
+          type: 'error',
+          message: '❌ Failed to send message via both email services. Please contact me directly at ahasanulhaque20@gmail.com'
+        })
+      }
     }
 
     setIsSubmitting(false)

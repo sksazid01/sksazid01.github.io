@@ -9,7 +9,7 @@ export default function Experience() {
       title: "Data Science & ML Engineer",
       company: "Python-based Projects",
       duration: "March 2020 - Present",
-      length: "(5+ Years)",
+      length: "(2+ Years)",
       type: "📊 Full-time Focus",
       achievements: [
         "Advanced proficiency in Python libraries: Keras, NumPy, Matplotlib, Pandas",
