@@ -120,7 +120,7 @@ export default function About() {
             <motion.div
               key={index}
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 rotateY: 5,
                 z: 50
@@ -172,9 +172,7 @@ export default function About() {
           ))}
         </motion.div> */}
 
-        {/* Dynamic GitHub Stats Widget */}
-        <GitHubStatsWidget stats={githubStats} loading={loading} />
-        
+
         {/* Competitive Programming Links */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -190,13 +188,16 @@ export default function About() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <CodeforcesWidget handle="sksazid" />
-            
+
             <VJudgeWidget handle="sksazid" />
-            
+
             <CodeChefWidget handle="sksazid" />
           </div>
         </motion.div>
-        
+
+        {/* Dynamic GitHub Stats Widget */}
+        <GitHubStatsWidget stats={githubStats} loading={loading} />
+
         {/* Dynamic Coding Stats Widget */}
         <CodingStatsWidget stats={codingStats} loading={loading} />
       </div>

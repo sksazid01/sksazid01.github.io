@@ -2,11 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { ExternalLink, Github, ShoppingCart, Smartphone, Gamepad2, BarChart3 } from 'lucide-react'
-import DynamicProjects from './DynamicProjects'
-import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function Projects() {
-  const { githubRepos, loading } = useDynamicPortfolio()
   
   const projects = [
     {
@@ -17,7 +14,7 @@ export default function Projects() {
       color: "from-blue-500 to-cyan-500",
       timeline: "02/2023 - 07/2023",
       links: {
-        github: "#",
+        github: "https://github.com/sksazid01",
         demo: "#"
       }
     },
@@ -29,7 +26,7 @@ export default function Projects() {
       color: "from-green-500 to-emerald-500",
       timeline: "07/2023 - Present",
       links: {
-        github: "#",
+        github: "https://github.com/sksazid01",
         demo: "#"
       }
     },
@@ -41,7 +38,7 @@ export default function Projects() {
       color: "from-purple-500 to-pink-500",
       timeline: "04/2023 - 06/2023",
       links: {
-        github: "#",
+        github: "https://github.com/sksazid01",
         demo: "#"
       }
     },
@@ -53,7 +50,7 @@ export default function Projects() {
       color: "from-orange-500 to-red-500",
       timeline: "01/2025 - 07/2025",
       links: {
-        github: "#",
+        github: "https://github.com/sksazid01",
         demo: "#"
       }
     },
@@ -65,7 +62,7 @@ export default function Projects() {
       color: "from-cyan-500 to-blue-500",
       timeline: "03/2023 - Present",
       links: {
-        github: "#"
+        github: "https://github.com/sksazid01"
       }
     }
   ]
@@ -87,10 +84,6 @@ export default function Projects() {
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Some of my notable work and contributions
-            <br />
-            <span className="text-base text-blue-600 dark:text-blue-400 font-medium">
-              ⬇️ Check out "🔥 Live GitHub Projects" below for real-time repositories
-            </span>
           </p>
         </motion.div>
 
@@ -195,9 +188,6 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
-        
-        {/* Dynamic GitHub Projects */}
-        <DynamicProjects repos={githubRepos} loading={loading} />
       </div>
     </section>
   )

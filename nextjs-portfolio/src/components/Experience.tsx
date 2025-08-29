@@ -6,9 +6,9 @@ import { Calendar, MapPin, CheckCircle, Briefcase } from 'lucide-react'
 export default function Experience() {
   const experiences = [
     {
-      title: "Data Science & ML Engineer",
+      title: "Data Science & ML",
       company: "Python-based Projects",
-      duration: "March 2020 - Present",
+      duration: "March 2024 - Present",
       length: "(2+ Years)",
       type: "📊 Full-time Focus",
       achievements: [
@@ -19,13 +19,13 @@ export default function Experience() {
       ]
     },
     {
-      title: "Competitive Programming Specialist",
+      title: "Competitive Programming",
       company: "Codeforces (Handle: sksazid)",
       duration: "March 2022 - Present",
-      length: "(2+ Years, 9 Months)",
+      length: "(4+ Years)",
       type: "🏆 Active Competitor",
       achievements: [
-        "1230+ problems solved using Python, Swift, C, and C++",
+        "650+ problems solved using Python, Swift, C, and C++",
         "Consistent rating improvement through regular practice",
         "Strong algorithmic thinking and problem-solving expertise",
         "Participated in multiple contests and challenges"
@@ -35,7 +35,7 @@ export default function Experience() {
       title: "Multi-Platform Problem Solver",
       company: "Vjudge & Online Judges",
       duration: "March 2022 - Present",
-      length: "(2+ Years, 9 Months)",
+      length: "(4+ Years)",
       type: "🌐 Cross-Platform Expert",
       achievements: [
         "590+ problems solved across multiple platforms",
@@ -48,10 +48,10 @@ export default function Experience() {
       title: "Contest Participant & Problem Solver",
       company: "CodeChef Platform",
       duration: "March 2022 - Present",
-      length: "(2+ Years, 9 Months)",
+      length: "(4+ Years)",
       type: "🎯 Monthly Contestant",
       achievements: [
-        "235+ problems solved with contest participation",
+        "100+ problems solved with contest participation",
         "Active participation in monthly programming contests",
         "Sharpened logical thinking and coding efficiency",
         "Consistent performance improvement"
@@ -60,8 +60,8 @@ export default function Experience() {
     {
       title: "Android Application Developer",
       company: "Native Android Development",
-      duration: "January 2023 - Present",
-      length: "(2+ Years)",
+      duration: "July 2023",
+      length: "(6 months)",
       type: "📱 Mobile Solutions",
       achievements: [
         "Restaurant Management System - Order processing and inventory",
@@ -73,8 +73,8 @@ export default function Experience() {
     {
       title: "JavaFX Game Developer",
       company: "Desktop Game Development",
-      duration: "April 2022 - Present",
-      length: "(2+ Years, 8 Months)",
+      duration: "January 2023",
+      length: "(6 months)",
       type: "🎮 Game Development",
       achievements: [
         "Word Matching Game - Interactive educational game",

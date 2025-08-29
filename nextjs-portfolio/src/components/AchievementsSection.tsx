@@ -23,7 +23,7 @@ interface Achievement {
   category: 'coding' | 'project' | 'learning' | 'recognition'
   icon: React.ReactNode
   color: string
-  progress?: number
+  status: 'completed' | 'in-progress' | 'featured' | 'ongoing'
   badge?: string
 }
 
@@ -32,13 +32,13 @@ export default function AchievementsSection() {
   const [achievements] = useState<Achievement[]>([
     {
       id: '1',
-      title: '1230+ Problems Solved',
-      description: 'Solved over 1230 competitive programming problems across multiple platforms',
+      title: '650+ Problems Solved',
+      description: 'Solved over 650 competitive programming problems across multiple platforms',
       date: '2024-12',
       category: 'coding',
       icon: <Code className="w-6 h-6" />,
       color: 'from-blue-500 to-cyan-500',
-      progress: 95,
+      status: 'ongoing',
       badge: 'Master'
     },
     {
@@ -49,7 +49,7 @@ export default function AchievementsSection() {
       category: 'project',
       icon: <Trophy className="w-6 h-6" />,
       color: 'from-green-500 to-emerald-500',
-      progress: 100,
+      status: 'completed',
       badge: 'Complete'
     },
     {
@@ -60,7 +60,7 @@ export default function AchievementsSection() {
       category: 'project',
       icon: <Star className="w-6 h-6" />,
       color: 'from-purple-500 to-pink-500',
-      progress: 90,
+      status: 'featured',
       badge: 'Featured'
     },
     {
@@ -71,7 +71,7 @@ export default function AchievementsSection() {
       category: 'learning',
       icon: <TrendingUp className="w-6 h-6" />,
       color: 'from-orange-500 to-red-500',
-      progress: 85,
+      status: 'completed',
       badge: 'Advanced'
     },
     {
@@ -82,7 +82,7 @@ export default function AchievementsSection() {
       category: 'coding',
       icon: <Target className="w-6 h-6" />,
       color: 'from-indigo-500 to-purple-500',
-      progress: 88,
+      status: 'ongoing',
       badge: 'Expert'
     },
     {
@@ -93,7 +93,7 @@ export default function AchievementsSection() {
       category: 'recognition',
       icon: <Medal className="w-6 h-6" />,
       color: 'from-yellow-500 to-orange-500',
-      progress: 92,
+      status: 'completed',
       badge: 'Champion'
     },
     {
@@ -104,18 +104,18 @@ export default function AchievementsSection() {
       category: 'project',
       icon: <Award className="w-6 h-6" />,
       color: 'from-teal-500 to-green-500',
-      progress: 95,
+      status: 'completed',
       badge: 'Innovation'
     },
     {
       id: '8',
-      title: '5+ Years Python Experience',
+      title: '2+ Years Python Experience',
       description: 'Maintained consistent Python development and data science work',
       date: '2024-01',
       category: 'learning',
       icon: <Clock className="w-6 h-6" />,
       color: 'from-blue-600 to-indigo-600',
-      progress: 100,
+      status: 'ongoing',
       badge: 'Veteran'
     }
   ])
@@ -281,28 +281,29 @@ export default function AchievementsSection() {
                   {achievement.description}
                 </p>
 
-                {/* Progress Bar */}
-                {achievement.progress && (
-                  <div className="mb-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs font-medium text-gray-500 dark:text-gray-500">
-                        Progress
-                      </span>
-                      <span className="text-xs font-bold text-gray-700 dark:text-gray-300">
-                        {achievement.progress}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <motion.div
-                        className={`h-2 bg-gradient-to-r ${achievement.color} rounded-full`}
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${achievement.progress}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: index * 0.1 }}
-                      />
-                    </div>
+                {/* Status Indicator */}
+                <div className="mb-4">
+                  <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
+                    achievement.status === 'completed' 
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
+                      : achievement.status === 'ongoing' 
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+                      : achievement.status === 'featured'
+                      ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400'
+                      : 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400'
+                  }`}>
+                    <div className={`w-2 h-2 rounded-full ${
+                      achievement.status === 'completed' 
+                        ? 'bg-green-500' 
+                        : achievement.status === 'ongoing' 
+                        ? 'bg-blue-500'
+                        : achievement.status === 'featured'
+                        ? 'bg-purple-500'
+                        : 'bg-orange-500'
+                    }`} />
+                    <span className="capitalize">{achievement.status === 'in-progress' ? 'In Progress' : achievement.status}</span>
                   </div>
-                )}
+                </div>
 
                 {/* Date */}
                 <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-500">
@@ -318,7 +319,7 @@ export default function AchievementsSection() {
         </motion.div>
 
         {/* Achievement Summary */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -340,7 +341,7 @@ export default function AchievementsSection() {
               🎯 Always striving for excellence
             </motion.div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   )

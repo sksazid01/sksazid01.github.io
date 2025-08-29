@@ -17,7 +17,6 @@ export default function Header() {
     { href: '#skills', label: 'Skills' },
     { href: '#experience', label: 'Experience' },
     { href: '#projects', label: 'Projects' },
-    { href: '#github-projects', label: 'Live GitHub' },
     { href: '#contact', label: 'Contact' },
   ]
 
@@ -25,21 +24,10 @@ export default function Header() {
     const handleScroll = () => {
       const sections = navLinks.map(link => link.href.substring(1))
       
-      // Special handling for github-projects which is nested inside projects
-      const githubProjectsElement = document.getElementById('github-projects')
-      if (githubProjectsElement) {
-        const githubRect = githubProjectsElement.getBoundingClientRect()
-        // If github-projects section is in view, prioritize it
-        if (githubRect.top <= 200 && githubRect.bottom >= 200) {
-          setActiveSection('github-projects')
-          return
-        }
-      }
-      
-      // Regular section detection for other sections
+      // Regular section detection
       const current = sections.find(section => {
         const element = document.getElementById(section)
-        if (element && section !== 'github-projects') {
+        if (element) {
           const rect = element.getBoundingClientRect()
           return rect.top <= 150 && rect.bottom >= 150
         }
@@ -57,9 +45,7 @@ export default function Header() {
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
-      // For github-projects, scroll a bit higher to ensure it's properly in view
-      const offset = href === '#github-projects' ? -100 : 0
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset + offset
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
       
       window.scrollTo({
         top: elementPosition,

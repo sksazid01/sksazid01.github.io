@@ -74,7 +74,7 @@ Real-time repositories from github.com/sksazid01:
 • Total Forks: 8+
 • Most Used Language: Python
 
-View live projects: Navigate to "🔥 Live GitHub Projects" section`,
+View projects: Navigate to "Featured Projects" section`,
       type: 'success' as const
     },
     contact: {
