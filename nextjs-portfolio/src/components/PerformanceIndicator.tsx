@@ -94,7 +94,7 @@ export default function PerformanceIndicator() {
       className="fixed top-44 right-4 z-35 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-3 max-w-[280px] hidden lg:block"
     >
       {/* Activity Status */}
-      {!activityLoading && currentActivity && (
+      {/* {!activityLoading && currentActivity && (
         <motion.div
           className="flex items-center gap-2 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full border border-green-200 dark:border-green-700 mb-2"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -117,7 +117,7 @@ export default function PerformanceIndicator() {
             {currentActivity}
           </span>
         </motion.div>
-      )}
+      )} */}
 
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
@@ -170,7 +170,7 @@ export default function PerformanceIndicator() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <Eye className="w-3 h-3 text-blue-500" />
-              <span className="text-xs text-gray-600 dark:text-gray-400">Views</span>
+              <span className="text-xs text-gray-600 dark:text-gray-400">Visitors</span>
             </div>
             <span className="text-xs font-medium text-blue-500">
               {visitorCount.toLocaleString()}
