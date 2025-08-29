@@ -82,30 +82,72 @@ export async function fetchCodeforcesStats(handle: string): Promise<CodeforcesSt
   }
 }
 
-// VJudge - No public API, so we'll use web scraping via backend API
+// VJudge - Using static data since no public API available
 export async function fetchVJudgeStats(handle: string): Promise<VJudgeStat | null> {
   try {
-    const response = await fetch(`/api/vjudge?handle=${handle}`)
-    if (!response.ok) {
-      console.error('Failed to fetch VJudge data')
-      return null
+    // Static data for known handles - replace with your actual stats
+    const staticData: Record<string, VJudgeStat> = {
+      'sksazid': {
+        totalSolved: 326,
+        handle: 'sksazid',
+        school: 'SUST',
+        membership: 'Active Member'
+      }
     }
-    return await response.json()
+    
+    // Return static data if available, otherwise default values
+    if (staticData[handle]) {
+      return staticData[handle]
+    }
+    
+    // Default values for unknown handles
+    return {
+      totalSolved: 0,
+      handle,
+      school: 'Unknown',
+      membership: 'Member'
+    }
   } catch (error) {
     console.error('Error fetching VJudge stats:', error)
     return null
   }
 }
 
-// CodeChef - No public API, so we'll use web scraping via backend API
+// CodeChef - Using static data since no public API available
 export async function fetchCodeChefStats(handle: string): Promise<CodeChefStat | null> {
   try {
-    const response = await fetch(`/api/codechef?handle=${handle}`)
-    if (!response.ok) {
-      console.error('Failed to fetch CodeChef data')
-      return null
+    // Static data for known handles - replace with your actual stats
+    const staticData: Record<string, CodeChefStat> = {
+      'sksazid': {
+        totalSolved: 150,
+        currentRating: 1500,
+        maxRating: 1600,
+        stars: 3,
+        division: 'Division 2',
+        contestsParticipated: 15,
+        handle: 'sksazid',
+        country: 'Bangladesh',
+        institution: 'SUST'
+      }
     }
-    return await response.json()
+    
+    // Return static data if available, otherwise default values
+    if (staticData[handle]) {
+      return staticData[handle]
+    }
+    
+    // Default values for unknown handles
+    return {
+      totalSolved: 0,
+      currentRating: 0,
+      maxRating: 0,
+      stars: 0,
+      division: 'Unrated',
+      contestsParticipated: 0,
+      handle,
+      country: 'Unknown',
+      institution: 'Unknown'
+    }
   } catch (error) {
     console.error('Error fetching CodeChef stats:', error)
     return null

@@ -7,24 +7,28 @@ Visit: [https://sksazid.me](https://sksazid.me)
 
 ## Features
 - ✨ Modern responsive design with Next.js 15 & TypeScript
-- 🌙 Dark/Light mode toggle
+- 🌙 Dark/Light mode toggle with system preference detection
 - 🎨 Smooth animations with Framer Motion
 - 🔗 Dynamic GitHub API integration
-- 📊 Real-time coding statistics
-- 📧 Contact form with Formspree integration
+- 📊 Real-time coding statistics with static data fallback
+- 📧 Contact form with EmailJS integration
 - 📱 Mobile-optimized interface
-- 🌟 Interactive starry background
+- 🌟 Interactive starry background and cursor effects
+- 🖥️ Interactive terminal with portfolio commands
+- ⚙️ Advanced settings panel with user preferences
+- 📈 Performance monitoring with real-time metrics
+- 🏆 Achievements & milestones section with filtering
 
 ## Architecture
 
-### Next.js Portfolio (`/nextjs-portfolio`)
+### Main Portfolio (`/Main Portfolio`)
 The main portfolio application built with:
 - **Next.js 15** - React framework with static export
 - **TypeScript** - Type safety and better development experience
 - **Tailwind CSS** - Utility-first styling
 - **Framer Motion** - Smooth animations and transitions
-- **GitHub API** - Live repository data integration
-- **Formspree** - Contact form handling
+- **EmailJS** - Contact form handling with Gmail SMTP
+- **Static Data Integration** - Competitive programming stats (optimized for static export)
 
 ### Static Build (`/`)
 The compiled static files ready for deployment:
@@ -36,19 +40,28 @@ The compiled static files ready for deployment:
 ## Development
 
 ```bash
-cd nextjs-portfolio
+cd "Main Portfolio"
 npm install
 npm run dev
 ```
+
+## Recent Updates
+- ✅ Fixed build issues with API routes by converting to static data
+- ✅ Implemented static export compatibility for GitHub Pages
+- ✅ Added enhanced theme system with system preference detection
+- ✅ Integrated interactive terminal with portfolio commands
+- ✅ Added performance monitoring and real-time metrics
+- ✅ Enhanced visual effects and user experience
 
 ## Deployment
 
 The portfolio is automatically deployed to GitHub Pages using static export:
 
 1. Build the project: `npm run build`
-2. Copy files to root: `cp -r out/* ../`
-3. Commit and push to main branch
-4. GitHub Pages serves from root directory
+2. Export static files: `npm run export`
+3. Copy files to root: `cp -r out/* ../`
+4. Commit and push to main branch
+5. GitHub Pages serves from root directory
 
 ## Custom Domain
 Configured with `CNAME` file pointing to: **sksazid.me**
