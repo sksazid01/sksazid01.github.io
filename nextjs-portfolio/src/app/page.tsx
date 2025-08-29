@@ -9,7 +9,6 @@ import Skills from '@/components/Skills'
 import SkillsVisualization from '@/components/SkillsVisualization'
 import Experience from '@/components/Experience'
 import AchievementsSection from '@/components/AchievementsSection'
-import Projects from '@/components/Projects'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import LoadingScreen from '@/components/LoadingScreen'
@@ -53,7 +52,6 @@ export default function Home() {
         <SkillsVisualization />
         <Experience />
         <AchievementsSection />
-        <Projects />
         <Contact />
         <Footer />
       </motion.div>

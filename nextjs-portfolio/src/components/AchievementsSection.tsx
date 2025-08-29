@@ -12,7 +12,13 @@ import {
   Code,
   Users,
   TrendingUp,
-  Clock
+  Clock,
+  Github,
+  ExternalLink,
+  ShoppingCart,
+  Smartphone,
+  Gamepad2,
+  BarChart3
 } from 'lucide-react'
 
 interface Achievement {
@@ -25,10 +31,72 @@ interface Achievement {
   color: string
   status: 'completed' | 'in-progress' | 'featured' | 'ongoing'
   badge?: string
+  technologies?: string[]
+  links?: {
+    github?: string
+    demo?: string
+  }
+  repoName?: string // Add this to map to actual GitHub repos
+}
+
+interface GitHubRepo {
+  id: number
+  name: string
+  html_url: string
+  description: string
+  language: string
+  updated_at: string
 }
 
 export default function AchievementsSection() {
   const [filter, setFilter] = useState<string>('all')
+  const [repositories, setRepositories] = useState<GitHubRepo[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch GitHub repositories
+  useEffect(() => {
+    const fetchRepositories = async () => {
+      try {
+        const response = await fetch('https://api.github.com/users/sksazid01/repos?sort=updated&per_page=50')
+        if (response.ok) {
+          const repos = await response.json()
+          setRepositories(repos)
+        }
+      } catch (error) {
+        console.error('Error fetching repositories:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRepositories()
+  }, [])
+
+  // Function to get repository URL by name or closest match
+  const getRepositoryUrl = (repoName?: string, projectTitle?: string) => {
+    if (!repoName && !projectTitle) return 'https://github.com/sksazid01'
+    
+    // First, try to find exact match by repoName
+    if (repoName) {
+      const repo = repositories.find(r => r.name.toLowerCase() === repoName.toLowerCase())
+      if (repo) return repo.html_url
+    }
+    
+    // Then try to find by project title keywords
+    if (projectTitle) {
+      const keywords = projectTitle.toLowerCase().split(' ')
+      const repo = repositories.find(r => 
+        keywords.some(keyword => 
+          r.name.toLowerCase().includes(keyword) || 
+          r.description?.toLowerCase().includes(keyword)
+        )
+      )
+      if (repo) return repo.html_url
+    }
+    
+    // Default to profile
+    return 'https://github.com/sksazid01'
+  }
   const [achievements] = useState<Achievement[]>([
     {
       id: '1',
@@ -50,45 +118,90 @@ export default function AchievementsSection() {
       icon: <Trophy className="w-6 h-6" />,
       color: 'from-green-500 to-emerald-500',
       status: 'completed',
-      badge: 'Complete'
+      badge: 'Complete',
+      technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+      repoName: 'sksazid01.github.io',
+      links: {
+        demo: '#'
+      }
     },
     {
       id: '3',
       title: 'Restaurant Management App',
-      description: 'Developed native Android application for restaurant order management',
+      description: 'Native Android application for restaurant management and order processing with modern UI/UX',
       date: '2024-10',
       category: 'project',
-      icon: <Star className="w-6 h-6" />,
+      icon: <Smartphone className="w-6 h-6" />,
       color: 'from-purple-500 to-pink-500',
       status: 'featured',
-      badge: 'Featured'
+      badge: 'Featured',
+      technologies: ['Android', 'Kotlin', 'Jetpack Compose', 'Room Database', 'MVVM'],
+      repoName: 'Eatery_Android_Project',
+      links: {
+        demo: '#'
+      }
     },
     {
       id: '4',
-      title: 'Machine Learning Expertise',
-      description: 'Mastered Python ML libraries: Keras, NumPy, Matplotlib, Pandas',
-      date: '2024-08',
-      category: 'learning',
-      icon: <TrendingUp className="w-6 h-6" />,
-      color: 'from-orange-500 to-red-500',
+      title: 'E-commerce Marketplace',
+      description: 'Comprehensive e-commerce platform with user management, product catalog, and secure transactions',
+      date: '2023-07',
+      category: 'project',
+      icon: <ShoppingCart className="w-6 h-6" />,
+      color: 'from-blue-500 to-cyan-500',
       status: 'completed',
-      badge: 'Advanced'
+      badge: 'Academic',
+      technologies: ['Django', 'Python', 'JavaScript', 'PostgreSQL', 'HTML/CSS'],
+      repoName: 'E-commerce_web_project',
+      links: {
+        demo: '#'
+      }
     },
     {
       id: '5',
+      title: 'Machine Learning Expertise',
+      description: 'Mastered Python ML libraries and data science projects with real-world datasets',
+      date: '2024-08',
+      category: 'learning',
+      icon: <BarChart3 className="w-6 h-6" />,
+      color: 'from-orange-500 to-red-500',
+      status: 'ongoing',
+      badge: 'Advanced',
+      technologies: ['Python', 'Keras', 'NumPy', 'Matplotlib', 'Pandas', 'Scikit-learn'],
+      repoName: 'Neural_Network'
+    },
+    {
+      id: '6',
       title: 'Multi-Platform Problem Solver',
-      description: 'Achieved 590+ problems solved on Vjudge and other platforms',
+      description: 'Achieved 590+ problems solved on Vjudge and other competitive programming platforms',
       date: '2024-06',
       category: 'coding',
       icon: <Target className="w-6 h-6" />,
       color: 'from-indigo-500 to-purple-500',
       status: 'ongoing',
-      badge: 'Expert'
+      badge: 'Expert',
+      repoName: 'Random_Problem_Solving_Code'
     },
     {
-      id: '6',
+      id: '7',
+      title: 'JavaFX Game Development',
+      description: 'Interactive Word Matching Game with engaging UI/UX design and multiple difficulty levels',
+      date: '2024-02',
+      category: 'project',
+      icon: <Gamepad2 className="w-6 h-6" />,
+      color: 'from-teal-500 to-green-500',
+      status: 'completed',
+      badge: 'Innovation',
+      technologies: ['Java', 'JavaFX', 'FXML', 'CSS', 'Scene Builder'],
+      repoName: 'Word-Game-JavaFX',
+      links: {
+        demo: '#'
+      }
+    },
+    {
+      id: '8',
       title: 'Contest Champion',
-      description: 'Won 235+ coding challenges and contest problems on CodeChef',
+      description: "Solved 235+ contest's problems on CodeChef",
       date: '2024-04',
       category: 'recognition',
       icon: <Medal className="w-6 h-6" />,
@@ -97,20 +210,25 @@ export default function AchievementsSection() {
       badge: 'Champion'
     },
     {
-      id: '7',
-      title: 'JavaFX Game Development',
-      description: 'Created interactive Word Matching Game with modern UI/UX design',
-      date: '2024-02',
+      id: '9',
+      title: 'Club Management System',
+      description: 'Full-stack web application for club activities with member registration and event management',
+      date: '2025-07',
       category: 'project',
-      icon: <Award className="w-6 h-6" />,
-      color: 'from-teal-500 to-green-500',
-      status: 'completed',
-      badge: 'Innovation'
+      icon: <Users className="w-6 h-6" />,
+      color: 'from-orange-500 to-red-500',
+      status: 'in-progress',
+      badge: 'Upcoming',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JWT'],
+      repoName: 'Project350_CMS',
+      links: {
+        demo: '#'
+      }
     },
     {
-      id: '8',
-      title: '2+ Years Python Experience',
-      description: 'Maintained consistent Python development and data science work',
+      id: '10',
+      title: '5+ Years Python Experience',
+      description: 'Maintained consistent Python development and data science work across multiple domains',
       date: '2024-01',
       category: 'learning',
       icon: <Clock className="w-6 h-6" />,
@@ -121,9 +239,9 @@ export default function AchievementsSection() {
   ])
 
   const categories = [
-    { id: 'all', name: 'All Achievements', icon: Trophy },
-    { id: 'coding', name: 'Coding', icon: Code },
+    { id: 'all', name: 'All Items', icon: Trophy },
     { id: 'project', name: 'Projects', icon: Star },
+    { id: 'coding', name: 'Coding', icon: Code },
     { id: 'learning', name: 'Learning', icon: TrendingUp },
     { id: 'recognition', name: 'Recognition', icon: Medal }
   ]
@@ -141,7 +259,7 @@ export default function AchievementsSection() {
   }
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/50">
+    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/50">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -152,11 +270,11 @@ export default function AchievementsSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              Achievements & Milestones
+              Projects & Achievements
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Notable accomplishments and milestones in my journey
+            Featured projects, notable accomplishments, and milestones in my development journey
           </p>
         </motion.div>
 
@@ -281,8 +399,23 @@ export default function AchievementsSection() {
                   {achievement.description}
                 </p>
 
-                {/* Status Indicator */}
-                <div className="mb-4">
+                {/* Technologies */}
+                {achievement.technologies && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {achievement.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Status Indicator and Project Links */}
+                <div className="flex justify-between items-center mb-4">
+                  {/* Status Indicator on the left */}
                   <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
                     achievement.status === 'completed' 
                       ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
@@ -302,6 +435,36 @@ export default function AchievementsSection() {
                         : 'bg-orange-500'
                     }`} />
                     <span className="capitalize">{achievement.status === 'in-progress' ? 'In Progress' : achievement.status}</span>
+                  </div>
+
+                  {/* Code button on the right */}
+                  <div className="flex gap-2">
+                    {achievement.links?.demo && achievement.links.demo !== '#' && (
+                      <motion.a
+                        href={achievement.links.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r ${achievement.color} text-white rounded-full hover:shadow-lg transition-all text-xs`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        Demo
+                      </motion.a>
+                    )}
+                    {achievement.repoName && (
+                      <motion.a
+                        href={getRepositoryUrl(achievement.repoName)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white rounded-full hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors text-xs"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Github className="w-3 h-3" />
+                        Code
+                      </motion.a>
+                    )}
                   </div>
                 </div>
 
