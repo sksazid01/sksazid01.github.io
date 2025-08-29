@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { ExternalLink, Award, TrendingUp, Trophy, Star } from 'lucide-react'
+import { ExternalLink, Award, TrendingUp, Trophy, Star, Plus } from 'lucide-react'
+import { getStoredStats, updatePlatformStats } from '@/utils/localStats'
 
 interface CodeChefStats {
   totalSolved: number
@@ -14,6 +15,8 @@ interface CodeChefStats {
   handle: string
   country: string
   institution: string
+  lastUpdated?: string
+  cached?: boolean
 }
 
 interface CodeChefWidgetProps {
@@ -21,43 +24,87 @@ interface CodeChefWidgetProps {
   problemsSolved?: number
   currentRating?: number
   maxRating?: number
+  enableManualUpdate?: boolean
 }
 
 export default function CodeChefWidget({ 
   handle = 'sksazid', 
   problemsSolved = 54,
   currentRating = 1437,
-  maxRating = 1474
+  maxRating = 1474,
+  enableManualUpdate = true
 }: CodeChefWidgetProps) {
   const [stats, setStats] = useState<CodeChefStats | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showUpdateInput, setShowUpdateInput] = useState(false)
+  const [newCount, setNewCount] = useState('')
 
   useEffect(() => {
-    // Simulate loading and set real data
-    const timer = setTimeout(() => {
+    // Check for stored stats first
+    const stored = getStoredStats('codechef')
+    
+    if (stored) {
+      setStats({
+        totalSolved: stored.totalSolved,
+        currentRating: currentRating,
+        maxRating: maxRating,
+        stars: 2,
+        division: 'Div 3',
+        contestsParticipated: 12,
+        handle: handle,
+        country: 'Bangladesh',
+        institution: 'SUST',
+        lastUpdated: stored.lastUpdated,
+        cached: true
+      })
+    } else {
+      // Use fallback data
       setStats({
         totalSolved: problemsSolved,
         currentRating: currentRating,
         maxRating: maxRating,
-        stars: 2, // 2★ from the profile
+        stars: 2,
         division: 'Div 3',
         contestsParticipated: 12,
         handle: handle,
         country: 'Bangladesh',
         institution: 'SUST'
       })
-      setLoading(false)
-    }, 1200)
-
-    return () => clearTimeout(timer)
+    }
+    
+    setLoading(false)
   }, [handle, problemsSolved, currentRating, maxRating])
+
+  // Listen for stats updates
+  useEffect(() => {
+    const handleStatsUpdate = (event: CustomEvent) => {
+      setStats(prev => prev ? {
+        ...prev,
+        totalSolved: event.detail.totalSolved,
+        lastUpdated: event.detail.lastUpdated,
+        cached: true
+      } : null)
+    }
+
+    window.addEventListener('codechef_stats_updated', handleStatsUpdate as EventListener)
+    return () => window.removeEventListener('codechef_stats_updated', handleStatsUpdate as EventListener)
+  }, [])
+
+  const handleManualUpdate = () => {
+    const count = parseInt(newCount)
+    if (count && count > 0) {
+      updatePlatformStats('codechef', count)
+      setNewCount('')
+      setShowUpdateInput(false)
+    }
+  }
 
   if (loading) {
     return (
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="group bg-gradient-to-r from-yellow-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
+        className="group bg-gradient-to-r from-yellow-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300 relative"
       >
         <div className="animate-pulse">
           <div className="text-3xl font-bold mb-2">---</div>
@@ -65,6 +112,12 @@ export default function CodeChefWidget({
           <div className="font-semibold">CodeChef</div>
           <div className="text-xs opacity-75 mt-1">@{handle}</div>
         </div>
+        {/* Loading spinner */}
+        <motion.div
+          className="absolute top-2 right-2 w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
       </motion.div>
     )
   }
@@ -117,12 +170,54 @@ export default function CodeChefWidget({
 
       {/* Content */}
       <div className="relative z-10">
+        {/* Manual Update Button */}
+        {enableManualUpdate && (
+          <motion.button
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setShowUpdateInput(!showUpdateInput)
+            }}
+            className="absolute top-1 right-1 p-1 rounded-full hover:bg-white/20 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Plus className="w-3 h-3" />
+          </motion.button>
+        )}
+
+        {/* Update Input */}
+        {showUpdateInput && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="absolute top-8 right-1 bg-white dark:bg-gray-800 rounded-lg p-2 shadow-lg border z-20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <input
+              type="number"
+              value={newCount}
+              onChange={(e) => setNewCount(e.target.value)}
+              placeholder="New count"
+              className="w-20 px-2 py-1 text-xs border rounded text-black"
+              autoFocus
+            />
+            <button
+              onClick={handleManualUpdate}
+              className="ml-1 px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600"
+            >
+              ✓
+            </button>
+          </motion.div>
+        )}
+
         {/* Problems Solved */}
         <motion.div 
           className="text-3xl font-bold mb-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
+          key={stats.totalSolved} // Re-animate when data changes
         >
           {stats.totalSolved}
         </motion.div>
@@ -167,6 +262,7 @@ export default function CodeChefWidget({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
+          key={stats.currentRating} // Re-animate when rating changes
         >
           <div className="flex items-center justify-center gap-2">
             <TrendingUp className="w-3 h-3" />
@@ -178,6 +274,12 @@ export default function CodeChefWidget({
           <div className="text-xs opacity-60">
             Max: {stats.maxRating} • {stats.contestsParticipated} contests
           </div>
+          {stats.lastUpdated && (
+            <div className="text-xs opacity-50">
+              Updated: {new Date(stats.lastUpdated).toLocaleTimeString()}
+              {stats.cached && ' (cached)'}
+            </div>
+          )}
         </motion.div>
 
         {/* Floating Stars Animation */}

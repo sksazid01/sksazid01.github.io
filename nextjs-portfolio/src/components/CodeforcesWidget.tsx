@@ -2,38 +2,79 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { fetchCodeforcesStats } from '@/utils/codeforces'
-import { ExternalLink, Trophy, TrendingUp } from 'lucide-react'
+import { ExternalLink, Trophy, TrendingUp, RefreshCw } from 'lucide-react'
+import { getStoredStats } from '@/utils/localStats'
+
+interface CodeforcesStats {
+  totalSolved: number
+  rating: number
+  rank: string
+  maxRating: number
+  handle: string
+  contests: number
+  lastUpdated?: string
+  cached?: boolean
+}
 
 interface CodeforcesWidgetProps {
   handle?: string
+  enableAutoUpdate?: boolean
 }
 
-export default function CodeforcesWidget({ handle = 'sksazid' }: CodeforcesWidgetProps) {
-  const [stats, setStats] = useState<any>(null)
+export default function CodeforcesWidget({ 
+  handle = 'sksazid', 
+  enableAutoUpdate = true 
+}: CodeforcesWidgetProps) {
+  const [stats, setStats] = useState<CodeforcesStats | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
   useEffect(() => {
-    const loadStats = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const data = await fetchCodeforcesStats(handle)
-        if (data) {
-          setStats(data)
-        } else {
-          setError('Failed to fetch data')
-        }
-      } catch (err) {
-        setError('Error loading Codeforces data')
-      } finally {
-        setLoading(false)
-      }
+    // Load data from storage or use defaults
+    const stored = getStoredStats('codeforces')
+    
+    if (stored) {
+      setStats({
+        totalSolved: stored.totalSolved,
+        rating: 1228,
+        rank: 'Pupil',
+        maxRating: 1228,
+        handle: handle,
+        contests: 0,
+        lastUpdated: stored.lastUpdated,
+        cached: true
+      })
+      setLastUpdated(new Date(stored.lastUpdated))
+    } else {
+      // Default values
+      setStats({
+        totalSolved: 1230,
+        rating: 1228,
+        rank: 'Pupil',
+        maxRating: 1228,
+        handle: handle,
+        contests: 0
+      })
+    }
+    
+    setLoading(false)
+  }, [handle])
+
+  // Listen for auto-updates
+  useEffect(() => {
+    const handleStatsUpdate = (event: CustomEvent) => {
+      setStats(prev => prev ? {
+        ...prev,
+        totalSolved: event.detail.totalSolved,
+        lastUpdated: event.detail.lastUpdated,
+        cached: true
+      } : null)
+      setLastUpdated(new Date())
     }
 
-    loadStats()
-  }, [handle])
+    window.addEventListener('codeforces_stats_updated', handleStatsUpdate as EventListener)
+    return () => window.removeEventListener('codeforces_stats_updated', handleStatsUpdate as EventListener)
+  }, [])
 
   if (loading) {
     return (
@@ -52,7 +93,7 @@ export default function CodeforcesWidget({ handle = 'sksazid' }: CodeforcesWidge
     )
   }
 
-  if (error || !stats) {
+  if (!stats) {
     return (
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
@@ -90,64 +131,89 @@ export default function CodeforcesWidget({ handle = 'sksazid' }: CodeforcesWidge
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.05, y: -5 }}
       transition={{ duration: 0.3 }}
-      className="group bg-gradient-to-r from-red-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300 block"
+      className="group bg-gradient-to-r from-red-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300 block relative overflow-hidden"
     >
-      {/* Problems Solved */}
-      <motion.div 
-        className="text-3xl font-bold mb-2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        {stats.totalSolved.toLocaleString()}
-      </motion.div>
+      {/* Background Animation */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        initial={false}
+      />
+
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Auto-Update Indicator */}
+        {stats?.cached && (
+          <motion.div
+            className="absolute top-1 right-1 w-2 h-2 bg-green-400 rounded-full"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        )}
+
+        {/* Problems Solved */}
+        <motion.div 
+          className="text-3xl font-bold mb-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          key={stats.totalSolved} // Re-animate when data changes
+        >
+          {stats.totalSolved.toLocaleString()}
+        </motion.div>
       
-      <motion.div 
-        className="text-sm opacity-90 mb-2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        Problems Solved
-      </motion.div>
+        <motion.div 
+          className="text-sm opacity-90 mb-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          Problems Solved
+        </motion.div>
 
-      {/* Platform */}
-      <motion.div 
-        className="font-semibold flex items-center justify-center gap-2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        <Trophy className="w-4 h-4" />
-        CodeForces
-        <ExternalLink className="w-3 h-3 opacity-75 group-hover:opacity-100 transition-opacity" />
-      </motion.div>
+        {/* Platform */}
+        <motion.div 
+          className="font-semibold flex items-center justify-center gap-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <Trophy className="w-4 h-4" />
+          CodeForces
+          <ExternalLink className="w-3 h-3 opacity-75 group-hover:opacity-100 transition-opacity" />
+        </motion.div>
 
-      {/* Handle and Rating */}
-      <motion.div 
-        className="text-xs opacity-75 mt-1"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        @{handle}
-      </motion.div>
+        {/* Handle and Rating */}
+        <motion.div 
+          className="text-xs opacity-75 mt-1"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          @{handle}
+        </motion.div>
 
-      {/* Rating and Rank */}
-      <motion.div 
-        className="text-xs mt-2 space-y-1"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        <div className="flex items-center justify-center gap-2">
-          <TrendingUp className="w-3 h-3" />
-          <span>Rating: {stats.rating}</span>
-        </div>
-        <div className={`font-medium capitalize ${getRankColor(stats.rank)}`}>
-          {stats.rank}
-        </div>
-      </motion.div>
+        {/* Rating and Rank */}
+        <motion.div 
+          className="text-xs mt-2 space-y-1"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          key={stats.rating} // Re-animate when rating changes
+        >
+          <div className="flex items-center justify-center gap-2">
+            <TrendingUp className="w-3 h-3" />
+            <span>Rating: {stats.rating}</span>
+          </div>
+          <div className={`font-medium capitalize ${getRankColor(stats.rank)}`}>
+            {stats.rank}
+          </div>
+          {lastUpdated && (
+            <div className="text-xs opacity-50 mt-1">
+              Updated: {lastUpdated.toLocaleTimeString()}
+            </div>
+          )}
+        </motion.div>
+      </div>
 
       {/* Hover Effect */}
       <motion.div

@@ -2,40 +2,83 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { ExternalLink, Target, Calendar, School } from 'lucide-react'
+import { ExternalLink, Code, TrendingUp, Trophy, RefreshCw, Plus } from 'lucide-react'
+import { getStoredStats, setStoredStats, updatePlatformStats } from '@/utils/localStats'
 
 interface VJudgeStats {
   totalSolved: number
-  joinDate: string
-  school: string
   handle: string
-  lastSeen: string
+  school: string
+  membership: string
+  lastUpdated?: string
+  cached?: boolean
 }
 
 interface VJudgeWidgetProps {
   handle?: string
   problemsSolved?: number
+  enableManualUpdate?: boolean
 }
 
-export default function VJudgeWidget({ handle = 'sksazid', problemsSolved = 325 }: VJudgeWidgetProps) {
+export default function VJudgeWidget({ 
+  handle = 'sksazid', 
+  problemsSolved = 326, // Updated to current count
+  enableManualUpdate = true 
+}: VJudgeWidgetProps) {
   const [stats, setStats] = useState<VJudgeStats | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showUpdateInput, setShowUpdateInput] = useState(false)
+  const [newCount, setNewCount] = useState('')
 
   useEffect(() => {
-    // Simulate loading and set static data since VJudge doesn't have a public API
-    const timer = setTimeout(() => {
+    // Check for stored stats first
+    const stored = getStoredStats('vjudge')
+    
+    if (stored) {
+      setStats({
+        totalSolved: stored.totalSolved,
+        handle: handle,
+        school: 'SUST',
+        membership: 'Active Member',
+        lastUpdated: stored.lastUpdated,
+        cached: true
+      })
+    } else {
+      // Use fallback data
       setStats({
         totalSolved: problemsSolved,
-        joinDate: '41 months ago',
-        school: 'SUST',
         handle: handle,
-        lastSeen: '4 days ago'
+        school: 'SUST',
+        membership: 'Active Member'
       })
-      setLoading(false)
-    }, 1000)
-
-    return () => clearTimeout(timer)
+    }
+    
+    setLoading(false)
   }, [handle, problemsSolved])
+
+  // Listen for stats updates from other components
+  useEffect(() => {
+    const handleStatsUpdate = (event: CustomEvent) => {
+      setStats(prev => prev ? {
+        ...prev,
+        totalSolved: event.detail.totalSolved,
+        lastUpdated: event.detail.lastUpdated,
+        cached: true
+      } : null)
+    }
+
+    window.addEventListener('vjudge_stats_updated', handleStatsUpdate as EventListener)
+    return () => window.removeEventListener('vjudge_stats_updated', handleStatsUpdate as EventListener)
+  }, [])
+
+  const handleManualUpdate = () => {
+    const count = parseInt(newCount)
+    if (count && count > 0) {
+      updatePlatformStats('vjudge', count)
+      setNewCount('')
+      setShowUpdateInput(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -88,12 +131,54 @@ export default function VJudgeWidget({ handle = 'sksazid', problemsSolved = 325 
 
       {/* Content */}
       <div className="relative z-10">
+        {/* Manual Update Button */}
+        {enableManualUpdate && (
+          <motion.button
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setShowUpdateInput(!showUpdateInput)
+            }}
+            className="absolute top-1 right-1 p-1 rounded-full hover:bg-white/20 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Plus className="w-3 h-3" />
+          </motion.button>
+        )}
+
+        {/* Update Input */}
+        {showUpdateInput && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="absolute top-8 right-1 bg-white dark:bg-gray-800 rounded-lg p-2 shadow-lg border z-20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <input
+              type="number"
+              value={newCount}
+              onChange={(e) => setNewCount(e.target.value)}
+              placeholder="New count"
+              className="w-20 px-2 py-1 text-xs border rounded text-black"
+              autoFocus
+            />
+            <button
+              onClick={handleManualUpdate}
+              className="ml-1 px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600"
+            >
+              ✓
+            </button>
+          </motion.div>
+        )}
+
         {/* Problems Solved */}
         <motion.div 
           className="text-3xl font-bold mb-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
+          key={stats.totalSolved} // Re-animate when data changes
         >
           {stats.totalSolved.toLocaleString()}+
         </motion.div>
@@ -114,7 +199,7 @@ export default function VJudgeWidget({ handle = 'sksazid', problemsSolved = 325 
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Target className="w-4 h-4" />
+          <Code className="w-4 h-4" />
           VJudge
           <ExternalLink className="w-3 h-3 opacity-75 group-hover:opacity-100 transition-opacity" />
         </motion.div>
@@ -137,13 +222,32 @@ export default function VJudgeWidget({ handle = 'sksazid', problemsSolved = 325 
           transition={{ delay: 0.5 }}
         >
           <div className="flex items-center justify-center gap-2">
-            <School className="w-3 h-3" />
+            <Trophy className="w-3 h-3" />
             <span>{stats.school}</span>
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <Calendar className="w-3 h-3" />
-            <span>Member since {stats.joinDate}</span>
-          </div>
+          <div className="opacity-75">{stats.membership}</div>
+          {stats.lastUpdated && (
+            <div className="text-xs opacity-50 mt-1">
+              Updated: {new Date(stats.lastUpdated).toLocaleTimeString()}
+              {stats.cached && ' (cached)'}
+            </div>
+          )}
+        </motion.div>
+
+        {/* Floating Animation */}
+        <motion.div
+          className="absolute top-2 left-2 opacity-30 group-hover:opacity-60"
+          animate={{
+            y: [0, -3, 0],
+            rotate: [0, 3, -3, 0],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        >
+          <TrendingUp className="w-4 h-4" />
         </motion.div>
 
         {/* Pulse Effect on Hover */}

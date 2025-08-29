@@ -21,7 +21,7 @@ export default function About() {
     {
       icon: <Trophy className="w-6 h-6" />,
       title: "Problem Solving Expert",
-      description: "1230+ problems solved in CodeForces, 325+ in Vjudge platform using C, C++, Python, and Swift",
+      description: "650+ problems solved in CodeForces, 325+ in Vjudge platform using C, C++, Python, and Swift",
       color: "from-purple-500 to-pink-500"
     },
     {
@@ -62,12 +62,12 @@ export default function About() {
     }
   ]
 
-  const stats = [
-    { number: "1230+", label: "CodeForces Problems" },
-    { number: "325+", label: "Vjudge Problems" },
-    { number: "1000+", label: "Total Problems Solved" },
-    { number: "3+", label: "Years Programming" }
-  ]
+  // const stats = [
+  //   { number: "1230+", label: "CodeForces Problems" },
+  //   { number: "325+", label: "Vjudge Problems" },
+  //   { number: "1000+", label: "Total Problems Solved" },
+  //   { number: "3+", label: "Years Programming" }
+  // ]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -142,7 +142,7 @@ export default function About() {
         </motion.div>
 
         {/* Stats Row */}
-        <motion.div
+        {/* <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -170,7 +170,7 @@ export default function About() {
               </p>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
 
         {/* Dynamic GitHub Stats Widget */}
         <GitHubStatsWidget stats={githubStats} loading={loading} />
@@ -191,14 +191,9 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <CodeforcesWidget handle="sksazid" />
             
-            <VJudgeWidget handle="sksazid" problemsSolved={325} />
+            <VJudgeWidget handle="sksazid" />
             
-            <CodeChefWidget 
-              handle="sksazid" 
-              problemsSolved={54}
-              currentRating={1437}
-              maxRating={1474}
-            />
+            <CodeChefWidget handle="sksazid" />
           </div>
         </motion.div>
         
