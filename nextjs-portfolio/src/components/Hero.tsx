@@ -81,7 +81,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: -20, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="fixed top-36 right-4 z-45 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 max-w-xs sm:max-w-sm md:top-32 lg:top-36"
+        className="fixed top-20 right-4 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 max-w-xs sm:max-w-sm"
       >
         <div className="space-y-1.5">
           {/* Time-based Greeting */}
@@ -112,7 +112,7 @@ export default function Hero() {
           )}
           
           {/* Interactive Greeting */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.9 }}
@@ -125,7 +125,7 @@ export default function Hero() {
             >
               {greeting}, I'm Sazid {clickCount > 0 && `(${clickCount}!)`}
             </button>
-          </motion.div>
+          </motion.div> */}
         </div>
       </motion.div>
 

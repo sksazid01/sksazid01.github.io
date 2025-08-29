@@ -91,18 +91,18 @@ export default function PerformanceIndicator() {
       initial={{ opacity: 0, x: 300 }}
       animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 300 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-20 right-4 z-40 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 max-w-xs"
+      className="fixed top-44 right-4 z-35 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-3 max-w-[280px] hidden lg:block"
     >
       {/* Activity Status */}
       {!activityLoading && currentActivity && (
         <motion.div
-          className="hidden lg:flex items-center gap-2 bg-green-50 dark:bg-green-900/20 px-3 py-1.5 rounded-full border border-green-200 dark:border-green-700 mb-3"
+          className="flex items-center gap-2 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full border border-green-200 dark:border-green-700 mb-2"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
         >
           <motion.div 
-            className="w-2 h-2 bg-green-500 rounded-full"
+            className="w-1.5 h-1.5 bg-green-500 rounded-full"
             animate={{ 
               scale: [1, 1.2, 1],
               opacity: [1, 0.7, 1]
@@ -113,43 +113,16 @@ export default function PerformanceIndicator() {
               ease: "easeInOut"
             }}
           />
-          <span className="text-xs font-medium text-green-700 dark:text-green-300 max-w-[180px] truncate">
+          <span className="text-xs font-medium text-green-700 dark:text-green-300 max-w-[140px] truncate">
             {currentActivity}
           </span>
         </motion.div>
       )}
 
-      {/* Visitor Counter */}
-      {!activityLoading && visitorCount > 0 && (
-        <motion.div
-          className="hidden lg:flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full border border-blue-200 dark:border-blue-700 mb-3"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-        >
-          <motion.div 
-            className="w-2 h-2 bg-blue-500 rounded-full"
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [1, 0.7, 1]
-            }}
-            transition={{ 
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <span className="text-xs font-medium text-blue-700 dark:text-blue-300 flex items-center gap-1">
-            <Eye className="w-3 h-3" />
-            Portfolio Views: {visitorCount.toLocaleString()}
-          </span>
-        </motion.div>
-      )}
-
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-          <Activity className="w-4 h-4 text-blue-500" />
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-xs font-semibold text-gray-900 dark:text-white flex items-center gap-1">
+          <Activity className="w-3 h-3 text-blue-500" />
           Performance
         </h3>
         <motion.button
@@ -163,38 +136,27 @@ export default function PerformanceIndicator() {
       </div>
 
       {/* Metrics */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         {/* Page Load Time */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <LoadIcon className={`w-4 h-4 ${getPerformanceColor(metrics.pageLoadTime)}`} />
-            <span className="text-xs text-gray-600 dark:text-gray-400">Load Time</span>
+          <div className="flex items-center gap-1">
+            <LoadIcon className={`w-3 h-3 ${getPerformanceColor(metrics.pageLoadTime)}`} />
+            <span className="text-xs text-gray-600 dark:text-gray-400">Load</span>
           </div>
           <span className={`text-xs font-mono ${getPerformanceColor(metrics.pageLoadTime)}`}>
             {metrics.pageLoadTime}ms
           </span>
         </div>
 
-        {/* Render Time */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <RenderIcon className={`w-4 h-4 ${getPerformanceColor(metrics.renderTime)}`} />
-            <span className="text-xs text-gray-600 dark:text-gray-400">Render Time</span>
-          </div>
-          <span className={`text-xs font-mono ${getPerformanceColor(metrics.renderTime)}`}>
-            {metrics.renderTime}ms
-          </span>
-        </div>
-
         {/* Network Status */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {metrics.networkStatus === 'online' ? (
-              <Wifi className="w-4 h-4 text-green-500" />
+              <Wifi className="w-3 h-3 text-green-500" />
             ) : (
-              <WifiOff className="w-4 h-4 text-red-500" />
+              <WifiOff className="w-3 h-3 text-red-500" />
             )}
-            <span className="text-xs text-gray-600 dark:text-gray-400">Network</span>
+            <span className="text-xs text-gray-600 dark:text-gray-400">Net</span>
           </div>
           <span className={`text-xs capitalize ${
             metrics.networkStatus === 'online' ? 'text-green-500' : 'text-red-500'
@@ -203,32 +165,38 @@ export default function PerformanceIndicator() {
           </span>
         </div>
 
-        {/* Performance Score */}
-        <div className="pt-2 border-t border-gray-200 dark:border-gray-600">
+        {/* Visitor Count */}
+        {!activityLoading && visitorCount > 0 && (
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-blue-500" />
+            <div className="flex items-center gap-1">
+              <Eye className="w-3 h-3 text-blue-500" />
+              <span className="text-xs text-gray-600 dark:text-gray-400">Views</span>
+            </div>
+            <span className="text-xs font-medium text-blue-500">
+              {visitorCount.toLocaleString()}
+            </span>
+          </div>
+        )}
+
+        {/* Performance Score */}
+        <div className="pt-1 border-t border-gray-200 dark:border-gray-600">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <TrendingUp className="w-3 h-3 text-blue-500" />
               <span className="text-xs text-gray-600 dark:text-gray-400">Score</span>
             </div>
             <div className="flex items-center gap-1">
               <span className="text-xs font-bold text-green-500">98</span>
-              <Sparkles className="w-3 h-3 text-yellow-500" />
+              <Sparkles className="w-2 h-2 text-yellow-500" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Last Updated */}
-      <div className="mt-3 pt-2 border-t border-gray-200 dark:border-gray-600">
-        <p className="text-xs text-gray-500 dark:text-gray-500 text-center">
-          Updated: {metrics.lastUpdated}
-        </p>
-      </div>
-
       {/* Animated dots */}
       <div className="absolute -top-1 -right-1">
         <motion.div
-          className="w-2 h-2 bg-green-500 rounded-full"
+          className="w-1.5 h-1.5 bg-green-500 rounded-full"
           animate={{ 
             scale: [1, 1.5, 1],
             opacity: [1, 0.5, 1]

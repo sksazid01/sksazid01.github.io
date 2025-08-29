@@ -18,7 +18,6 @@ import InteractiveTerminal from '@/components/InteractiveTerminal'
 import PerformanceIndicator from '@/components/PerformanceIndicator'
 import CursorTrail from '@/components/CursorTrail'
 import QuickStatsUpdater from '@/components/QuickStatsUpdater'
-import AutoUpdateIndicator from '@/components/AutoUpdateIndicator'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
@@ -60,8 +59,7 @@ export default function Home() {
       <AdvancedSettings />
       <InteractiveTerminal />
       <PerformanceIndicator />
-      <QuickStatsUpdater />
-      <AutoUpdateIndicator />
+      {/* <QuickStatsUpdater /> */}
     </main>
   )
 }
