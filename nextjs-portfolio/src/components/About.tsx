@@ -4,6 +4,9 @@ import { motion } from 'framer-motion'
 import { GraduationCap, Trophy, Code, Database, Globe, Star, Target, BookOpen } from 'lucide-react'
 import GitHubStatsWidget from './GitHubStatsWidget'
 import CodingStatsWidget from './CodingStatsWidget'
+import CodeforcesWidget from './CodeforcesWidget'
+import VJudgeWidget from './VJudgeWidget'
+import CodeChefWidget from './CodeChefWidget'
 import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function About() {
@@ -18,7 +21,7 @@ export default function About() {
     {
       icon: <Trophy className="w-6 h-6" />,
       title: "Problem Solving Expert",
-      description: "650+ problems solved in CodeForces, 325+ in Vjudge platform using C, C++, Python, and Swift",
+      description: "1230+ problems solved in CodeForces, 325+ in Vjudge platform using C, C++, Python, and Swift",
       color: "from-purple-500 to-pink-500"
     },
     {
@@ -60,7 +63,7 @@ export default function About() {
   ]
 
   const stats = [
-    { number: "650+", label: "CodeForces Problems" },
+    { number: "1230+", label: "CodeForces Problems" },
     { number: "325+", label: "Vjudge Problems" },
     { number: "1000+", label: "Total Problems Solved" },
     { number: "3+", label: "Years Programming" }
@@ -186,44 +189,16 @@ export default function About() {
             </span>
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <motion.a
-              href="https://codeforces.com/profile/sksazid"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-gradient-to-r from-red-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -5 }}
-            >
-              <div className="text-3xl font-bold mb-2">650+</div>
-              <div className="text-sm opacity-90 mb-2">Problems Solved</div>
-              <div className="font-semibold">CodeForces</div>
-              <div className="text-xs opacity-75 mt-1">@sksazid</div>
-            </motion.a>
+            <CodeforcesWidget handle="sksazid" />
             
-            <motion.a
-              href="https://vjudge.net/user/sksazid"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-gradient-to-r from-blue-500 to-purple-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -5 }}
-            >
-              <div className="text-3xl font-bold mb-2">325+</div>
-              <div className="text-sm opacity-90 mb-2">Good Problems</div>
-              <div className="font-semibold">VJudge</div>
-              <div className="text-xs opacity-75 mt-1">@sksazid</div>
-            </motion.a>
+            <VJudgeWidget handle="sksazid" problemsSolved={325} />
             
-            <motion.a
-              href="https://www.codechef.com/users/sksazid"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-gradient-to-r from-yellow-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -5 }}
-            >
-              <div className="text-3xl font-bold mb-2">⭐</div>
-              <div className="text-sm opacity-90 mb-2">Active Profile</div>
-              <div className="font-semibold">CodeChef</div>
-              <div className="text-xs opacity-75 mt-1">@sksazid</div>
-            </motion.a>
+            <CodeChefWidget 
+              handle="sksazid" 
+              problemsSolved={54}
+              currentRating={1437}
+              maxRating={1474}
+            />
           </div>
         </motion.div>
         

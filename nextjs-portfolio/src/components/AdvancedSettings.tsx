@@ -82,14 +82,15 @@ export default function AdvancedSettings() {
       {/* Settings Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 left-8 z-50 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
+        className="fixed bottom-20 left-6 z-50 bg-white dark:bg-gray-800 p-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1 }}
+        title="Open Settings"
       >
-        <Settings className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+        <Settings className="w-5 h-5 text-gray-700 dark:text-gray-300" />
       </motion.button>
 
       {/* Settings Panel */}
@@ -111,7 +112,7 @@ export default function AdvancedSettings() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -300 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-4 top-1/2 -translate-y-1/2 w-80 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 max-h-[80vh] overflow-y-auto"
+              className="fixed left-4 top-4 bottom-4 w-80 sm:w-96 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 overflow-y-auto"
             >
               {/* Header */}
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">

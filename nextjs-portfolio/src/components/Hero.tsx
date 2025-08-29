@@ -3,17 +3,133 @@
 import { motion } from 'framer-motion'
 import { ChevronDown, Mail, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 
 export default function Hero() {
-  const scrollToSection = (href: string) => {
+  // React Hook - this is component memory!
+  const [greeting, setGreeting] = useState<string>('Hello')
+  const [clickCount, setClickCount] = useState<number>(0)
+  const [timeBasedGreeting, setTimeBasedGreeting] = useState<string>('')
+  const [currentTime, setCurrentTime] = useState<string>('')
+  
+  // useEffect runs when component loads!
+  useEffect(() => {
+    const hour = new Date().getHours()
+    let timeGreeting: string
+    
+    if (hour < 12) { 
+      timeGreeting = '🌅 Good Morning'
+    } else if (hour < 16) {
+      timeGreeting = '☀️ Good Afternoon'  
+    } else if(hour < 19){
+    // Set up interval to update every second
+      timeGreeting = '🌄 Good Evening'
+    }
+    else {
+      timeGreeting = '🌙 Good Night'
+    }
+    
+    setTimeBasedGreeting(timeGreeting)
+    
+    // This runs only once when component loads
+  }, []) // Empty array means "run once"
+  
+  // useEffect for live clock - runs every second!
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date()
+      const timeString = now.toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        second: '2-digit'
+      })
+      setCurrentTime(timeString)
+    }
+    
+    // Update immediately
+    updateTime()
+    
+    // Set up interval to update every second
+    const interval = setInterval(updateTime, 1000)
+    
+    // Cleanup function - very important!
+    return () => {
+      clearInterval(interval)
+    }
+  }, []) // Run once and set up the interval
+  
+  // This function makes smooth scrolling when you click buttons.
+  const scrollToSection = (href: string): void => {
     const element = document.querySelector(href)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
+  // Our new interactive function using React state!
+  const changeGreeting = (): void => {
+    const greetings: string[] = ['Hello', 'Hi there', 'Hey', 'Greetings', 'Welcome', '¡Hola']
+    const randomGreeting: string = greetings[Math.floor(Math.random() * greetings.length)]
+    setGreeting(randomGreeting) // This updates the component's memory
+    setClickCount(prevCount => prevCount + 1) // Better way to update state!
+  }
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8">
+    <>
+      {/* Floating Time & Greeting Widget */}
+      <motion.div
+        initial={{ opacity: 0, y: -20, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="fixed top-36 right-4 z-45 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 max-w-xs sm:max-w-sm md:top-32 lg:top-36"
+      >
+        <div className="space-y-1.5">
+          {/* Time-based Greeting */}
+          {timeBasedGreeting && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.7 }}
+              className="text-xs font-semibold text-blue-600 dark:text-blue-400"
+            >
+              {timeBasedGreeting}
+            </motion.div>
+          )}
+          
+          {/* Live Clock */}
+          {currentTime && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.8 }}
+              className="flex items-center gap-1.5"
+            >
+              <span className="text-sm">🕐</span>
+              <span className="text-xs font-mono font-medium text-gray-700 dark:text-gray-300">
+                {currentTime}
+              </span>
+            </motion.div>
+          )}
+          
+          {/* Interactive Greeting */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.9 }}
+            className="pt-1.5 border-t border-gray-200 dark:border-gray-600"
+          >
+            <button
+              onClick={changeGreeting}
+              className="text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 cursor-pointer leading-tight"
+              title={`Clicked ${clickCount} times! Click to change greeting.`}
+            >
+              {greeting}, I'm Sazid {clickCount > 0 && `(${clickCount}!)`}
+            </button>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
@@ -24,22 +140,25 @@ export default function Hero() {
             className="text-center lg:text-left"
           >
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              id="greeting-text"
+              className="text-lg text-gray-600 dark:text-gray-300 mb-2 cursor-pointer hover:text-blue-500 transition-colors duration-300"
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-lg text-gray-600 dark:text-gray-400 mb-4"
+              transition={{ duration: 0.6, delay: 0.4, type: "spring", bounce: 0.4 }}
+              onClick={changeGreeting}
+              title={`Clicked ${clickCount} times! Click to change greeting.`}
             >
-              Hello, I&apos;m
+              {greeting}, I&apos;m {clickCount > 0 && `(${clickCount} clicks!)`}
             </motion.p>
             
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
+              transition={{ delay: 0.7 }}
+              className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 whitespace-nowrap"
             >
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 bg-clip-text text-transparent animate-pulse">
-              Md Ahasanul Haque
+              <span className="text-blue-600 dark:text-blue-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 cursor-pointer">
+              Sazid
               </span>
             </motion.h1>
             
@@ -110,7 +229,11 @@ export default function Hero() {
             >
               <motion.div
                 className="relative w-80 h-80 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 p-1 shadow-2xl"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  rotate: 360,
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 255, 0.25)"
+                }}
                 transition={{ duration: 0.3 }}
               >
                 <div className="w-full h-full rounded-full overflow-hidden">
@@ -161,5 +284,6 @@ export default function Hero() {
         </motion.button>
       </motion.div>
     </section>
+    </>
   )
 }

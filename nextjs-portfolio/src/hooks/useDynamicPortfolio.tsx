@@ -170,8 +170,8 @@ export const useDynamicPortfolio = () => {
         // Try to get location data
         let location = 'Unknown'
         try {
-          const geoApiResponse = await fetch(`https://httpbin.org/ip`)
-          if (geoApiResponse.ok) {
+          // Use a simple approach - just set to 'Global' since we have IP data
+          if (ipData?.ip) {
             location = 'Global'
           }
         } catch {

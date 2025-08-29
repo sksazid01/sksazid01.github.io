@@ -20,12 +20,12 @@ import PerformanceIndicator from '@/components/PerformanceIndicator'
 import CursorTrail from '@/components/CursorTrail'
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 2000)
+    }, 2000) // 2s Loading
 
     return () => clearTimeout(timer)
   }, [])
