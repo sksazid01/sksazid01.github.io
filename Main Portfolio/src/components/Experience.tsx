@@ -6,81 +6,52 @@ import { Calendar, MapPin, CheckCircle, Briefcase } from 'lucide-react'
 export default function Experience() {
   const experiences = [
     {
-      title: "Data Science & ML",
-      company: "Python-based Projects",
-      duration: "March 2024 - Present",
+      title: "Competitive Programmer",
+      company: "CodeForces | VJudge | CodeChef — Handle: sksazid",
+      duration: "03/2022 - Present",
       length: "(2+ Years)",
-      type: "📊 Full-time Focus",
-      achievements: [
-        "Advanced proficiency in Python libraries: Keras, NumPy, Matplotlib, Pandas",
-        "Specialized in data analysis and machine learning model development",
-        "Created comprehensive data visualization dashboards",
-        "Implemented predictive models for real-world applications"
-      ]
-    },
-    {
-      title: "Competitive Programming",
-      company: "Codeforces (Handle: sksazid)",
-      duration: "March 2022 - Present",
-      length: "(4+ Years)",
       type: "🏆 Active Competitor",
       achievements: [
-        "650+ problems solved using Python, Swift, C, and C++",
-        "Consistent rating improvement through regular practice",
-        "Strong algorithmic thinking and problem-solving expertise",
-        "Participated in multiple contests and challenges"
+        "CodeForces: Achieved 1200+ rating (Pupil), solved 650+ problems using C, C++, Python, and Swift",
+        "VJudge: Solved 325+ problems across multiple platforms, strengthening algorithmic thinking",
+        "CodeChef: Achieved 1474 max rating, solved 100+ problems",
+        "Participated in SUST IUPC 2023"
       ]
     },
     {
-      title: "Multi-Platform Problem Solver",
-      company: "Vjudge & Online Judges",
-      duration: "March 2022 - Present",
-      length: "(4+ Years)",
-      type: "🌐 Cross-Platform Expert",
+      title: "Data Science & Machine Learning Project",
+      company: "Workplace/Company",
+      duration: "03/2023 - Present",
+      length: "(1+ Year)",
+      type: "📊 Research & Development",
       achievements: [
-        "590+ problems solved across multiple platforms",
-        "Diversified experience with various algorithmic approaches",
-        "Enhanced versatility in competitive programming",
-        "Cross-platform problem-solving expertise"
+        "Worked with Python libraries including Keras, NumPy, Matplotlib, and Pandas",
+        "Specialized in data preprocessing and feature engineering",
+        "Focused on model training, data visualization, and predictive analytics"
       ]
     },
     {
-      title: "Contest Participant & Problem Solver",
-      company: "CodeChef Platform",
-      duration: "March 2022 - Present",
-      length: "(4+ Years)",
-      type: "🎯 Monthly Contestant",
+      title: "AI Training for Problem Solving",
+      company: "RemoteTasks",
+      duration: "11/2023 - 09/2024",
+      length: "(10 Months)",
+      type: "🤖 AI Training Specialist",
       achievements: [
-        "100+ problems solved with contest participation",
-        "Active participation in monthly programming contests",
-        "Sharpened logical thinking and coding efficiency",
-        "Consistent performance improvement"
+        "Contributed to creating editorials, test cases, and solutions",
+        "Specialized in algorithms and code optimization",
+        "Enhanced AI model performance through systematic training"
       ]
     },
     {
-      title: "Android Application Developer",
-      company: "Native Android Development",
-      duration: "July 2023",
-      length: "(6 months)",
-      type: "📱 Mobile Solutions",
+      title: "AI Tester and Trainer",
+      company: "Outlier",
+      duration: "10/2023 - Present",
+      length: "(1+ Year)",
+      type: "🔬 Quality Assurance",
       achievements: [
-        "Restaurant Management System - Order processing and inventory",
-        "Modern Android development practices implementation",
-        "User-centric design and business solution focus",
-        "Java/Kotlin proficiency with SQLite integration"
-      ]
-    },
-    {
-      title: "JavaFX Game Developer",
-      company: "Desktop Game Development",
-      duration: "January 2023",
-      length: "(6 months)",
-      type: "🎮 Game Development",
-      achievements: [
-        "Word Matching Game - Interactive educational game",
-        "JavaFX GUI design and development",
-        "Clean, maintainable code architecture",
-        "User experience optimization"
+        "Trained and tested an AI chatbot for Bangla language and English learning",
+        "Conducted comprehensive evaluation of AI responses",
+        "Performed API testing and validation of agent-calling functionalities"
       ]
     }
   ]

@@ -29,8 +29,8 @@ interface CodeChefWidgetProps {
 
 export default function CodeChefWidget({ 
   handle = 'sksazid', 
-  problemsSolved = 54,
-  currentRating = 1437,
+  problemsSolved = 100,
+  currentRating = 1474,
   maxRating = 1474,
   enableManualUpdate = true
 }: CodeChefWidgetProps) {
@@ -43,7 +43,8 @@ export default function CodeChefWidget({
     // Check for stored stats first
     const stored = getStoredStats('codechef')
     
-    if (stored) {
+    // Validate stored stats - if the count seems unreasonable, ignore it
+    if (stored && stored.totalSolved > 0 && stored.totalSolved < 10000) {
       setStats({
         totalSolved: stored.totalSolved,
         currentRating: currentRating,
@@ -58,7 +59,7 @@ export default function CodeChefWidget({
         cached: true
       })
     } else {
-      // Use fallback data
+      // Use fallback data if no valid stored stats
       setStats({
         totalSolved: problemsSolved,
         currentRating: currentRating,
@@ -219,7 +220,7 @@ export default function CodeChefWidget({
           transition={{ delay: 0.1 }}
           key={stats.totalSolved} // Re-animate when data changes
         >
-          {stats.totalSolved}
+          {stats.totalSolved}+
         </motion.div>
         
         <motion.div 

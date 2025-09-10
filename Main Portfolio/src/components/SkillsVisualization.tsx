@@ -13,7 +13,7 @@ import {
 
 interface Skill {
   name: string
-  level: 'Expert' | 'Advanced' | 'Proficient' | 'Intermediate'
+  level: 'Beginner' | 'Intermediate' | 'Proficient' | 'Advanced'
   category: string
   projects: number
   experience: string
@@ -26,49 +26,49 @@ export default function SkillsVisualization() {
   const skills: Skill[] = [
     {
       name: 'JavaScript/TypeScript',
-      level: 'Expert',
+      level: 'Beginner',
       category: 'Frontend',
-      projects: 15,
+      projects: 3,
       experience: '6+ months',
       description: 'Modern web development with type safety'
     },
     {
       name: 'Python',
-      level: 'Expert',
+      level: 'Beginner',
       category: 'Backend/AI',
-      projects: 25,
+      projects: 5,
       experience: '2+ years',
       description: 'Data science, machine learning, and web APIs'
     },
     {
       name: 'Java',
-      level: 'Advanced',
+      level: 'Intermediate',
       category: 'Backend',
-      projects: 12,
+      projects: 3,
       experience: '1+ years',
       description: 'Enterprise applications and Android development'
     },
     {
       name: 'C and C++',
-      level: 'Advanced',
+      level: 'Intermediate',
       category: 'Systems',
-      projects: 8,
+      projects: 2,
       experience: '3+ years',
       description: 'Competitive programming'
     },
     {
       name: 'React/Next.js',
-      level: 'Advanced',
+      level: 'Intermediate',
       category: 'Frontend',
-      projects: 10,
+      projects: 3,
       experience: '6+ months',
       description: 'Modern React ecosystem and SSR applications'
     },
     {
       name: 'Android Development',
-      level: 'Advanced',
+      level: 'Intermediate',
       category: 'Mobile',
-      projects: 6,
+      projects: 2,
       experience: '1+ years',
       description: 'Native Android apps with Jetpack Compose'
     },
@@ -76,15 +76,15 @@ export default function SkillsVisualization() {
       name: 'Machine Learning',
       level: 'Proficient',
       category: 'AI/ML',
-      projects: 8,
+      projects: 2,
       experience: '1+ years',
       description: 'Deep learning models and data analysis'
     },
     {
       name: 'Data Science',
-      level: 'Advanced',
+      level: 'Intermediate',
       category: 'Analytics',
-      projects: 12,
+      projects: 3,
       experience: '1+ years',
       description: 'Statistical analysis and data visualization'
     }
@@ -92,20 +92,20 @@ export default function SkillsVisualization() {
 
   const getLevelColor = (level: string) => {
     switch (level) {
-      case 'Expert': return 'from-green-500 to-emerald-600'
-      case 'Advanced': return 'from-blue-500 to-cyan-600'
+      case 'Beginner': return 'from-green-500 to-emerald-600'
+      case 'Intermediate': return 'from-blue-500 to-cyan-600'
       case 'Proficient': return 'from-purple-500 to-indigo-600'
-      case 'Intermediate': return 'from-orange-500 to-yellow-600'
+      case 'Advanced': return 'from-orange-500 to-yellow-600'
       default: return 'from-gray-500 to-gray-600'
     }
   }
 
   const getLevelIcon = (level: string) => {
     switch (level) {
-      case 'Expert': return <Award className="w-4 h-4" />
-      case 'Advanced': return <Star className="w-4 h-4" />
+      case 'Beginner': return <Award className="w-4 h-4" />
+      case 'Intermediate': return <Star className="w-4 h-4" />
       case 'Proficient': return <CheckCircle className="w-4 h-4" />
-      case 'Intermediate': return <TrendingUp className="w-4 h-4" />
+      case 'Advanced': return <TrendingUp className="w-4 h-4" />
       default: return <Code className="w-4 h-4" />
     }
   }
@@ -200,9 +200,9 @@ export default function SkillsVisualization() {
           </div>
           <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
             <div className="text-3xl font-bold text-green-500 mb-2">
-              {skills.filter(skill => skill.level === 'Expert').length}
+              {skills.filter(skill => skill.level === 'Beginner').length}
             </div>
-            <div className="text-gray-600 dark:text-gray-400 font-medium">Expert Skills</div>
+            <div className="text-gray-600 dark:text-gray-400 font-medium">Beginner Skills</div>
           </div>
           <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
             <div className="text-3xl font-bold text-purple-500 mb-2">
@@ -226,11 +226,11 @@ export default function SkillsVisualization() {
           <div className="flex flex-wrap justify-center gap-6">
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
-              <span className="font-medium">Expert</span>
+              <span className="font-medium">Beginner</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600"></div>
-              <span className="font-medium">Advanced</span>
+              <span className="font-medium">Intermediate</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <div className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600"></div>
@@ -238,7 +238,7 @@ export default function SkillsVisualization() {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <div className="w-3 h-3 rounded-full bg-gradient-to-r from-orange-500 to-yellow-600"></div>
-              <span className="font-medium">Intermediate</span>
+              <span className="font-medium">Advanced</span>
             </div>
           </div>
         </motion.div>

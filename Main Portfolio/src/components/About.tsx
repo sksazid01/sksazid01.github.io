@@ -14,50 +14,50 @@ export default function About() {
   const highlights = [
     {
       icon: <GraduationCap className="w-6 h-6" />,
-      title: "BSc in Engineering",
-      description: "Shahjalal University of Engineering and Technology (Computer Science and Engineering)",
+      title: "BSc in Computer Science and Engineering",
+      description: "Shahjalal University of Science and Technology, Sylhet, Bangladesh",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Trophy className="w-6 h-6" />,
-      title: "Problem Solving Expert",
-      description: "650+ problems solved in CodeForces, 325+ in Vjudge platform using C, C++, Python, and Swift",
+      title: "Competitive Programmer",
+      description: "CodeForces: 1200+ rating (Pupil), solved 650+ problems using C, C++, Python, and Swift",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: <Code className="w-6 h-6" />,
-      title: "Multi-Platform Developer",
-      description: "325+ good problems solved in Vjudge platform with diverse programming challenges",
+      title: "Multi-Platform Problem Solver",
+      description: "VJudge: Solved 325+ problems. CodeChef: Achieved 1474 rating, solved 100+ problems",
       color: "from-green-500 to-emerald-500"
     },
     {
       icon: <Database className="w-6 h-6" />,
       title: "Data Science & ML",
-      description: "Working with Python libraries like Keras, NumPy, Matplotlib for long-term projects",
+      description: "Python libraries: Keras, NumPy, Matplotlib, Pandas. Model training, data visualization, and predictive analytics",
       color: "from-orange-500 to-red-500"
     },
     {
       icon: <Globe className="w-6 h-6" />,
-      title: "Technical Proficiency",
-      description: "Python, Java, JavaScript, Kotlin, C++, Android Development, UI: Jetpack Compose, Data Science, Machine Learning",
+      title: "Technical Skills",
+      description: "Languages: C/C++, Python, Java, Kotlin, JavaScript. Web Development, Data Structures & Algorithms, Problem Solving",
       color: "from-indigo-500 to-purple-500"
     },
     {
       icon: <Star className="w-6 h-6" />,
-      title: "Language Skills",
-      description: "Native Bangla, Professional Working Proficiency in English and Hindi",
+      title: "Languages",
+      description: "English (Native or Bilingual Proficiency), Bangla (Native or Bilingual Proficiency), Hindi (Professional Working Proficiency)",
       color: "from-pink-500 to-rose-500"
     },
     {
       icon: <Target className="w-6 h-6" />,
-      title: "SUST Programming Camp",
+      title: "SUST Programming Training Camp",
       description: "Competitive Programming Training Camp participant (03/2022 - Present)",
       color: "from-cyan-500 to-blue-500"
     },
     {
       icon: <BookOpen className="w-6 h-6" />,
       title: "Academic Projects",
-      description: "E-commerce Marketplace, Club Management System, JavaFX Game Development",
+      description: "E-commerce Marketplace (Java, Servlets), Club Management System (Kotlin, Jetpack Compose), Restaurant Management System, Word Matching Game (JavaFX)",
       color: "from-teal-500 to-green-500"
     }
   ]

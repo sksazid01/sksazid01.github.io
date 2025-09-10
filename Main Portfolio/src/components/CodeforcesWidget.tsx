@@ -36,9 +36,9 @@ export default function CodeforcesWidget({
     if (stored) {
       setStats({
         totalSolved: stored.totalSolved,
-        rating: 1228,
+        rating: 1200,
         rank: 'Pupil',
-        maxRating: 1228,
+        maxRating: 1200,
         handle: handle,
         contests: 0,
         lastUpdated: stored.lastUpdated,
@@ -48,10 +48,10 @@ export default function CodeforcesWidget({
     } else {
       // Default values
       setStats({
-        totalSolved: 1230,
-        rating: 1228,
+        totalSolved: 650,
+        rating: 1200,
         rank: 'Pupil',
-        maxRating: 1228,
+        maxRating: 1200,
         handle: handle,
         contests: 0
       })
@@ -158,7 +158,7 @@ export default function CodeforcesWidget({
           transition={{ delay: 0.1 }}
           key={stats.totalSolved} // Re-animate when data changes
         >
-          {stats.totalSolved.toLocaleString()}
+          {stats.totalSolved.toLocaleString()+"+"}
         </motion.div>
       
         <motion.div 

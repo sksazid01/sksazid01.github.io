@@ -22,8 +22,8 @@ interface VJudgeWidgetProps {
 
 export default function VJudgeWidget({ 
   handle = 'sksazid', 
-  problemsSolved = 326, // Updated to current count
-  enableManualUpdate = true 
+  problemsSolved = 330, // Updated to correct count
+  enableManualUpdate = false 
 }: VJudgeWidgetProps) {
   const [stats, setStats] = useState<VJudgeStats | null>(null)
   const [loading, setLoading] = useState(true)
@@ -34,7 +34,8 @@ export default function VJudgeWidget({
     // Check for stored stats first
     const stored = getStoredStats('vjudge')
     
-    if (stored) {
+    // Validate stored stats - if the count seems unreasonable, ignore it
+    if (stored && stored.totalSolved > 0 && stored.totalSolved < 10000) {
       setStats({
         totalSolved: stored.totalSolved,
         handle: handle,
@@ -44,7 +45,7 @@ export default function VJudgeWidget({
         cached: true
       })
     } else {
-      // Use fallback data
+      // Use fallback data if no valid stored stats
       setStats({
         totalSolved: problemsSolved,
         handle: handle,
