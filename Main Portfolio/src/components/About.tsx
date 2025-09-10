@@ -7,6 +7,7 @@ import CodingStatsWidget from './CodingStatsWidget'
 import CodeforcesWidget from './CodeforcesWidget'
 import VJudgeWidget from './VJudgeWidget'
 import CodeChefWidget from './CodeChefWidget'
+import DownloadCVButton from './DownloadCVButton'
 import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function About() {
@@ -103,9 +104,20 @@ export default function About() {
               About Me
             </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
             Professional background, technical expertise, and achievements
           </p>
+          
+          {/* Download CV Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-4"
+          >
+            <DownloadCVButton />
+          </motion.div>
         </motion.div>
 
         {/* 3x4 Grid Layout */}

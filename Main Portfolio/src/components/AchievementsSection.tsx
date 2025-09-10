@@ -227,7 +227,7 @@ export default function AchievementsSection() {
     },
     {
       id: '10',
-      title: '5+ Years Python Experience',
+      title: '3+ Years Python Experience',
       description: 'Maintained consistent Python development and data science work across multiple domains',
       date: '2024-01',
       category: 'learning',

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ChevronDown, Mail, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import DownloadCVButton from './DownloadCVButton'
 
 export default function Hero() {
   // React Hook - this is component memory!
@@ -206,6 +207,15 @@ export default function Hero() {
                   View My Work
                 </span>
               </motion.button>
+
+              {/* Download CV Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <DownloadCVButton variant="outline" />
+              </motion.div>
             </motion.div>
           </motion.div>
 
