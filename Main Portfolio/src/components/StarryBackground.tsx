@@ -46,6 +46,18 @@ export default function StarryBackground() {
   const mouseRef = useRef({ x: 0, y: 0 })
   const nextShootTimeout = useRef<number | null>(null)
   const burstTimeoutsRef = useRef<number[]>([])
+  const enableFollow = true // set false to disable steering
+
+  // mouse move listener (normalized 0..1)
+  useEffect(() => {
+    if (!enableFollow) return
+    const handleMouse = (e: MouseEvent) => {
+      mouseRef.current.x = e.clientX / window.innerWidth
+      mouseRef.current.y = e.clientY / window.innerHeight
+    }
+    window.addEventListener('mousemove', handleMouse)
+    return () => window.removeEventListener('mousemove', handleMouse)
+  }, [enableFollow])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -152,13 +164,38 @@ export default function StarryBackground() {
     }
     scheduleNext()
 
-    const animate = (time: number) => {
+  const FOLLOW_STRENGTH = 0.03 // acceleration factor
+  const VELOCITY_DAMPING = 0.985 // friction each frame
+  const MAX_SPEED_BASE = 0.9 // scaled by depth
+
+  const animate = (time: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       if (theme === 'dark') {
         // Stars for dark mode
   starsRef.current.forEach((star: Star) => {
           // update position (depth scaled)
+          if (enableFollow) {
+            // target point uses parallax-shifted desired center
+            const targetX = mouseRef.current.x * canvas.width
+            const targetY = mouseRef.current.y * canvas.height
+            const dx = targetX - star.x
+            const dy = targetY - star.y
+            // apply small acceleration scaled by depth
+            star.vx += dx * FOLLOW_STRENGTH * (0.2 + star.depth)
+            star.vy += dy * FOLLOW_STRENGTH * (0.2 + star.depth)
+            // damping
+            star.vx *= VELOCITY_DAMPING
+            star.vy *= VELOCITY_DAMPING
+            // speed clamp (depth-scaled)
+            const maxSpeed = MAX_SPEED_BASE * (0.3 + star.depth)
+            const speed = Math.hypot(star.vx, star.vy)
+            if (speed > maxSpeed) {
+              const k = maxSpeed / speed
+              star.vx *= k
+              star.vy *= k
+            }
+          }
           star.x += star.vx * star.speedMul
           star.y += star.vy * star.speedMul
 
