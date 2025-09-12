@@ -15,8 +15,8 @@ export default function DownloadCVButton({
   const handleDownload = () => {
     // Create a temporary anchor element to trigger download
     const link = document.createElement('a')
-    link.href = '/MyCV.pdf'
-    link.download = 'MyCV.pdf'
+    link.href = "/cv.pdf"
+    link.download = "Md_Ahasanul_Haque_Sazid's_Resume.pdf"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -41,7 +41,7 @@ export default function DownloadCVButton({
       className={`inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl ${getButtonStyles()} ${className}`}
     >
       <Download className="w-5 h-5" />
-      Download CV
+      My Resume
       <FileText className="w-4 h-4 opacity-75" />
     </motion.button>
   )
