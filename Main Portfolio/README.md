@@ -197,6 +197,6 @@ New sections can be added by:
 
 ---
 
-**Built with ❤️ by Ahasanul Haque**
+**Built with ❤️ by Ahasanul Haque Sazid**
 
 *A showcase of modern web development techniques and user experience design.*
