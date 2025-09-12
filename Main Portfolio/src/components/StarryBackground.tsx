@@ -14,6 +14,8 @@ interface Star {
   vy: number
   depth: number // 0 (far) .. 1 (near)
   speedMul: number
+  offsetX?: number
+  offsetY?: number
 }
 
 interface Particle {
@@ -46,7 +48,7 @@ export default function StarryBackground() {
   const mouseRef = useRef({ x: 0, y: 0 })
   const nextShootTimeout = useRef<number | null>(null)
   const burstTimeoutsRef = useRef<number[]>([])
-  const enableFollow = true // set false to disable steering
+  const enableFollow = true // attraction (non-destructive)
 
   // mouse move listener (normalized 0..1)
   useEffect(() => {
@@ -99,6 +101,8 @@ export default function StarryBackground() {
           vy,
           depth,
           speedMul: 0.5 + depth * 1.2,
+          offsetX: 0,
+          offsetY: 0,
         })
       }
 
@@ -164,9 +168,10 @@ export default function StarryBackground() {
     }
     scheduleNext()
 
-  const FOLLOW_STRENGTH = 0.03 // acceleration factor
-  const VELOCITY_DAMPING = 0.985 // friction each frame
-  const MAX_SPEED_BASE = 0.9 // scaled by depth
+  const ATTRACTION_RADIUS = 260
+  const ATTRACTION_STRENGTH = 0.35 // how strongly stars shift toward cursor inside radius
+  const RETURN_EASING = 0.90 // 0-1; closer to 1 = slower return
+  const MAX_OFFSET = 120 // clamp displacement
 
   const animate = (time: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -176,26 +181,33 @@ export default function StarryBackground() {
   starsRef.current.forEach((star: Star) => {
           // update position (depth scaled)
           if (enableFollow) {
-            // target point uses parallax-shifted desired center
-            const targetX = mouseRef.current.x * canvas.width
-            const targetY = mouseRef.current.y * canvas.height
-            const dx = targetX - star.x
-            const dy = targetY - star.y
-            // apply small acceleration scaled by depth
-            star.vx += dx * FOLLOW_STRENGTH * (0.2 + star.depth)
-            star.vy += dy * FOLLOW_STRENGTH * (0.2 + star.depth)
-            // damping
-            star.vx *= VELOCITY_DAMPING
-            star.vy *= VELOCITY_DAMPING
-            // speed clamp (depth-scaled)
-            const maxSpeed = MAX_SPEED_BASE * (0.3 + star.depth)
-            const speed = Math.hypot(star.vx, star.vy)
-            if (speed > maxSpeed) {
-              const k = maxSpeed / speed
-              star.vx *= k
-              star.vy *= k
+            const cursorX = mouseRef.current.x * canvas.width
+            const cursorY = mouseRef.current.y * canvas.height
+            const dx = cursorX - star.x
+            const dy = cursorY - star.y
+            const dist = Math.hypot(dx, dy)
+            if (dist < ATTRACTION_RADIUS) {
+              const influence = (1 - dist / ATTRACTION_RADIUS) ** 2 // ease near edge
+              const shiftX = dx * influence * ATTRACTION_STRENGTH * (0.3 + star.depth)
+              const shiftY = dy * influence * ATTRACTION_STRENGTH * (0.3 + star.depth)
+              star.offsetX = (star.offsetX || 0) + shiftX
+              star.offsetY = (star.offsetY || 0) + shiftY
+              // clamp
+              const mag = Math.hypot(star.offsetX, star.offsetY)
+              if (mag > MAX_OFFSET) {
+                const k = MAX_OFFSET / mag
+                star.offsetX *= k
+                star.offsetY *= k
+              }
+            } else {
+              // ease back to origin
+              star.offsetX = (star.offsetX || 0) * RETURN_EASING
+              star.offsetY = (star.offsetY || 0) * RETURN_EASING
+              if (Math.abs(star.offsetX) < 0.05) star.offsetX = 0
+              if (Math.abs(star.offsetY) < 0.05) star.offsetY = 0
             }
           }
+          // baseline drift remains
           star.x += star.vx * star.speedMul
           star.y += star.vy * star.speedMul
 
@@ -211,8 +223,8 @@ export default function StarryBackground() {
           ctx.beginPath()
           // parallax offset based on mouse (subtle for far stars, stronger near)
           const parallaxStrength = 30 * star.depth // max shift
-          const px = star.x + (mouseRef.current.x - 0.5) * parallaxStrength
-          const py = star.y + (mouseRef.current.y - 0.5) * parallaxStrength
+          const px = star.x + (mouseRef.current.x - 0.5) * parallaxStrength + (star.offsetX || 0)
+          const py = star.y + (mouseRef.current.y - 0.5) * parallaxStrength + (star.offsetY || 0)
 
           ctx.arc(px, py, star.size, 0, Math.PI * 2)
           
