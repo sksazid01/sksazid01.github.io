@@ -99,6 +99,23 @@ export default function AchievementsSection() {
   }
   const [achievements] = useState<Achievement[]>([
     {
+      id: '0',
+      title: '4th Position at Inter-University National Hackathon 2025',
+      description: 'Team SUST_Prompt_Storm secured 4th position at Green University of Bangladesh, powered by SmythOS. Ranked 6th out of ~250 teams in selection, competed among 50 finalists.',
+      date: '2025-09',
+      category: 'recognition',
+      icon: <Trophy className="w-6 h-6" />,
+      color: 'from-yellow-500 to-orange-500',
+      status: 'featured',
+      badge: '🏆 Champion',
+      technologies: ['SmythOS', 'AI Agents', 'Full Stack', 'Team Leadership'],
+      repoName: 'Smart-IELTS',
+      links: {
+        github: 'https://github.com/sksazid01/Smart-IELTS',
+        demo: '#'
+      }
+    },
+    {
       id: '1',
       title: '650+ Problems Solved',
       description: 'Solved over 650 competitive programming problems across multiple platforms',
