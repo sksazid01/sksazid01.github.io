@@ -159,7 +159,7 @@ export default function ProfessionalAchievements() {
       teamName: 'SUST Team',
       results: [
         {
-          stage: 'Inter-University Programming Contest',
+          stage: 'Inter-University Programming Contest 2023',
           position: 'Top Selected Team',
           participants: 'Among all participants in SUST',
           highlight: true
@@ -428,6 +428,7 @@ export default function ProfessionalAchievements() {
                             src={image}
                             alt={`Achievement ${idx + 1}`}
                             className="w-full h-full object-cover"
+                            loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center p-2">
                             <ExternalLink className="w-5 h-5 text-white" />
@@ -480,6 +481,7 @@ export default function ProfessionalAchievements() {
               src={selectedImage}
               alt="Selected"
               className="w-full h-auto rounded-2xl shadow-2xl"
+              loading="lazy"
             />
             <button
               onClick={() => setSelectedImage(null)}

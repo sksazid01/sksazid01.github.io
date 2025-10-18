@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ChevronDown, Mail, ExternalLink } from 'lucide-react'
+import { ChevronDown, Mail, ExternalLink, Github, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import DownloadCVButton from './DownloadCVButton'
@@ -216,6 +216,69 @@ export default function Hero() {
               >
                 <DownloadCVButton variant="outline" />
               </motion.div>
+            </motion.div>
+
+            {/* Social Media Links - Highlighted */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9 }}
+              className="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
+            >
+              <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Connect with me:
+              </div>
+              <div className="flex gap-3">
+                {/* LinkedIn */}
+                <motion.a
+                  href="https://www.linkedin.com/in/sksazid/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  whileHover={{ scale: 1.08, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Linkedin className="w-5 h-5 relative z-10" />
+                  <span className="relative z-10">LinkedIn</span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-800"
+                    initial={{ x: '100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  {/* Glow effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-blue-400 opacity-0 blur-lg"
+                    whileHover={{ opacity: 0.3 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
+
+                {/* GitHub */}
+                <motion.a
+                  href="https://github.com/sksazid01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  whileHover={{ scale: 1.08, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Github className="w-5 h-5 relative z-10" />
+                  <span className="relative z-10">GitHub</span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-gray-900 to-black dark:from-gray-800 dark:to-gray-900"
+                    initial={{ x: '100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  {/* Glow effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gray-600 opacity-0 blur-lg"
+                    whileHover={{ opacity: 0.3 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
+              </div>
             </motion.div>
           </motion.div>
 

@@ -32,7 +32,7 @@ export default function Experience() {
     },
     {
       title: "AI Training for Problem Solving",
-      company: "RemoteTasks",
+      company: "Remotasks.com",
       duration: "11/2023 - 09/2024",
       length: "(10 Months)",
       type: "🤖 AI Training Specialist",
@@ -44,7 +44,7 @@ export default function Experience() {
     },
     {
       title: "AI Tester and Trainer",
-      company: "Outlier",
+      company: "app.Outlier.ai",
       duration: "10/2023 - Present",
       length: "(1+ Year)",
       type: "🔬 Quality Assurance",

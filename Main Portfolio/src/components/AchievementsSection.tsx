@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { 
   Trophy, 
   Target, 
@@ -39,82 +39,16 @@ interface Achievement {
   repoName?: string // Add this to map to actual GitHub repos
 }
 
-interface GitHubRepo {
-  id: number
-  name: string
-  html_url: string
-  description: string
-  language: string
-  updated_at: string
-}
-
 export default function AchievementsSection() {
   const [filter, setFilter] = useState<string>('all')
-  const [repositories, setRepositories] = useState<GitHubRepo[]>([])
-  const [loading, setLoading] = useState(true)
 
-  // Fetch GitHub repositories
-  useEffect(() => {
-    const fetchRepositories = async () => {
-      try {
-        const response = await fetch('https://api.github.com/users/sksazid01/repos?sort=updated&per_page=50')
-        if (response.ok) {
-          const repos = await response.json()
-          setRepositories(repos)
-        }
-      } catch (error) {
-        console.error('Error fetching repositories:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchRepositories()
-  }, [])
-
-  // Function to get repository URL by name or closest match
-  const getRepositoryUrl = (repoName?: string, projectTitle?: string) => {
-    if (!repoName && !projectTitle) return 'https://github.com/sksazid01'
-    
-    // First, try to find exact match by repoName
-    if (repoName) {
-      const repo = repositories.find(r => r.name.toLowerCase() === repoName.toLowerCase())
-      if (repo) return repo.html_url
-    }
-    
-    // Then try to find by project title keywords
-    if (projectTitle) {
-      const keywords = projectTitle.toLowerCase().split(' ')
-      const repo = repositories.find(r => 
-        keywords.some(keyword => 
-          r.name.toLowerCase().includes(keyword) || 
-          r.description?.toLowerCase().includes(keyword)
-        )
-      )
-      if (repo) return repo.html_url
-    }
-    
-    // Default to profile
-    return 'https://github.com/sksazid01'
+  // Function to get repository URL by name
+  const getRepositoryUrl = (repoName?: string) => {
+    if (!repoName) return 'https://github.com/sksazid01'
+    return `https://github.com/sksazid01/${repoName}`
   }
+  
   const [achievements] = useState<Achievement[]>([
-    {
-      id: '0',
-      title: '4th Position at Inter-University National Hackathon 2025',
-      description: 'Team SUST_Prompt_Storm secured 4th position at Green University of Bangladesh, powered by SmythOS. Ranked 6th out of ~250 teams in selection, competed among 50 finalists.',
-      date: '2025-09',
-      category: 'recognition',
-      icon: <Trophy className="w-6 h-6" />,
-      color: 'from-yellow-500 to-orange-500',
-      status: 'featured',
-      badge: '🏆 Champion',
-      technologies: ['SmythOS', 'AI Agents', 'Full Stack', 'Team Leadership'],
-      repoName: 'Smart-IELTS',
-      links: {
-        github: 'https://github.com/sksazid01/Smart-IELTS',
-        demo: '#'
-      }
-    },
     {
       id: '1',
       title: '650+ Problems Solved',
@@ -256,11 +190,9 @@ export default function AchievementsSection() {
   ])
 
   const categories = [
-    { id: 'all', name: 'All Items', icon: Trophy },
-    { id: 'project', name: 'Projects', icon: Star },
-    { id: 'coding', name: 'Coding', icon: Code },
-    { id: 'learning', name: 'Learning', icon: TrendingUp },
-    { id: 'recognition', name: 'Recognition', icon: Medal }
+    { id: 'all', name: 'All Projects', icon: Trophy },
+    { id: 'project', name: 'Applications', icon: Star },
+    { id: 'learning', name: 'Learning & Skills', icon: TrendingUp }
   ]
 
   const filteredAchievements = filter === 'all' 
@@ -269,10 +201,9 @@ export default function AchievementsSection() {
 
   const stats = {
     total: achievements.length,
-    coding: achievements.filter(a => a.category === 'coding').length,
     projects: achievements.filter(a => a.category === 'project').length,
     learning: achievements.filter(a => a.category === 'learning').length,
-    recognition: achievements.filter(a => a.category === 'recognition').length
+    coding: achievements.filter(a => a.category === 'coding').length
   }
 
   return (
@@ -287,11 +218,11 @@ export default function AchievementsSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              Projects & Achievements
+              Projects
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Featured projects, notable accomplishments, and milestones in my development journey
+            Featured projects and learning milestones in my development journey
           </p>
         </motion.div>
 
@@ -305,10 +236,9 @@ export default function AchievementsSection() {
         >
           {[
             { label: 'Total', value: stats.total, color: 'from-blue-500 to-cyan-500' },
-            { label: 'Coding', value: stats.coding, color: 'from-green-500 to-emerald-500' },
-            { label: 'Projects', value: stats.projects, color: 'from-purple-500 to-pink-500' },
+            { label: 'Applications', value: stats.projects, color: 'from-purple-500 to-pink-500' },
             { label: 'Learning', value: stats.learning, color: 'from-orange-500 to-red-500' },
-            { label: 'Recognition', value: stats.recognition, color: 'from-yellow-500 to-orange-500' }
+            { label: 'Coding Skills', value: stats.coding, color: 'from-green-500 to-emerald-500' }
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
