@@ -105,17 +105,20 @@ export default function CodeChefWidget({
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="group bg-gradient-to-r from-yellow-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300 relative"
+        className="group bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-6 rounded-xl text-center hover:shadow-xl hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 relative"
       >
         <div className="animate-pulse">
-          <div className="text-3xl font-bold mb-2">---</div>
-          <div className="text-sm opacity-90 mb-2">Loading...</div>
-          <div className="font-semibold">CodeChef</div>
-          <div className="text-xs opacity-75 mt-1">@{handle}</div>
+          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
+            <Trophy className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+          </div>
+          <div className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">---</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">Loading...</div>
+          <div className="font-semibold text-gray-900 dark:text-white">CodeChef</div>
+          <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">@{handle}</div>
         </div>
         {/* Loading spinner */}
         <motion.div
-          className="absolute top-2 right-2 w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+          className="absolute top-2 right-2 w-4 h-4 border-2 border-gray-300 dark:border-gray-600 border-t-blue-600 dark:border-t-blue-400 rounded-full"
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
         />
@@ -128,12 +131,15 @@ export default function CodeChefWidget({
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="group bg-gradient-to-r from-yellow-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300"
+        className="group bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-6 rounded-xl text-center hover:shadow-xl hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300"
       >
-        <div className="text-3xl font-bold mb-2">⭐</div>
-        <div className="text-sm opacity-90 mb-2">Active Profile</div>
-        <div className="font-semibold">CodeChef</div>
-        <div className="text-xs opacity-75 mt-1">@{handle}</div>
+              <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
+        <Trophy className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      </div>
+      <div className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">100+</div>
+        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">Problems Solved</div>
+        <div className="font-semibold text-gray-900 dark:text-white">CodeChef</div>
+        <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">@{handle}</div>
       </motion.div>
     )
   }
@@ -161,13 +167,11 @@ export default function CodeChefWidget({
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.05, y: -5 }}
       transition={{ duration: 0.3 }}
-      className="group bg-gradient-to-r from-yellow-500 to-orange-500 p-6 rounded-xl text-white text-center hover:shadow-xl transition-all duration-300 block relative overflow-hidden"
+      className="group bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-6 rounded-xl text-center hover:shadow-xl hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 block relative overflow-hidden"
     >
-      {/* Background Animation */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-orange-600 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        initial={false}
-      />
+      <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
+        <Trophy className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10">
@@ -214,7 +218,7 @@ export default function CodeChefWidget({
 
         {/* Problems Solved */}
         <motion.div 
-          className="text-3xl font-bold mb-2"
+          className="text-3xl font-bold mb-2 text-gray-900 dark:text-white"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -224,7 +228,7 @@ export default function CodeChefWidget({
         </motion.div>
         
         <motion.div 
-          className="text-sm opacity-90 mb-2"
+          className="text-sm text-gray-600 dark:text-gray-400 mb-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -234,19 +238,19 @@ export default function CodeChefWidget({
 
         {/* Platform */}
         <motion.div 
-          className="font-semibold flex items-center justify-center gap-2"
+          className="font-semibold flex items-center justify-center gap-2 text-gray-900 dark:text-white"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
           <Award className="w-4 h-4" />
           CodeChef
-          <ExternalLink className="w-3 h-3 opacity-75 group-hover:opacity-100 transition-opacity" />
+          <ExternalLink className="w-3 h-3 text-gray-600 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" />
         </motion.div>
 
         {/* Handle and Stars */}
         <motion.div 
-          className="text-xs opacity-75 mt-1 flex items-center justify-center gap-1"
+          className="text-xs text-gray-500 dark:text-gray-500 mt-1 flex items-center justify-center gap-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -266,17 +270,17 @@ export default function CodeChefWidget({
           key={stats.currentRating} // Re-animate when rating changes
         >
           <div className="flex items-center justify-center gap-2">
-            <TrendingUp className="w-3 h-3" />
-            <span className={getRatingColor(stats.currentRating)}>
+            <TrendingUp className="w-3 h-3 text-gray-600 dark:text-gray-400" />
+            <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-blue-700 dark:text-blue-300 font-semibold">
               {stats.currentRating}
             </span>
-            <span className="opacity-75">({stats.division})</span>
+            <span className="text-gray-600 dark:text-gray-400">({stats.division})</span>
           </div>
-          <div className="text-xs opacity-60">
+          <div className="text-xs text-gray-500 dark:text-gray-500">
             Max: {stats.maxRating} • {stats.contestsParticipated} contests
           </div>
           {stats.lastUpdated && (
-            <div className="text-xs opacity-50">
+            <div className="text-xs text-gray-400 dark:text-gray-600">
               Updated: {new Date(stats.lastUpdated).toLocaleTimeString()}
               {stats.cached && ' (cached)'}
             </div>
@@ -285,7 +289,7 @@ export default function CodeChefWidget({
 
         {/* Floating Stars Animation */}
         <motion.div
-          className="absolute top-2 right-2 opacity-30 group-hover:opacity-60"
+          className="absolute top-2 right-2 text-gray-300 dark:text-gray-700 group-hover:text-blue-500 dark:group-hover:text-blue-400"
           animate={{
             y: [0, -5, 0],
             rotate: [0, 5, -5, 0],
@@ -301,7 +305,7 @@ export default function CodeChefWidget({
 
         {/* Pulse Effect on Hover */}
         <motion.div
-          className="absolute inset-0 rounded-xl border-2 border-white/20 opacity-0 group-hover:opacity-100"
+          className="absolute inset-0 rounded-xl border-2 border-blue-500/20 dark:border-blue-400/20 opacity-0 group-hover:opacity-100"
           animate={{
             scale: [1, 1.02, 1],
           }}

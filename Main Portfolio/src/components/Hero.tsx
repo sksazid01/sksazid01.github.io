@@ -180,7 +180,7 @@ export default function Hero() {
             >
               <motion.button
                 onClick={() => scrollToSection('#contact')}
-                className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                className="group relative px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -188,12 +188,6 @@ export default function Hero() {
                   <Mail className="w-5 h-5" />
                   Get In Touch
                 </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600"
-                  initial={{ x: '100%' }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
               </motion.button>
               
               <motion.button
@@ -234,24 +228,12 @@ export default function Hero() {
                   href="https://www.linkedin.com/in/sksazid/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  className="group flex items-center gap-2 px-5 py-3 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300"
                   whileHover={{ scale: 1.08, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Linkedin className="w-5 h-5 relative z-10" />
-                  <span className="relative z-10">LinkedIn</span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-800"
-                    initial={{ x: '100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  {/* Glow effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-blue-400 opacity-0 blur-lg"
-                    whileHover={{ opacity: 0.3 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  <Linkedin className="w-5 h-5" />
+                  <span>LinkedIn</span>
                 </motion.a>
 
                 {/* GitHub */}
@@ -259,24 +241,12 @@ export default function Hero() {
                   href="https://github.com/sksazid01"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  className="group flex items-center gap-2 px-5 py-3 bg-gray-800 dark:bg-gray-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-gray-900 dark:hover:bg-gray-600 transition-all duration-300"
                   whileHover={{ scale: 1.08, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Github className="w-5 h-5 relative z-10" />
-                  <span className="relative z-10">GitHub</span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-gray-900 to-black dark:from-gray-800 dark:to-gray-900"
-                    initial={{ x: '100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  {/* Glow effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gray-600 opacity-0 blur-lg"
-                    whileHover={{ opacity: 0.3 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  <Github className="w-5 h-5" />
+                  <span>GitHub</span>
                 </motion.a>
               </div>
             </motion.div>

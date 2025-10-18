@@ -302,24 +302,25 @@ export default function AchievementsSection() {
               className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden"
             >
               {/* Achievement Header */}
-              <div className={`h-32 bg-gradient-to-br ${achievement.color} flex items-center justify-center text-white relative overflow-hidden`}>
+              <div className="h-32 bg-gray-50 dark:bg-gray-700/50 flex items-center justify-center relative overflow-hidden border-b-2 border-blue-500 dark:border-blue-400">
                 <motion.div
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   transition={{ duration: 0.3 }}
+                  className="text-blue-600 dark:text-blue-400"
                 >
                   {achievement.icon}
                 </motion.div>
                 
                 {/* Badge */}
                 {achievement.badge && (
-                  <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">
+                  <div className="absolute top-3 right-3 bg-blue-100 dark:bg-blue-900/30 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-blue-700 dark:text-blue-300">
                     {achievement.badge}
                   </div>
                 )}
 
                 {/* Animated particles */}
                 <motion.div
-                  className="absolute top-2 left-2 w-2 h-2 bg-white/30 rounded-full"
+                  className="absolute top-2 left-2 w-2 h-2 bg-blue-500/30 rounded-full"
                   animate={{ 
                     scale: [1, 1.5, 1],
                     opacity: [0.3, 0.8, 0.3]
@@ -327,7 +328,7 @@ export default function AchievementsSection() {
                   transition={{ duration: 2, repeat: Infinity }}
                 />
                 <motion.div
-                  className="absolute bottom-2 right-2 w-1 h-1 bg-white/40 rounded-full"
+                  className="absolute bottom-2 right-2 w-1 h-1 bg-blue-500/40 rounded-full"
                   animate={{ 
                     scale: [1, 1.3, 1],
                     opacity: [0.4, 0.9, 0.4]
@@ -391,7 +392,7 @@ export default function AchievementsSection() {
                         href={achievement.links.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r ${achievement.color} text-white rounded-full hover:shadow-lg transition-all text-xs`}
+                        className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 dark:bg-blue-500 text-white rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 hover:shadow-lg transition-all text-xs"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
