@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Calendar, MapPin, CheckCircle, Briefcase } from 'lucide-react'
+import { Calendar, MapPin, CheckCircle, Briefcase, Clock } from 'lucide-react'
 
 export default function Experience() {
   const experiences = [
@@ -58,7 +58,7 @@ export default function Experience() {
 
   return (
     <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -72,93 +72,217 @@ export default function Experience() {
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            My professional journey and key achievements
+            My professional journey throughout undergraduate studies
           </p>
         </motion.div>
 
-        <div className="relative">
-          {/* Timeline Line */}
+        <div className="relative pb-8">
+          {/* Timeline Line - Vertical center */}
           <motion.div
             initial={{ height: 0 }}
-            whileInView={{ height: '100%' }}
+            whileInView={{ height: 'calc(100% - 80px)' }}
             viewport={{ once: true }}
             transition={{ duration: 2, ease: 'easeInOut' }}
-            className="absolute left-4 md:left-8 top-0 w-1 bg-gradient-to-b from-blue-500 to-cyan-500 rounded-full"
+            className="absolute left-8 md:left-1/2 top-12 w-0.5 bg-gradient-to-b from-blue-500 via-cyan-500 to-purple-500 rounded-full transform md:-translate-x-1/2 z-0"
           />
 
-          <div className="space-y-12">
+          <div className="space-y-24 md:space-y-32">
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ x: 10 }}
-                className="relative pl-12 md:pl-20"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="relative"
               >
-                {/* Timeline Dot */}
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 + 0.3, type: 'spring', stiffness: 200 }}
-                  className="absolute left-2 md:left-6 w-4 h-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full border-4 border-white dark:border-gray-900 shadow-lg"
-                />
+                {/* Desktop Layout */}
+                <div className={`hidden md:flex items-start gap-8 ${
+                  index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
+                }`}>
+                  {/* Content Card */}
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                    className={`w-[calc(50%-100px)] bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-sm p-8 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 relative z-10 ${
+                      index % 2 === 0 ? 'text-right' : 'text-left'
+                    }`}
+                  >
+                    {/* Type Badge */}
+                    <div className={`flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'} mb-3`}>
+                      <span className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md">
+                        {exp.type}
+                      </span>
+                    </div>
 
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50">
-                  <div className="flex flex-wrap items-center gap-4 mb-4">
-                    <span className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                      {exp.type}
-                    </span>
+                    {/* Title */}
+                    <h3 className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2 ${
+                      index % 2 === 0 ? 'flex-row-reverse' : ''
+                    }`}>
+                      <Briefcase className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                      <span>{exp.title}</span>
+                    </h3>
+
+                    {/* Company */}
+                    <p className={`text-base font-semibold text-blue-600 dark:text-blue-400 mb-4 flex items-center gap-2 ${
+                      index % 2 === 0 ? 'flex-row-reverse justify-end' : ''
+                    }`}>
+                      <MapPin className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-sm md:text-base">{exp.company}</span>
+                    </p>
+
+                    {/* Achievements */}
+                    <div className={`bg-gradient-to-br from-gray-50 to-white dark:from-gray-900/50 dark:to-gray-800/50 p-5 rounded-xl border border-gray-200 dark:border-gray-700/50 ${
+                      index % 2 === 0 ? 'text-right' : 'text-left'
+                    }`}>
+                      <h4 className={`text-sm font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2 ${
+                        index % 2 === 0 ? 'flex-row-reverse justify-end' : ''
+                      }`}>
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span>Key Achievements</span>
+                      </h4>
+                      <ul className="space-y-2.5">
+                        {exp.achievements.map((achievement, achIndex) => (
+                          <motion.li
+                            key={achIndex}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.15 + achIndex * 0.08 }}
+                            className={`flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300 ${
+                              index % 2 === 0 ? 'flex-row-reverse text-right' : ''
+                            }`}
+                          >
+                            <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mt-2 flex-shrink-0" />
+                            <span className="leading-relaxed">{achievement}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+
+                  {/* Center Timeline Badge */}
+                  <div className="flex-shrink-0 w-[120px] flex flex-col items-center">
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.15 + 0.3, type: 'spring', stiffness: 200 }}
+                      className="relative z-20"
+                    >
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl border-4 border-white dark:border-gray-900">
+                        <Calendar className="w-8 h-8 text-white" />
+                      </div>
+                      <div className="mt-4 px-5 py-3 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 min-w-[160px]">
+                        <p className="text-sm font-bold text-gray-900 dark:text-white text-center whitespace-nowrap">
+                          {exp.duration}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-1">
+                          {exp.length}
+                        </p>
+                      </div>
+                    </motion.div>
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                    <Briefcase className="w-6 h-6 text-blue-500" />
-                    {exp.title}
-                  </h3>
+                  {/* Spacer */}
+                  <div className="w-[calc(50%-100px)]" />
+                </div>
 
-                  <p className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
-                    <MapPin className="w-5 h-5" />
-                    {exp.company}
-                  </p>
+                {/* Mobile Layout */}
+                <div className="md:hidden relative pl-24">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.15 + 0.3, type: 'spring', stiffness: 200 }}
+                    className="absolute left-0 top-0 flex flex-col items-center z-20"
+                  >
+                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-xl border-4 border-white dark:border-gray-900">
+                      <Calendar className="w-7 h-7 text-white" />
+                    </div>
+                  </motion.div>
 
-                  <div className="flex flex-col sm:flex-row gap-2 mb-6">
-                    <span className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-full text-sm font-medium">
-                      <Calendar className="w-4 h-4" />
-                      {exp.duration}
-                    </span>
-                    <span className="text-sm text-gray-600 dark:text-gray-400 px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-full font-medium">
-                      {exp.length}
-                    </span>
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-sm p-6 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700"
+                  >
+                    {/* Type Badge */}
+                    <div className="flex justify-start mb-3">
+                      <span className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md">
+                        {exp.type}
+                      </span>
+                    </div>
 
-                  <div className="bg-gray-50 dark:bg-gray-900/50 p-6 rounded-xl">
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-500" />
-                      Key Achievements:
-                    </h4>
-                    <ul className="space-y-3">
-                      {exp.achievements.map((achievement, achIndex) => (
-                        <motion.li
-                          key={achIndex}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: index * 0.1 + achIndex * 0.05 }}
-                          className="flex items-start gap-3 text-gray-700 dark:text-gray-300"
-                        >
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                          <span>{achievement}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                      <Briefcase className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                      <span>{exp.title}</span>
+                    </h3>
+
+                    {/* Company */}
+                    <p className="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+                      <MapPin className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-sm">{exp.company}</span>
+                    </p>
+
+                    {/* Duration - Mobile */}
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-full">
+                        <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                        <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                          {exp.duration}
+                        </span>
+                      </div>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full">
+                        {exp.length}
+                      </span>
+                    </div>
+
+                    {/* Achievements */}
+                    <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900/50 dark:to-gray-800/50 p-5 rounded-xl border border-gray-200 dark:border-gray-700/50">
+                      <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span>Key Achievements</span>
+                      </h4>
+                      <ul className="space-y-2.5">
+                        {exp.achievements.map((achievement, achIndex) => (
+                          <motion.li
+                            key={achIndex}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.15 + achIndex * 0.08 }}
+                            className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300"
+                          >
+                            <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mt-2 flex-shrink-0" />
+                            <span className="leading-relaxed">{achievement}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
+
+        {/* Timeline Legend */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-16 flex justify-center"
+        >
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-700 px-6 py-3 rounded-full border border-blue-200 dark:border-gray-600 shadow-md">
+            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+              <span>Timeline flows from <strong>March 2022</strong> to <strong>Present</strong></span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
