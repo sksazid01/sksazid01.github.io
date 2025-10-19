@@ -12,28 +12,28 @@ export default function Contact() {
       title: "Email",
       value: "ahasanulhaque20@gmail.com",
       href: "mailto:ahasanulhaque20@gmail.com",
-      color: "from-blue-500 to-cyan-500"
+      color: "blue"
     },
     {
       icon: <Phone className="w-6 h-6" />,
       title: "Phone",
       value: "+880 9697001667",
       href: "tel:+8809697001667",
-      color: "from-green-500 to-emerald-500"
+      color: "blue"
     },
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Location",
       value: "Sylhet, Bangladesh",
       href: "#",
-      color: "from-purple-500 to-pink-500"
+      color: "blue"
     },
     {
       icon: <Github className="w-6 h-6" />,
       title: "GitHub",
       value: "sksazid01",
       href: "https://github.com/sksazid01",
-      color: "from-gray-500 to-gray-700"
+      color: "gray"
     }
   ]
 
@@ -48,7 +48,7 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <span className="text-blue-600 dark:text-blue-400">
               Get In Touch
             </span>
           </h2>
@@ -79,7 +79,11 @@ export default function Contact() {
                 whileHover={{ scale: 1.02, x: 10 }}
                 className="flex items-center gap-6 p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
               >
-                <div className={`p-4 rounded-xl bg-gradient-to-r ${info.color} text-white`}>
+                <div className={`p-4 rounded-xl ${
+                  info.color === 'blue' 
+                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                }`}>
                   {info.icon}
                 </div>
                 <div>

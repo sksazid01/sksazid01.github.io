@@ -2,9 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { 
-  Trophy, 
-  Users, 
+import {
+  Trophy,
+  Users,
   Award,
   Calendar,
   MapPin,
@@ -61,7 +61,7 @@ export default function ProfessionalAchievements() {
       date: 'September 2025',
       category: 'hackathon',
       icon: <Trophy className="w-8 h-8" />,
-      color: 'from-yellow-500 via-orange-500 to-red-500',
+      color: 'blue',
       teamName: 'SUST_Prompt_Storm',
       results: [
         {
@@ -84,19 +84,19 @@ export default function ProfessionalAchievements() {
       projectLink: 'https://github.com/sksazid01/Smart-IELTS',
       teamMembers: [
         {
+          name: 'Md Ahasanul Haque Sazid',
+          role: 'Develop Backend & Integrate SmythOS Agents',
+          linkedin: 'https://www.linkedin.com/in/sksazid/'
+        },
+        {
           name: 'Abhishek Dash',
-          role: 'Team Leader & Frontend Developer',
+          role: 'Team Leader',
           linkedin: 'https://www.linkedin.com/in/abhishek-dash-60762322a/'
         },
         {
           name: 'Badhon Ahmad',
-          role: 'Full Stack Developer & System Architect',
+          role: 'Planning & Developing Frontend',
           linkedin: 'https://www.linkedin.com/in/badhon-ahmad-5a5894225/'
-        },
-        {
-          name: 'Md Ahasanul Haque Sazid',
-          role: 'Backend Developer & SmythOS Integration',
-          linkedin: 'https://www.linkedin.com/in/sksazid/'
         }
       ]
     },
@@ -109,7 +109,7 @@ export default function ProfessionalAchievements() {
       date: 'September 2025',
       category: 'hackathon',
       icon: <Star className="w-8 h-8" />,
-      color: 'from-purple-500 via-pink-500 to-rose-500',
+      color: 'blue',
       teamName: 'SUST_Prompt_Storm',
       results: [
         {
@@ -130,19 +130,19 @@ export default function ProfessionalAchievements() {
       projectLink: 'https://github.com/sksazid01/sust_prompt_storm_preliminary',
       teamMembers: [
         {
+          name: 'Md Ahasanul Haque Sazid',
+          role: 'Develop Backend & Integrate SmythOS Agents',
+          linkedin: 'https://www.linkedin.com/in/sksazid/'
+        },
+        {
           name: 'Abhishek Dash',
-          role: 'Team Leader & Frontend Developer',
+          role: 'Team Leader',
           linkedin: 'https://www.linkedin.com/in/abhishek-dash-60762322a/'
         },
         {
           name: 'Badhon Ahmad',
-          role: 'Full Stack Developer & System Architect',
+          role: 'Planning & Developing Frontend',
           linkedin: 'https://www.linkedin.com/in/badhon-ahmad-5a5894225/'
-        },
-        {
-          name: 'Md Ahasanul Haque Sazid',
-          role: 'Backend Developer & SmythOS Integration',
-          linkedin: 'https://www.linkedin.com/in/sksazid/'
         }
       ]
     },
@@ -182,8 +182,8 @@ export default function ProfessionalAchievements() {
     { id: 'competition', name: 'Competitions', count: achievements.filter(a => a.category === 'competition').length }
   ]
 
-  const filteredAchievements = activeCategory === 'all' 
-    ? achievements 
+  const filteredAchievements = activeCategory === 'all'
+    ? achievements
     : achievements.filter(a => a.category === activeCategory)
 
   return (
@@ -202,17 +202,17 @@ export default function ProfessionalAchievements() {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, type: "spring" }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-6 shadow-lg"
+            className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full mb-6 shadow-lg"
           >
             <Trophy className="w-8 h-8 text-white" />
           </motion.div>
-          
+
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Notable Achievements
             </span>
           </h2>
-          
+
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Recognition and accomplishments in competitive programming and hackathons
           </p>
@@ -230,11 +230,10 @@ export default function ProfessionalAchievements() {
             <motion.button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
-                activeCategory === category.id
+              className={`px-6 py-3 rounded-full font-medium transition-all ${activeCategory === category.id
                   ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
-              }`}
+                }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -271,7 +270,7 @@ export default function ProfessionalAchievements() {
                         </p>
                       </div>
                     </div>
-                    
+
                     <div className="flex flex-wrap gap-4 text-sm md:text-base text-white/90 mb-4">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
@@ -294,11 +293,10 @@ export default function ProfessionalAchievements() {
 
               {/* Results Section */}
               <div className="p-8">
-                <div className={`grid gap-6 mb-8 ${
-                  achievement.results.length === 1 
-                    ? 'grid-cols-1 max-w-2xl mx-auto' 
+                <div className={`grid gap-6 mb-8 ${achievement.results.length === 1
+                    ? 'grid-cols-1 max-w-2xl mx-auto'
                     : 'grid-cols-1 md:grid-cols-2'
-                }`}>
+                  }`}>
                   {achievement.results.map((result, idx) => (
                     <motion.div
                       key={idx}
@@ -306,34 +304,33 @@ export default function ProfessionalAchievements() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: idx * 0.1 }}
-                      className={`relative p-6 rounded-2xl border-2 ${
-                        result.highlight 
-                          ? 'bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-yellow-400 dark:border-yellow-600' 
+                      className={`relative p-6 rounded-2xl border-2 flex flex-col items-center justify-center text-center ${result.highlight
+                          ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-400 dark:border-blue-600'
                           : 'bg-gray-50 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600'
-                      }`}
+                        }`}
                     >
                       {result.highlight && (
-                        <div className="absolute -top-3 -right-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        <div className="absolute -top-3 -right-3 bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
                           🏆 Achievement
                         </div>
                       )}
-                      
-                      <div className="flex items-center justify-between mb-3">
+
+                      <div className="flex items-center justify-center gap-3 mb-3">
                         <h4 className="font-bold text-lg text-gray-900 dark:text-white">
                           {result.stage}
                         </h4>
                         <Medal className={`w-6 h-6 ${result.highlight ? 'text-yellow-500' : 'text-gray-400'}`} />
                       </div>
-                      
+
                       <div className="text-3xl font-bold mb-2">
-                        <span className={result.highlight 
-                          ? 'bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent' 
+                        <span className={result.highlight
+                          ? 'text-blue-600 dark:text-blue-400 font-bold'
                           : 'text-gray-700 dark:text-gray-300'
                         }>
                           {result.position}
                         </span>
                       </div>
-                      
+
                       {result.participants && (
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                           {result.participants}
@@ -344,19 +341,19 @@ export default function ProfessionalAchievements() {
                 </div>
 
                 {/* Description */}
-                <div className="mb-8">
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <div className="mb-8 text-center">
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed max-w-4xl mx-auto">
                     {achievement.description}
                   </p>
                 </div>
 
                 {/* Technologies */}
                 {achievement.technologies && (
-                  <div className="mb-8">
+                  <div className="mb-8 text-center">
                     <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                       Technologies Used
                     </h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap justify-center gap-2">
                       {achievement.technologies.map((tech, idx) => (
                         <span
                           key={idx}
@@ -372,7 +369,7 @@ export default function ProfessionalAchievements() {
                 {/* Team Members */}
                 {achievement.teamMembers && achievement.teamMembers.length > 0 && (
                   <div className="mb-8">
-                    <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+                    <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4 text-center">
                       Team {achievement.teamName && `• ${achievement.teamName}`}
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -383,7 +380,7 @@ export default function ProfessionalAchievements() {
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.5, delay: idx * 0.1 }}
-                          className="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl"
+                          className="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl flex flex-col items-center justify-center text-center"
                         >
                           <h5 className="font-bold text-gray-900 dark:text-white mb-1">
                             {member.name}

@@ -91,13 +91,8 @@ export default function SkillsVisualization() {
   ]
 
   const getLevelColor = (level: string) => {
-    switch (level) {
-      case 'Beginner': return 'from-green-500 to-emerald-600'
-      case 'Intermediate': return 'from-blue-500 to-cyan-600'
-      case 'Proficient': return 'from-purple-500 to-indigo-600'
-      case 'Advanced': return 'from-orange-500 to-yellow-600'
-      default: return 'from-gray-500 to-gray-600'
-    }
+    // All levels use blue color for consistency
+    return 'blue'
   }
 
   const getLevelIcon = (level: string) => {
@@ -225,7 +220,7 @@ export default function SkillsVisualization() {
           </h3>
           <div className="flex flex-wrap justify-center gap-6">
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
+              <div className="w-3 h-3 rounded-full bg-blue-500 dark:bg-blue-400"></div>
               <span className="font-medium">Beginner</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
@@ -233,11 +228,11 @@ export default function SkillsVisualization() {
               <span className="font-medium">Intermediate</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <div className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+              <div className="w-3 h-3 rounded-full bg-blue-600 dark:bg-blue-500"></div>
               <span className="font-medium">Proficient</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <div className="w-3 h-3 rounded-full bg-gradient-to-r from-orange-500 to-yellow-600"></div>
+              <div className="w-3 h-3 rounded-full bg-blue-400 dark:bg-blue-600"></div>
               <span className="font-medium">Advanced</span>
             </div>
           </div>

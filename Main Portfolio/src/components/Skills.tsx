@@ -9,37 +9,37 @@ export default function Skills() {
       icon: <Code className="w-8 h-8" />,
       title: "Programming Languages",
       skills: ["Python", "Java", "C++", "JavaScript", "Kotlin"],
-      color: "from-blue-500 to-cyan-500"
+      color: "blue"
     },
     {
       icon: <Globe className="w-8 h-8" />,
       title: "Web Development",
       skills: ["Django", "Prompt/Query Generation", "Response Debugging", "Web Development"],
-      color: "from-green-500 to-emerald-500"
+      color: "blue"
     },
     {
       icon: <BarChart3 className="w-8 h-8" />,
       title: "Data Science",
       skills: ["Data Science", "Data Structure and Algorithm", "Machine Learning", "Problem Solving"],
-      color: "from-purple-500 to-pink-500"
+      color: "blue"
     },
     {
       icon: <Smartphone className="w-8 h-8" />,
       title: "Mobile Development",
       skills: ["Native Android Development", "GUI(JavaFX)", "Cyber Security"],
-      color: "from-orange-500 to-red-500"
+      color: "blue"
     },
     {
       icon: <Wrench className="w-8 h-8" />,
       title: "Tools & Others",
       skills: ["Git", "GitHub", "VS Code", "IntelliJ IDEA", "Android Studio"],
-      color: "from-indigo-500 to-purple-500"
+      color: "blue"
     },
     {
       icon: <Languages className="w-8 h-8" />,
       title: "Languages",
       skills: ["English (Professional)", "Bangla (Native)", "Hindi (Professional)"],
-      color: "from-pink-500 to-rose-500"
+      color: "blue"
     }
   ]
 
@@ -54,7 +54,7 @@ export default function Skills() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <span className="text-blue-600 dark:text-blue-400">
               Skills & Technologies
             </span>
           </h2>
@@ -74,7 +74,7 @@ export default function Skills() {
               whileHover={{ y: -10, rotateY: 5 }}
               className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
             >
-              <div className={`inline-flex p-4 rounded-xl bg-gradient-to-r ${category.color} text-white mb-6`}>
+              <div className="inline-flex p-4 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-6">
                 {category.icon}
               </div>
               
@@ -91,7 +91,7 @@ export default function Skills() {
                     viewport={{ once: true }}
                     transition={{ delay: (index * 0.1) + (skillIndex * 0.05) }}
                     whileHover={{ scale: 1.1, y: -2 }}
-                    className={`px-3 py-2 bg-gradient-to-r ${category.color} text-white text-sm font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-200 cursor-default`}
+                    className="px-3 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-200 cursor-default"
                   >
                     {skill}
                   </motion.span>

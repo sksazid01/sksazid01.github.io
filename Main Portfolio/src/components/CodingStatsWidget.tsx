@@ -17,7 +17,7 @@ interface CodingStatsWidgetProps {
 export default function CodingStatsWidget({ stats, loading }: CodingStatsWidgetProps) {
   if (loading) {
     return (
-      <div className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-6 animate-pulse">
+      <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 animate-pulse">
         <div className="h-6 bg-gray-300 dark:bg-gray-600 rounded mb-4 mx-auto w-80"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
@@ -59,19 +59,13 @@ export default function CodingStatsWidget({ stats, loading }: CodingStatsWidgetP
   }
 
   const getLanguageColor = (index: number) => {
-    const colors = [
-      'from-purple-500 to-pink-500',
-      'from-blue-500 to-cyan-500',
-      'from-green-500 to-emerald-500',
-      'from-orange-500 to-red-500',
-      'from-indigo-500 to-purple-500'
-    ]
-    return colors[index % colors.length]
+    // All languages use blue color for consistency
+    return 'blue'
   }
 
   return (
     <motion.div 
-      className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-6 border border-purple-100 dark:border-purple-800/50"
+      className="mt-8 bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800/50"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}

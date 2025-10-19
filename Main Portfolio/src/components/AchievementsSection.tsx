@@ -56,7 +56,7 @@ export default function AchievementsSection() {
       date: '2024-12',
       category: 'coding',
       icon: <Code className="w-6 h-6" />,
-      color: 'from-blue-500 to-cyan-500',
+      color: 'blue',
       status: 'ongoing',
       badge: 'Master'
     },
@@ -67,7 +67,7 @@ export default function AchievementsSection() {
       date: '2024-12',
       category: 'project',
       icon: <Trophy className="w-6 h-6" />,
-      color: 'from-green-500 to-emerald-500',
+      color: 'blue',
       status: 'completed',
       badge: 'Complete',
       technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
@@ -83,7 +83,7 @@ export default function AchievementsSection() {
       date: '2024-10',
       category: 'project',
       icon: <Smartphone className="w-6 h-6" />,
-      color: 'from-purple-500 to-pink-500',
+      color: 'blue',
       status: 'featured',
       badge: 'Featured',
       technologies: ['Android', 'Kotlin', 'Jetpack Compose', 'Room Database', 'MVVM'],
@@ -99,7 +99,7 @@ export default function AchievementsSection() {
       date: '2023-07',
       category: 'project',
       icon: <ShoppingCart className="w-6 h-6" />,
-      color: 'from-blue-500 to-cyan-500',
+      color: 'blue',
       status: 'completed',
       badge: 'Academic',
       technologies: ['Django', 'Python', 'JavaScript', 'PostgreSQL', 'HTML/CSS'],
@@ -115,7 +115,7 @@ export default function AchievementsSection() {
       date: '2024-08',
       category: 'learning',
       icon: <BarChart3 className="w-6 h-6" />,
-      color: 'from-orange-500 to-red-500',
+      color: 'blue',
       status: 'ongoing',
       badge: 'Advanced',
       technologies: ['Python', 'Keras', 'NumPy', 'Matplotlib', 'Pandas', 'Scikit-learn'],
@@ -128,7 +128,7 @@ export default function AchievementsSection() {
       date: '2024-06',
       category: 'coding',
       icon: <Target className="w-6 h-6" />,
-      color: 'from-indigo-500 to-purple-500',
+      color: 'blue',
       status: 'ongoing',
       badge: 'Expert',
       repoName: 'Random_Problem_Solving_Code'
@@ -140,7 +140,7 @@ export default function AchievementsSection() {
       date: '2024-02',
       category: 'project',
       icon: <Gamepad2 className="w-6 h-6" />,
-      color: 'from-teal-500 to-green-500',
+      color: 'blue',
       status: 'completed',
       badge: 'Innovation',
       technologies: ['Java', 'JavaFX', 'FXML', 'CSS', 'Scene Builder'],
@@ -156,7 +156,7 @@ export default function AchievementsSection() {
       date: '2024-04',
       category: 'recognition',
       icon: <Medal className="w-6 h-6" />,
-      color: 'from-yellow-500 to-orange-500',
+      color: 'blue',
       status: 'completed',
       badge: 'Champion'
     },
@@ -167,7 +167,7 @@ export default function AchievementsSection() {
       date: '2025-07',
       category: 'project',
       icon: <Users className="w-6 h-6" />,
-      color: 'from-orange-500 to-red-500',
+      color: 'blue',
       status: 'in-progress',
       badge: 'Upcoming',
       technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JWT'],
@@ -183,7 +183,7 @@ export default function AchievementsSection() {
       date: '2024-01',
       category: 'learning',
       icon: <Clock className="w-6 h-6" />,
-      color: 'from-blue-600 to-indigo-600',
+      color: 'blue',
       status: 'ongoing',
       badge: 'Veteran'
     }
@@ -217,7 +217,7 @@ export default function AchievementsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <span className="text-blue-600 dark:text-blue-400">
               Projects
             </span>
           </h2>
@@ -235,10 +235,10 @@ export default function AchievementsSection() {
           className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12"
         >
           {[
-            { label: 'Total', value: stats.total, color: 'from-blue-500 to-cyan-500' },
-            { label: 'Applications', value: stats.projects, color: 'from-purple-500 to-pink-500' },
-            { label: 'Learning', value: stats.learning, color: 'from-orange-500 to-red-500' },
-            { label: 'Coding Skills', value: stats.coding, color: 'from-green-500 to-emerald-500' }
+            { label: 'Total', value: stats.total },
+            { label: 'Applications', value: stats.projects },
+            { label: 'Learning', value: stats.learning },
+            { label: 'Coding Skills', value: stats.coding }
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -249,7 +249,7 @@ export default function AchievementsSection() {
               whileHover={{ scale: 1.05, y: -5 }}
               className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-lg text-center border border-gray-200/50 dark:border-gray-700/50"
             >
-              <div className={`text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}>
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">
                 {stat.value}
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">

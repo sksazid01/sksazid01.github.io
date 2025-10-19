@@ -23,7 +23,7 @@ export default function Projects() {
       description: "Native Android application for restaurant management and order processing. Built with modern Android development practices using Jetpack Compose for UI and efficient order tracking system.",
       icon: <Smartphone className="w-12 h-12" />,
       technologies: ["Android", "Kotlin", "Jetpack Compose", "Room Database", "MVVM"],
-      color: "from-green-500 to-emerald-500",
+      color: "blue",
       timeline: "07/2023 - Present",
       links: {
         github: "https://github.com/sksazid01",
@@ -35,7 +35,7 @@ export default function Projects() {
       description: "Interactive word matching game developed using JavaFX with engaging UI/UX design. Features multiple difficulty levels, score tracking system, and smooth animations.",
       icon: <Gamepad2 className="w-12 h-12" />,
       technologies: ["Java", "JavaFX", "FXML", "CSS", "Scene Builder"],
-      color: "from-purple-500 to-pink-500",
+      color: "blue",
       timeline: "04/2023 - 06/2023",
       links: {
         github: "https://github.com/sksazid01",
@@ -47,7 +47,7 @@ export default function Projects() {
       description: "Full-stack web application for managing club activities and member interactions. Includes member registration, event management, and administrative dashboard with real-time updates.",
       icon: <BarChart3 className="w-12 h-12" />,
       technologies: ["React", "Node.js", "MongoDB", "Express", "JWT"],
-      color: "from-orange-500 to-red-500",
+      color: "blue",
       timeline: "01/2025 - 07/2025",
       links: {
         github: "https://github.com/sksazid01",
@@ -59,7 +59,7 @@ export default function Projects() {
       description: "Working on long-term data science and machine learning projects using Python libraries. Includes data analysis, visualization, and predictive modeling with real-world datasets.",
       icon: <BarChart3 className="w-12 h-12" />,
       technologies: ["Python", "Keras", "NumPy", "Matplotlib", "Pandas", "Scikit-learn"],
-      color: "from-cyan-500 to-blue-500",
+      color: "blue",
       timeline: "03/2023 - Present",
       links: {
         github: "https://github.com/sksazid01"

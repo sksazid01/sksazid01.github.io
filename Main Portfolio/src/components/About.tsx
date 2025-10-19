@@ -17,49 +17,49 @@ export default function About() {
       icon: <GraduationCap className="w-6 h-6" />,
       title: "BSc in Computer Science and Engineering",
       description: "Shahjalal University of Science and Technology, Sylhet, Bangladesh",
-      color: "from-blue-500 to-cyan-500"
+      color: "blue"
     },
     {
       icon: <Trophy className="w-6 h-6" />,
       title: "Competitive Programmer",
       description: "CodeForces: 1200+ rating (Pupil), solved 650+ problems using C, C++, Python, and Swift",
-      color: "from-purple-500 to-pink-500"
+      color: "blue"
     },
     {
       icon: <Code className="w-6 h-6" />,
       title: "Multi-Platform Problem Solver",
       description: "VJudge: Solved 325+ problems. CodeChef: Achieved 1474 rating, solved 100+ problems",
-      color: "from-green-500 to-emerald-500"
+      color: "blue"
     },
     {
       icon: <Database className="w-6 h-6" />,
       title: "Data Science & ML",
       description: "Python libraries: Keras, NumPy, Matplotlib, Pandas. Model training, data visualization, and predictive analytics",
-      color: "from-orange-500 to-red-500"
+      color: "blue"
     },
     {
       icon: <Globe className="w-6 h-6" />,
       title: "Technical Skills",
       description: "Languages: C/C++, Python, Java, Kotlin, JavaScript. Web Development, Data Structures & Algorithms, Problem Solving",
-      color: "from-indigo-500 to-purple-500"
+      color: "blue"
     },
     {
       icon: <Star className="w-6 h-6" />,
       title: "Languages",
       description: "English (Native or Bilingual Proficiency), Bangla (Native or Bilingual Proficiency), Hindi (Professional Working Proficiency)",
-      color: "from-pink-500 to-rose-500"
+      color: "blue"
     },
     {
       icon: <Target className="w-6 h-6" />,
       title: "SUST Programming Training Camp",
       description: "Competitive Programming Training Camp participant (03/2022 - Present)",
-      color: "from-cyan-500 to-blue-500"
+      color: "blue"
     },
     {
       icon: <BookOpen className="w-6 h-6" />,
       title: "Academic Projects",
       description: "E-commerce Marketplace (Java, Servlets), Club Management System (Kotlin, Jetpack Compose), Restaurant Management System, Word Matching Game (JavaFX)",
-      color: "from-teal-500 to-green-500"
+      color: "blue"
     }
   ]
 
@@ -100,7 +100,7 @@ export default function About() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <span className="text-blue-600 dark:text-blue-400">
               About Me
             </span>
           </h2>
@@ -140,7 +140,7 @@ export default function About() {
               className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
               style={{ perspective: '1000px' }}
             >
-              <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${highlight.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
+              <div className="inline-flex p-3 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-300">
                 {highlight.icon}
               </div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
@@ -193,10 +193,8 @@ export default function About() {
           transition={{ duration: 0.8 }}
           className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50"
         >
-          <h3 className="text-2xl font-bold text-center mb-8">
-            <span className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
-              🏆 Competitive Programming Profiles
-            </span>
+          <h3 className="text-2xl font-bold text-center mb-8 text-blue-600 dark:text-blue-400">
+            🏆 Competitive Programming Profiles
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <CodeforcesWidget handle="sksazid" />
