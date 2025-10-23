@@ -61,7 +61,7 @@ export default function ProfessionalAchievements() {
       date: 'September 2025',
       category: 'hackathon',
       icon: <Trophy className="w-8 h-8" />,
-      color: 'blue',
+      color: 'from-blue-400/20 to-cyan-400/20',
       teamName: 'SUST_Prompt_Storm',
       results: [
         {
@@ -109,7 +109,7 @@ export default function ProfessionalAchievements() {
       date: 'September 2025',
       category: 'hackathon',
       icon: <Star className="w-8 h-8" />,
-      color: 'blue',
+      color: 'from-blue-400/20 to-cyan-400/20',
       teamName: 'SUST_Prompt_Storm',
       results: [
         {
@@ -155,7 +155,7 @@ export default function ProfessionalAchievements() {
       date: 'February 2024',
       category: 'competition',
       icon: <Code className="w-8 h-8" />,
-      color: 'blue',
+      color: 'from-blue-400/20 to-cyan-400/20',
       teamName: 'SUST Team',
       results: [
         {
@@ -254,24 +254,44 @@ export default function ProfessionalAchievements() {
               className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden"
             >
               {/* Achievement Header */}
-              <div className={`bg-gradient-to-r ${achievement.color} p-8 text-white`}>
+              <div className={`bg-gradient-to-r ${achievement.color} p-8 ${
+                achievement.id === '3' 
+                  ? 'text-gray-900 dark:text-white backdrop-blur-sm' 
+                  : 'text-white'
+              }`}>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="bg-white/20 backdrop-blur-sm p-3 rounded-xl">
+                      <div className={`${
+                        achievement.id === '3' 
+                          ? 'bg-blue-100 dark:bg-blue-900/40' 
+                          : 'bg-white/20'
+                      } backdrop-blur-sm p-3 rounded-xl ${
+                        achievement.id === '3'
+                          ? 'text-blue-600 dark:text-blue-400'
+                          : ''
+                      }`}>
                         {achievement.icon}
                       </div>
                       <div>
                         <h3 className="text-2xl md:text-3xl font-bold mb-1">
                           {achievement.title}
                         </h3>
-                        <p className="text-white/90 text-sm md:text-base">
+                        <p className={`${
+                          achievement.id === '3'
+                            ? 'text-gray-700 dark:text-gray-300'
+                            : 'text-white/90'
+                        } text-sm md:text-base`}>
                           {achievement.event}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 text-sm md:text-base text-white/90 mb-4">
+                    <div className={`flex flex-wrap gap-4 text-sm md:text-base ${
+                      achievement.id === '3'
+                        ? 'text-gray-700 dark:text-gray-300'
+                        : 'text-white/90'
+                    } mb-4`}>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
                         <span>{achievement.organizer}</span>
@@ -283,7 +303,11 @@ export default function ProfessionalAchievements() {
                     </div>
 
                     {achievement.location && (
-                      <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
+                      <div className={`inline-block ${
+                        achievement.id === '3'
+                          ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300'
+                          : 'bg-white/20 text-white'
+                      } backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium`}>
                         {achievement.location}
                       </div>
                     )}
