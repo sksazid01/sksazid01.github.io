@@ -205,17 +205,17 @@ export default function Skills() {
                 activeSkill === skill.name ? 'scale-105' : ''
               }`}
             >
-              {/* Perimeter Border Light Animation */}
+              {/* Top Edge Light Animation */}
               <div className="absolute inset-0 pointer-events-none">
                 {/* Top Edge */}
                 <motion.div
-                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
                   style={{ filter: 'blur(1px)' }}
                   animate={{
                     left: ['-40%', '100%']
                   }}
                   transition={{
-                    duration: 8,
+                    duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
                     repeatDelay: 0
@@ -223,60 +223,15 @@ export default function Skills() {
                 />
                 {/* Top Edge Glow */}
                 <motion.div
-                  className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm"
+                  className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
                   animate={{
                     left: ['-40%', '100%']
                   }}
                   transition={{
-                    duration: 8,
+                    duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
                     repeatDelay: 0
-                  }}
-                />
-                {/* Right Edge */}
-                <motion.div
-                  className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{
-                    top: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 8,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: 2
-                  }}
-                />
-                {/* Bottom Edge */}
-                <motion.div
-                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{
-                    right: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 8,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: 4
-                  }}
-                />
-                {/* Left Edge */}
-                <motion.div
-                  className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{
-                    bottom: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 8,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: 6
                   }}
                 />
               </div>
@@ -321,65 +276,33 @@ export default function Skills() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
         >
           <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
-            {/* Perimeter Border Light Animation */}
+            {/* Top Edge Light Animation */}
             <div className="absolute inset-0 pointer-events-none">
               {/* Top Edge */}
               <motion.div
-                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
                 style={{ filter: 'blur(1px)' }}
                 animate={{
                   left: ['-40%', '100%']
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 3,
                   ease: 'linear',
                   repeat: Infinity,
                   repeatDelay: 0
                 }}
               />
-              {/* Right Edge */}
+              {/* Top Edge Glow */}
               <motion.div
-                className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
+                className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
                 animate={{
-                  top: ['-40%', '100%']
+                  left: ['-40%', '100%']
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 3,
                   ease: 'linear',
                   repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 2
-                }}
-              />
-              {/* Bottom Edge */}
-              <motion.div
-                className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  right: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 8,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 4
-                }}
-              />
-              {/* Left Edge */}
-              <motion.div
-                className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  bottom: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 8,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 6
+                  repeatDelay: 0
                 }}
               />
             </div>
@@ -389,66 +312,35 @@ export default function Skills() {
             <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Total Projects</div>
           </div>
           <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
-            {/* Perimeter Border Light Animation */}
+            {/* Top Edge Light Animation */}
             <div className="absolute inset-0 pointer-events-none">
               {/* Top Edge */}
               <motion.div
-                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
                 style={{ filter: 'blur(1px)' }}
                 animate={{
                   left: ['-40%', '100%']
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 3,
                   ease: 'linear',
                   repeat: Infinity,
                   repeatDelay: 0,
                   delay: 0.5
                 }}
               />
-              {/* Right Edge */}
+              {/* Top Edge Glow */}
               <motion.div
-                className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
+                className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
                 animate={{
-                  top: ['-40%', '100%']
+                  left: ['-40%', '100%']
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 3,
                   ease: 'linear',
                   repeat: Infinity,
                   repeatDelay: 0,
-                  delay: 2.5
-                }}
-              />
-              {/* Bottom Edge */}
-              <motion.div
-                className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  right: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 8,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 4.5
-                }}
-              />
-              {/* Left Edge */}
-              <motion.div
-                className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  bottom: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 8,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 6.5
+                  delay: 0.5
                 }}
               />
             </div>
@@ -458,66 +350,35 @@ export default function Skills() {
             <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Advanced Skills</div>
           </div>
           <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
-            {/* Perimeter Border Light Animation */}
+            {/* Top Edge Light Animation */}
             <div className="absolute inset-0 pointer-events-none">
               {/* Top Edge */}
               <motion.div
-                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
                 style={{ filter: 'blur(1px)' }}
                 animate={{
                   left: ['-40%', '100%']
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 3,
                   ease: 'linear',
                   repeat: Infinity,
                   repeatDelay: 0,
                   delay: 1
                 }}
               />
-              {/* Right Edge */}
+              {/* Top Edge Glow */}
               <motion.div
-                className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
+                className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
                 animate={{
-                  top: ['-40%', '100%']
+                  left: ['-40%', '100%']
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 3,
                   ease: 'linear',
                   repeat: Infinity,
                   repeatDelay: 0,
-                  delay: 3
-                }}
-              />
-              {/* Bottom Edge */}
-              <motion.div
-                className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  right: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 8,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 5
-                }}
-              />
-              {/* Left Edge */}
-              <motion.div
-                className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  bottom: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 8,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 7
+                  delay: 1
                 }}
               />
             </div>

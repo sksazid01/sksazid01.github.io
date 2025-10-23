@@ -140,66 +140,64 @@ export default function About() {
               className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
               style={{ perspective: '1000px' }}
             >
-              {/* Perimeter Border Light Animation */}
+              {/* Top and Bottom Edge Light Animation */}
               <div className="absolute inset-0 pointer-events-none">
                 {/* Top Edge */}
                 <motion.div
-                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-violet-500/80 to-transparent"
                   style={{ filter: 'blur(1px)' }}
                   animate={{
                     left: ['-40%', '100%']
                   }}
                   transition={{
-                    duration: 8,
+                    duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
                     repeatDelay: 0,
-                    delay: index * 0.2
+                    delay: index * 0.1
                   }}
                 />
-                {/* Right Edge */}
+                {/* Top Edge Glow */}
                 <motion.div
-                  className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
+                  className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-violet-400/40 to-transparent blur-sm"
                   animate={{
-                    top: ['-40%', '100%']
+                    left: ['-40%', '100%']
                   }}
                   transition={{
-                    duration: 8,
+                    duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
                     repeatDelay: 0,
-                    delay: 2 + index * 0.2
+                    delay: index * 0.1
                   }}
                 />
                 {/* Bottom Edge */}
                 <motion.div
-                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-violet-500/80 to-transparent"
                   style={{ filter: 'blur(1px)' }}
                   animate={{
                     right: ['-40%', '100%']
                   }}
                   transition={{
-                    duration: 8,
+                    duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
                     repeatDelay: 0,
-                    delay: 4 + index * 0.2
+                    delay: index * 0.1
                   }}
                 />
-                {/* Left Edge */}
+                {/* Bottom Edge Glow */}
                 <motion.div
-                  className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
+                  className="absolute bottom-0 right-0 h-[4px] w-[40%] bg-gradient-to-l from-transparent via-violet-400/40 to-transparent blur-sm"
                   animate={{
-                    bottom: ['-40%', '100%']
+                    right: ['-40%', '100%']
                   }}
                   transition={{
-                    duration: 8,
+                    duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
                     repeatDelay: 0,
-                    delay: 6 + index * 0.2
+                    delay: index * 0.1
                   }}
                 />
               </div>
@@ -257,65 +255,60 @@ export default function About() {
           transition={{ duration: 0.8 }}
           className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
         >
-          {/* Perimeter Border Light Animation */}
+          {/* Top and Bottom Edge Light Animation */}
           <div className="absolute inset-0 pointer-events-none">
             {/* Top Edge */}
             <motion.div
-              className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+              className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-violet-500/80 to-transparent"
               style={{ filter: 'blur(1px)' }}
               animate={{
                 left: ['-40%', '100%']
               }}
               transition={{
-                duration: 8,
+                duration: 3,
                 ease: 'linear',
                 repeat: Infinity,
                 repeatDelay: 0
               }}
             />
-            {/* Right Edge */}
+            {/* Top Edge Glow */}
             <motion.div
-              className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-              style={{ filter: 'blur(1px)' }}
+              className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-violet-400/40 to-transparent blur-sm"
               animate={{
-                top: ['-40%', '100%']
+                left: ['-40%', '100%']
               }}
               transition={{
-                duration: 8,
+                duration: 3,
                 ease: 'linear',
                 repeat: Infinity,
-                repeatDelay: 0,
-                delay: 2
+                repeatDelay: 0
               }}
             />
             {/* Bottom Edge */}
             <motion.div
-              className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+              className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-violet-500/80 to-transparent"
               style={{ filter: 'blur(1px)' }}
               animate={{
                 right: ['-40%', '100%']
               }}
               transition={{
-                duration: 8,
+                duration: 3,
                 ease: 'linear',
                 repeat: Infinity,
-                repeatDelay: 0,
-                delay: 4
+                repeatDelay: 0
               }}
             />
-            {/* Left Edge */}
+            {/* Bottom Edge Glow */}
             <motion.div
-              className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-              style={{ filter: 'blur(1px)' }}
+              className="absolute bottom-0 right-0 h-[4px] w-[40%] bg-gradient-to-l from-transparent via-violet-400/40 to-transparent blur-sm"
               animate={{
-                bottom: ['-40%', '100%']
+                right: ['-40%', '100%']
               }}
               transition={{
-                duration: 8,
+                duration: 3,
                 ease: 'linear',
                 repeat: Infinity,
-                repeatDelay: 0,
-                delay: 6
+                repeatDelay: 0
               }}
             />
           </div>
