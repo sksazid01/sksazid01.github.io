@@ -27,7 +27,7 @@ const ProfessionalAchievements = dynamic(() => import('@/components/Professional
   loading: () => <div className="py-20 text-center">Loading achievements...</div>
 })
 
-const AchievementsSection = dynamic(() => import('@/components/AchievementsSection'), {
+const Projects = dynamic(() => import('@/components/Projects'), {
   loading: () => <div className="py-20 text-center">Loading projects...</div>
 })
 
@@ -71,10 +71,10 @@ export default function Home() {
       >
         <Hero />
         <About />
+        <Projects />
         <Skills />
         <Experience />
         <ProfessionalAchievements />
-        <AchievementsSection />
         <Contact />
         <Footer />
       </motion.div>

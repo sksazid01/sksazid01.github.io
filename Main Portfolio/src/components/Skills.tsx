@@ -1,177 +1,82 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { Code, Globe, BarChart3, Smartphone, Wrench, Languages, Calendar } from 'lucide-react'
+import { Trophy, Code, Target, Award, Zap, TrendingUp } from 'lucide-react'
+import CodeforcesWidget from './CodeforcesWidget'
+import VJudgeWidget from './VJudgeWidget'
+import CodeChefWidget from './CodeChefWidget'
+import CodingStatsWidget from './CodingStatsWidget'
+import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function Skills() {
-  const [activeSkill, setActiveSkill] = useState<string | null>(null)
+  const { codingStats, loading } = useDynamicPortfolio()
 
-  interface Skill {
-    name: string
-    level: 'Beginner' | 'Intermediate' | 'Proficient' | 'Advanced'
-    category: string
-    projects: number
-    experience: string
-    description: string
-  }
-
-  const skills: Skill[] = [
-    // Programming Languages
+  const cpHighlights = [
     {
-      name: 'Python',
-      level: 'Beginner',
-      category: 'Programming',
-      projects: 5,
-      experience: '2+ years',
-      description: 'Data science, machine learning, and web APIs'
+      icon: <Trophy className="w-6 h-6" />,
+      title: "Codeforces Pupil",
+      rating: "1200+",
+      description: "Active competitive programmer with consistent rating",
+      color: "blue"
     },
     {
-      name: 'Java',
-      level: 'Intermediate',
-      category: 'Programming',
-      projects: 3,
-      experience: '1+ years',
-      description: 'Enterprise applications and Android development'
+      icon: <Code className="w-6 h-6" />,
+      title: "Multi-Platform Solver",
+      rating: "650+",
+      description: "Problems solved across Codeforces, VJudge, CodeChef",
+      color: "purple"
     },
     {
-      name: 'C and C++',
-      level: 'Intermediate',
-      category: 'Programming',
-      projects: 2,
-      experience: '3+ years',
-      description: 'Competitive programming and system-level development'
+      icon: <Target className="w-6 h-6" />,
+      title: "VJudge Enthusiast",
+      rating: "330+",
+      description: "Diverse problem-solving experience",
+      color: "green"
     },
     {
-      name: 'JavaScript/TypeScript',
-      level: 'Beginner',
-      category: 'Programming',
-      projects: 3,
-      experience: '6+ months',
-      description: 'Modern web development with type safety'
+      icon: <Award className="w-6 h-6" />,
+      title: "CodeChef Competitor",
+      rating: "1474",
+      description: "100+ problems solved with strong rating",
+      color: "orange"
     },
     {
-      name: 'Kotlin',
-      level: 'Intermediate',
-      category: 'Programming',
-      projects: 2,
-      experience: '1+ years',
-      description: 'Android development with Jetpack Compose'
-    },
-    // Web Development
-    {
-      name: 'Django',
-      level: 'Intermediate',
-      category: 'Web Development',
-      projects: 2,
-      experience: '1+ years',
-      description: 'Python web framework for rapid development'
+      icon: <Zap className="w-6 h-6" />,
+      title: "Primary Languages",
+      rating: "C/C++",
+      description: "Expert in competitive programming with C++ and Python",
+      color: "red"
     },
     {
-      name: 'React/Next.js',
-      level: 'Intermediate',
-      category: 'Web Development',
-      projects: 3,
-      experience: '6+ months',
-      description: 'Modern React ecosystem and SSR applications'
-    },
-    {
-      name: 'HTML5 & CSS3',
-      level: 'Intermediate',
-      category: 'Web Development',
-      projects: 4,
-      experience: '2+ years',
-      description: 'Responsive design and modern web standards'
-    },
-    // Mobile Development
-    {
-      name: 'Android Development',
-      level: 'Intermediate',
-      category: 'Mobile',
-      projects: 2,
-      experience: '1+ years',
-      description: 'Native Android apps with Kotlin and Jetpack Compose'
-    },
-    {
-      name: 'JavaFX',
-      level: 'Intermediate',
-      category: 'Mobile',
-      projects: 1,
-      experience: '6+ months',
-      description: 'Desktop GUI applications with Java'
-    },
-    // Data Science & ML
-    {
-      name: 'Machine Learning',
-      level: 'Proficient',
-      category: 'Data Science',
-      projects: 2,
-      experience: '1+ years',
-      description: 'Deep learning models with Keras and TensorFlow'
-    },
-    {
-      name: 'Data Science',
-      level: 'Intermediate',
-      category: 'Data Science',
-      projects: 3,
-      experience: '1+ years',
-      description: 'Statistical analysis with Pandas and NumPy'
-    },
-    {
-      name: 'Data Structures & Algorithms',
-      level: 'Proficient',
-      category: 'Data Science',
-      projects: 10,
-      experience: '3+ years',
-      description: 'Competitive programming and problem solving (650+ problems)'
-    },
-    // Tools & Others
-    {
-      name: 'Git & GitHub',
-      level: 'Intermediate',
-      category: 'Tools',
-      projects: 15,
-      experience: '2+ years',
-      description: 'Version control and collaborative development'
-    },
-    {
-      name: 'VS Code',
-      level: 'Proficient',
-      category: 'Tools',
-      projects: 20,
-      experience: '3+ years',
-      description: 'Primary development environment with extensions'
-    },
-    {
-      name: 'IntelliJ IDEA',
-      level: 'Intermediate',
-      category: 'Tools',
-      projects: 5,
-      experience: '1+ years',
-      description: 'Java and Kotlin development IDE'
-    },
-    {
-      name: 'Android',
-      level: 'Intermediate',
-      category: 'Tools',
-      projects: 2,
-      experience: '1+ years',
-      description: 'Android app development environment'
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Training Camp",
+      rating: "3+ Years",
+      description: "SUST Programming Training Camp participant since 2022",
+      color: "indigo"
     }
   ]
 
-  const getLevelIcon = (level: string) => {
-    switch (level) {
-      case 'Beginner': return '🎯'
-      case 'Intermediate': return '⭐'
-      case 'Proficient': return '✅'
-      case 'Advanced': return '🚀'
-      default: return '💻'
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6 }
     }
   }
 
   return (
-    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/50">
+    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -181,33 +86,37 @@ export default function Skills() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              Skills & Technical Expertise
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text">
+              Competitive Programming
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Technologies and tools I work with to bring ideas to life
+            Problem-solving expertise across multiple coding platforms
           </p>
         </motion.div>
 
-        {/* Unified Skills Grid with Detailed Proficiency UI */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {skills.map((skill, index) => (
+        {/* CP Highlights Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
+        >
+          {cpHighlights.map((highlight, index) => (
             <motion.div
-              key={skill.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.05 }}
-              onHoverStart={() => setActiveSkill(skill.name)}
-              onHoverEnd={() => setActiveSkill(null)}
-              className={`relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 group overflow-hidden ${
-                activeSkill === skill.name ? 'scale-105' : ''
-              }`}
+              key={index}
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.05,
+                rotateY: 5,
+                z: 50
+              }}
+              className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
+              style={{ perspective: '1000px' }}
             >
-              {/* Top Edge Light Animation */}
+              {/* Animated Border */}
               <div className="absolute inset-0 pointer-events-none">
-                {/* Top Edge */}
                 <motion.div
                   className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
                   style={{ filter: 'blur(1px)' }}
@@ -218,10 +127,10 @@ export default function Skills() {
                     duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
-                    repeatDelay: 0
+                    repeatDelay: 0,
+                    delay: index * 0.1
                   }}
                 />
-                {/* Top Edge Glow */}
                 <motion.div
                   className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
                   animate={{
@@ -231,191 +140,130 @@ export default function Skills() {
                     duration: 3,
                     ease: 'linear',
                     repeat: Infinity,
-                    repeatDelay: 0
+                    repeatDelay: 0,
+                    delay: index * 0.1
                   }}
                 />
               </div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium">
-                  <span>{getLevelIcon(skill.level)}</span>
-                  {skill.level}
-                </div>
-                <div className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-                  {skill.category}
-                </div>
-              </div>
 
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                {skill.name}
+              <div className={`inline-flex p-3 rounded-xl bg-${highlight.color}-100 dark:bg-${highlight.color}-900/30 text-${highlight.color}-600 dark:text-${highlight.color}-400 mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10`}>
+                {highlight.icon}
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors relative z-10">
+                {highlight.title}
               </h3>
-
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
-                {skill.description}
-              </p>
-
-              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                <div className="flex items-center gap-1">
-                  <Code className="w-4 h-4 text-blue-500" />
-                  <span>{skill.projects} projects</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4 text-green-500" />
-                  <span>{skill.experience}</span>
-                </div>
+              <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text mb-2 relative z-10">
+                {highlight.rating}
               </div>
+              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed relative z-10">
+                {highlight.description}
+              </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Statistics */}
+        {/* Competitive Programming Profiles */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+          transition={{ duration: 0.8 }}
+          className="mb-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
         >
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
-            {/* Top Edge Light Animation */}
-            <div className="absolute inset-0 pointer-events-none">
-              {/* Top Edge */}
-              <motion.div
-                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  left: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 3,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0
-                }}
-              />
-              {/* Top Edge Glow */}
-              <motion.div
-                className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
-                animate={{
-                  left: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 3,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0
-                }}
-              />
-            </div>
-            <div className="text-3xl font-bold text-blue-500 mb-2 relative z-10">
-              {skills.reduce((acc, skill) => acc + skill.projects, 0)}
-            </div>
-            <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Total Projects</div>
+          {/* Animated Border */}
+          <div className="absolute inset-0 pointer-events-none">
+            <motion.div
+              className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-purple-500/80 to-transparent"
+              style={{ filter: 'blur(1px)' }}
+              animate={{
+                left: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 3,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0
+              }}
+            />
+            <motion.div
+              className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-purple-400/40 to-transparent blur-sm"
+              animate={{
+                left: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 3,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0
+              }}
+            />
+            <motion.div
+              className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-purple-500/80 to-transparent"
+              style={{ filter: 'blur(1px)' }}
+              animate={{
+                right: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 3,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0
+              }}
+            />
+            <motion.div
+              className="absolute bottom-0 right-0 h-[4px] w-[40%] bg-gradient-to-l from-transparent via-purple-400/40 to-transparent blur-sm"
+              animate={{
+                right: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 3,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0
+              }}
+            />
           </div>
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
-            {/* Top Edge Light Animation */}
-            <div className="absolute inset-0 pointer-events-none">
-              {/* Top Edge */}
-              <motion.div
-                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  left: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 3,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 0.5
-                }}
-              />
-              {/* Top Edge Glow */}
-              <motion.div
-                className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
-                animate={{
-                  left: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 3,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 0.5
-                }}
-              />
-            </div>
-            <div className="text-3xl font-bold text-green-500 mb-2 relative z-10">
-              {skills.filter(skill => skill.level === 'Proficient' || skill.level === 'Advanced').length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Advanced Skills</div>
-          </div>
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
-            {/* Top Edge Light Animation */}
-            <div className="absolute inset-0 pointer-events-none">
-              {/* Top Edge */}
-              <motion.div
-                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
-                style={{ filter: 'blur(1px)' }}
-                animate={{
-                  left: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 3,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 1
-                }}
-              />
-              {/* Top Edge Glow */}
-              <motion.div
-                className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
-                animate={{
-                  left: ['-40%', '100%']
-                }}
-                transition={{
-                  duration: 3,
-                  ease: 'linear',
-                  repeat: Infinity,
-                  repeatDelay: 0,
-                  delay: 1
-                }}
-              />
-            </div>
-            <div className="text-3xl font-bold text-purple-500 mb-2 relative z-10">
-              {skills.length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Total Technologies</div>
+          
+          <h3 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text relative z-10">
+            🏆 Live Platform Statistics
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+            <CodeforcesWidget handle="sksazid" />
+            <VJudgeWidget handle="sksazid" />
+            <CodeChefWidget handle="sksazid" />
           </div>
         </motion.div>
 
-        {/* Expertise Legend */}
+        {/* Dynamic Coding Stats Widget */}
+        <CodingStatsWidget stats={codingStats} loading={loading} />
+
+        {/* Problem Solving Journey */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50"
+          transition={{ duration: 0.8 }}
+          className="mt-16 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800/50 dark:to-gray-900/50 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50"
         >
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">
-            Expertise Levels
+          <h3 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+            💡 Problem-Solving Approach
           </h3>
-          <div className="flex flex-wrap justify-center gap-6">
-            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <span>🎯</span>
-              <span className="font-medium">Beginner</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">650+</div>
+              <p className="text-gray-600 dark:text-gray-400 font-medium">Total Problems</p>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <span>⭐</span>
-              <span className="font-medium">Intermediate</span>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">3+</div>
+              <p className="text-gray-600 dark:text-gray-400 font-medium">Years Experience</p>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <span>✅</span>
-              <span className="font-medium">Proficient</span>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-pink-600 dark:text-pink-400 mb-2">3</div>
+              <p className="text-gray-600 dark:text-gray-400 font-medium">Active Platforms</p>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <span>🚀</span>
-              <span className="font-medium">Advanced</span>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">C++</div>
+              <p className="text-gray-600 dark:text-gray-400 font-medium">Primary Language</p>
             </div>
           </div>
         </motion.div>
