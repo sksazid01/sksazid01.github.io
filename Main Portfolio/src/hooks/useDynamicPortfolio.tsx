@@ -64,7 +64,18 @@ export const useDynamicPortfolio = () => {
   // GitHub Projects Integration
   const fetchGitHubProjects = useCallback(async () => {
     try {
-      const response = await fetch('https://api.github.com/users/sksazid01/repos')
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+      
+      const response = await fetch('https://api.github.com/users/sksazid01/repos', {
+        signal: controller.signal
+      })
+      clearTimeout(timeoutId)
+      
+      if (!response.ok) {
+        throw new Error('GitHub API response not ok')
+      }
+      
       const repos = await response.json()
       
       const filteredRepos = repos
@@ -85,7 +96,7 @@ export const useDynamicPortfolio = () => {
       
       setGithubStats(stats)
     } catch (error) {
-      console.log('GitHub API rate limit reached, using fallback data')
+      console.log('GitHub API not available, using fallback data')
       loadFallbackProjects()
     }
   }, [])
@@ -93,16 +104,23 @@ export const useDynamicPortfolio = () => {
   // GitHub Activity Stream
   const fetchGitHubActivity = useCallback(async () => {
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 5000)
+      
       const [userResponse, eventsResponse] = await Promise.all([
-        fetch('https://api.github.com/users/sksazid01'),
-        fetch('https://api.github.com/users/sksazid01/events/public?per_page=10')
+        fetch('https://api.github.com/users/sksazid01', { signal: controller.signal }),
+        fetch('https://api.github.com/users/sksazid01/events/public?per_page=10', { signal: controller.signal })
       ])
+      
+      clearTimeout(timeoutId)
 
       if (userResponse.ok && eventsResponse.ok) {
         const user = await userResponse.json()
         const events = await eventsResponse.json()
         
         setGithubActivity({ user, recentEvents: events })
+      } else {
+        loadFallbackActivity()
       }
     } catch (error) {
       console.log('GitHub activity not available')
@@ -113,15 +131,15 @@ export const useDynamicPortfolio = () => {
   // Visitor Counter
   const initializeVisitorCounter = useCallback(async () => {
     try {
-      // Try multiple external APIs for visitor counting
-      const apiEndpoints = [
-        'https://api.ipify.org?format=json', // Get IP for unique visitor simulation
-        'https://httpbin.org/uuid', // Get UUID for session tracking
-        'https://jsonplaceholder.typicode.com/posts/1' // Fallback API
-      ]
-
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 3000) // 3 second timeout
+      
       // Try to get visitor IP for unique counting
-      const ipResponse = await fetch('https://api.ipify.org?format=json')
+      const ipResponse = await fetch('https://api.ipify.org?format=json', {
+        signal: controller.signal
+      })
+      clearTimeout(timeoutId)
+      
       if (ipResponse.ok) {
         const ipData = await ipResponse.json()
         // Create a simple hash from IP for visitor counting
@@ -132,18 +150,7 @@ export const useDynamicPortfolio = () => {
         return
       }
 
-      // Fallback to UUID-based counting
-      const uuidResponse = await fetch('https://httpbin.org/uuid')
-      if (uuidResponse.ok) {
-        const uuidData = await uuidResponse.json()
-        const uuidHash = btoa(uuidData.uuid).slice(0, 8)
-        const baseCount = 2800 // Higher baseline for established portfolio
-        const uuidBasedCount = parseInt(uuidHash, 36) % 1500
-        setVisitorCount(baseCount + uuidBasedCount)
-        return
-      }
-
-      // Final fallback with time-based counting
+      // Fallback with time-based counting
       const timeBasedCount = 2000 + (Date.now() % 2500)
       setVisitorCount(timeBasedCount)
 
@@ -158,30 +165,24 @@ export const useDynamicPortfolio = () => {
   // Advanced Visitor Analytics using External APIs
   const initializeVisitorAnalytics = useCallback(async () => {
     try {
-      // Get comprehensive visitor data from multiple APIs
-      const [ipResponse, geoResponse] = await Promise.all([
-        fetch('https://api.ipify.org?format=json'),
-        fetch('https://httpbin.org/json').catch(() => null) // Fallback for geo data
-      ])
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 3000)
+      
+      const ipResponse = await fetch('https://api.ipify.org?format=json', {
+        signal: controller.signal
+      })
+      
+      clearTimeout(timeoutId)
 
       if (ipResponse.ok) {
         const ipData = await ipResponse.json()
         
-        // Try to get location data
-        let location = 'Unknown'
-        try {
-          // Use a simple approach - just set to 'Global' since we have IP data
-          if (ipData?.ip) {
-            location = 'Global'
-          }
-        } catch {
-          location = 'International'
-        }
+        // Use 'Global' since we have IP data
+        const location = ipData?.ip ? 'Global' : 'International'
 
         // Generate analytics based on IP and current time
         const ipHash = btoa(ipData.ip).slice(0, 8)
-        const today = new Date().toDateString()
-        const uniqueDaily = 75 + (parseInt(ipHash, 36) % 35) // 75-110 unique visitors per day (professional range)
+        const uniqueDaily = 75 + (parseInt(ipHash, 36) % 35) // 75-110 unique visitors per day
         
         const visitorAnalytics: VisitorData = {
           count: 2500 + (parseInt(ipHash, 36) % 2000), // 2500-4500 total visitors
@@ -192,6 +193,8 @@ export const useDynamicPortfolio = () => {
 
         setVisitorData(visitorAnalytics)
         setVisitorCount(visitorAnalytics.count)
+      } else {
+        throw new Error('Failed to fetch visitor data')
       }
     } catch (error) {
       console.log('Visitor analytics APIs not available, using fallback')
