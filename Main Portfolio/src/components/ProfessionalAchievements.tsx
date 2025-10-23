@@ -155,7 +155,7 @@ export default function ProfessionalAchievements() {
       date: 'February 2024',
       category: 'competition',
       icon: <Code className="w-8 h-8" />,
-      color: 'from-blue-500 via-cyan-500 to-teal-500',
+      color: 'blue',
       teamName: 'SUST Team',
       results: [
         {

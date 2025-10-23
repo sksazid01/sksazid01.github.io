@@ -118,10 +118,72 @@ export default function Experience() {
                   <motion.div
                     whileHover={{ scale: 1.02, y: -5 }}
                     transition={{ type: 'spring', stiffness: 300 }}
-                    className={`w-[calc(50%-100px)] bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-sm p-8 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 relative z-10 ${
+                    className={`w-[calc(50%-100px)] bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-sm p-8 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 relative z-10 overflow-hidden ${
                       index % 2 === 0 ? 'text-right' : 'text-left'
                     }`}
                   >
+                    {/* Perimeter Border Light Animation */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {/* Top Edge */}
+                      <motion.div
+                        className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          left: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0
+                        }}
+                      />
+                      {/* Right Edge */}
+                      <motion.div
+                        className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          top: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0,
+                          delay: 2
+                        }}
+                      />
+                      {/* Bottom Edge */}
+                      <motion.div
+                        className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          right: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0,
+                          delay: 4
+                        }}
+                      />
+                      {/* Left Edge */}
+                      <motion.div
+                        className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          bottom: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0,
+                          delay: 6
+                        }}
+                      />
+                    </div>
                     {/* Type Badge */}
                     <div className={`flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'} mb-3`}>
                       <span className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md">
@@ -219,8 +281,70 @@ export default function Experience() {
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: 'spring', stiffness: 300 }}
-                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-sm p-6 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700"
+                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 backdrop-blur-sm p-6 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 relative overflow-hidden"
                   >
+                    {/* Perimeter Border Light Animation */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {/* Top Edge */}
+                      <motion.div
+                        className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          left: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0
+                        }}
+                      />
+                      {/* Right Edge */}
+                      <motion.div
+                        className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          top: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0,
+                          delay: 2
+                        }}
+                      />
+                      {/* Bottom Edge */}
+                      <motion.div
+                        className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          right: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0,
+                          delay: 4
+                        }}
+                      />
+                      {/* Left Edge */}
+                      <motion.div
+                        className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                        style={{ filter: 'blur(1px)' }}
+                        animate={{
+                          bottom: ['-40%', '100%']
+                        }}
+                        transition={{
+                          duration: 8,
+                          ease: 'linear',
+                          repeat: Infinity,
+                          repeatDelay: 0,
+                          delay: 6
+                        }}
+                      />
+                    </div>
                     {/* Type Badge */}
                     <div className="flex justify-start mb-3">
                       <span className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md">

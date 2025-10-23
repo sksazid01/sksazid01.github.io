@@ -265,10 +265,10 @@ export default function AchievementsSection() {
               whileHover={{ scale: 1.05, y: -5 }}
               className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-lg text-center border border-gray-200/50 dark:border-gray-700/50"
             >
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1 relative z-10">
                 {stat.value}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
+              <div className="text-sm text-gray-600 dark:text-gray-400 relative z-10">
                 {stat.label}
               </div>
             </motion.div>
@@ -315,8 +315,71 @@ export default function AchievementsSection() {
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -10, scale: 1.02 }}
-              className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden"
+              className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden relative"
             >
+              {/* Perimeter Border Light Animation */}
+              <div className="absolute inset-0 pointer-events-none z-10">
+                {/* Top Edge */}
+                <motion.div
+                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    left: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0
+                  }}
+                />
+                {/* Right Edge */}
+                <motion.div
+                  className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    top: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 2
+                  }}
+                />
+                {/* Bottom Edge */}
+                <motion.div
+                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    right: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 4
+                  }}
+                />
+                {/* Left Edge */}
+                <motion.div
+                  className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    bottom: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 6
+                  }}
+                />
+              </div>
+              
               {/* Achievement Header */}
               <div className="h-32 bg-gray-50 dark:bg-gray-700/50 flex items-center justify-center relative overflow-hidden border-b-2 border-blue-500 dark:border-blue-400">
                 <motion.div

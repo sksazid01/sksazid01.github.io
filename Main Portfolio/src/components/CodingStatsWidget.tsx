@@ -65,13 +65,89 @@ export default function CodingStatsWidget({ stats, loading }: CodingStatsWidgetP
 
   return (
     <motion.div 
-      className="mt-8 bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800/50"
+      className="mt-8 bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800/50 relative overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
+      {/* Perimeter Border Light Animation */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Top Edge */}
+        <motion.div
+          className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+          style={{ filter: 'blur(1px)' }}
+          animate={{
+            left: ['-40%', '100%']
+          }}
+          transition={{
+            duration: 8,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatDelay: 0
+          }}
+        />
+        {/* Top Edge Glow */}
+        <motion.div
+          className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm"
+          animate={{
+            left: ['-40%', '100%']
+          }}
+          transition={{
+            duration: 8,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatDelay: 0
+          }}
+        />
+        {/* Right Edge */}
+        <motion.div
+          className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+          style={{ filter: 'blur(1px)' }}
+          animate={{
+            top: ['-40%', '100%']
+          }}
+          transition={{
+            duration: 8,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatDelay: 0,
+            delay: 2
+          }}
+        />
+        {/* Bottom Edge */}
+        <motion.div
+          className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+          style={{ filter: 'blur(1px)' }}
+          animate={{
+            right: ['-40%', '100%']
+          }}
+          transition={{
+            duration: 8,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatDelay: 0,
+            delay: 4
+          }}
+        />
+        {/* Left Edge */}
+        <motion.div
+          className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+          style={{ filter: 'blur(1px)' }}
+          animate={{
+            bottom: ['-40%', '100%']
+          }}
+          transition={{
+            duration: 8,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatDelay: 0,
+            delay: 6
+          }}
+        />
+      </div>
+      
       <motion.h3 
-        className="text-xl font-bold text-center mb-4 text-gray-800 dark:text-white flex items-center justify-center gap-2"
+        className="text-xl font-bold text-center mb-4 text-gray-800 dark:text-white flex items-center justify-center gap-2 relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -83,7 +159,7 @@ export default function CodingStatsWidget({ stats, loading }: CodingStatsWidgetP
         </span>
       </motion.h3>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
         {/* Languages Chart */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}

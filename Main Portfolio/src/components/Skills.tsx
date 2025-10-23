@@ -201,10 +201,85 @@ export default function Skills() {
               transition={{ duration: 0.6, delay: index * 0.05 }}
               onHoverStart={() => setActiveSkill(skill.name)}
               onHoverEnd={() => setActiveSkill(null)}
-              className={`relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 group ${
+              className={`relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 group overflow-hidden ${
                 activeSkill === skill.name ? 'scale-105' : ''
               }`}
             >
+              {/* Perimeter Border Light Animation */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Top Edge */}
+                <motion.div
+                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    left: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0
+                  }}
+                />
+                {/* Top Edge Glow */}
+                <motion.div
+                  className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm"
+                  animate={{
+                    left: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0
+                  }}
+                />
+                {/* Right Edge */}
+                <motion.div
+                  className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    top: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 2
+                  }}
+                />
+                {/* Bottom Edge */}
+                <motion.div
+                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    right: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 4
+                  }}
+                />
+                {/* Left Edge */}
+                <motion.div
+                  className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    bottom: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 6
+                  }}
+                />
+              </div>
               <div className="flex items-center justify-between mb-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium">
                   <span>{getLevelIcon(skill.level)}</span>
@@ -245,23 +320,211 @@ export default function Skills() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
         >
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
-            <div className="text-3xl font-bold text-blue-500 mb-2">
+          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
+            {/* Perimeter Border Light Animation */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Top Edge */}
+              <motion.div
+                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  left: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0
+                }}
+              />
+              {/* Right Edge */}
+              <motion.div
+                className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  top: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 2
+                }}
+              />
+              {/* Bottom Edge */}
+              <motion.div
+                className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  right: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 4
+                }}
+              />
+              {/* Left Edge */}
+              <motion.div
+                className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  bottom: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 6
+                }}
+              />
+            </div>
+            <div className="text-3xl font-bold text-blue-500 mb-2 relative z-10">
               {skills.reduce((acc, skill) => acc + skill.projects, 0)}
             </div>
-            <div className="text-gray-600 dark:text-gray-400 font-medium">Total Projects</div>
+            <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Total Projects</div>
           </div>
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
-            <div className="text-3xl font-bold text-green-500 mb-2">
+          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
+            {/* Perimeter Border Light Animation */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Top Edge */}
+              <motion.div
+                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  left: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 0.5
+                }}
+              />
+              {/* Right Edge */}
+              <motion.div
+                className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  top: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 2.5
+                }}
+              />
+              {/* Bottom Edge */}
+              <motion.div
+                className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  right: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 4.5
+                }}
+              />
+              {/* Left Edge */}
+              <motion.div
+                className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  bottom: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 6.5
+                }}
+              />
+            </div>
+            <div className="text-3xl font-bold text-green-500 mb-2 relative z-10">
               {skills.filter(skill => skill.level === 'Proficient' || skill.level === 'Advanced').length}
             </div>
-            <div className="text-gray-600 dark:text-gray-400 font-medium">Advanced Skills</div>
+            <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Advanced Skills</div>
           </div>
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
-            <div className="text-3xl font-bold text-purple-500 mb-2">
+          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
+            {/* Perimeter Border Light Animation */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Top Edge */}
+              <motion.div
+                className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  left: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 1
+                }}
+              />
+              {/* Right Edge */}
+              <motion.div
+                className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  top: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 3
+                }}
+              />
+              {/* Bottom Edge */}
+              <motion.div
+                className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  right: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 5
+                }}
+              />
+              {/* Left Edge */}
+              <motion.div
+                className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                style={{ filter: 'blur(1px)' }}
+                animate={{
+                  bottom: ['-40%', '100%']
+                }}
+                transition={{
+                  duration: 8,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  repeatDelay: 0,
+                  delay: 7
+                }}
+              />
+            </div>
+            <div className="text-3xl font-bold text-purple-500 mb-2 relative z-10">
               {skills.length}
             </div>
-            <div className="text-gray-600 dark:text-gray-400 font-medium">Total Technologies</div>
+            <div className="text-gray-600 dark:text-gray-400 font-medium relative z-10">Total Technologies</div>
           </div>
         </motion.div>
 

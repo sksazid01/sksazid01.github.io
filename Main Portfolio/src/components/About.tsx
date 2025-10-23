@@ -137,16 +137,80 @@ export default function About() {
                 rotateY: 5,
                 z: 50
               }}
-              className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
+              className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
               style={{ perspective: '1000px' }}
             >
-              <div className="inline-flex p-3 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+              {/* Perimeter Border Light Animation */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Top Edge */}
+                <motion.div
+                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    left: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: index * 0.2
+                  }}
+                />
+                {/* Right Edge */}
+                <motion.div
+                  className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    top: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 2 + index * 0.2
+                  }}
+                />
+                {/* Bottom Edge */}
+                <motion.div
+                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    right: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 4 + index * 0.2
+                  }}
+                />
+                {/* Left Edge */}
+                <motion.div
+                  className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+                  style={{ filter: 'blur(1px)' }}
+                  animate={{
+                    bottom: ['-40%', '100%']
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: 'linear',
+                    repeat: Infinity,
+                    repeatDelay: 0,
+                    delay: 6 + index * 0.2
+                  }}
+                />
+              </div>
+              
+              <div className="inline-flex p-3 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10">
                 {highlight.icon}
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors relative z-10">
                 {highlight.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed relative z-10">
                 {highlight.description}
               </p>
             </motion.div>
@@ -191,12 +255,75 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50"
+          className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
         >
-          <h3 className="text-2xl font-bold text-center mb-8 text-blue-600 dark:text-blue-400">
+          {/* Perimeter Border Light Animation */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Top Edge */}
+            <motion.div
+              className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
+              style={{ filter: 'blur(1px)' }}
+              animate={{
+                left: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 8,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0
+              }}
+            />
+            {/* Right Edge */}
+            <motion.div
+              className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
+              style={{ filter: 'blur(1px)' }}
+              animate={{
+                top: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 8,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0,
+                delay: 2
+              }}
+            />
+            {/* Bottom Edge */}
+            <motion.div
+              className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
+              style={{ filter: 'blur(1px)' }}
+              animate={{
+                right: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 8,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0,
+                delay: 4
+              }}
+            />
+            {/* Left Edge */}
+            <motion.div
+              className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
+              style={{ filter: 'blur(1px)' }}
+              animate={{
+                bottom: ['-40%', '100%']
+              }}
+              transition={{
+                duration: 8,
+                ease: 'linear',
+                repeat: Infinity,
+                repeatDelay: 0,
+                delay: 6
+              }}
+            />
+          </div>
+          
+          <h3 className="text-2xl font-bold text-center mb-8 text-blue-600 dark:text-blue-400 relative z-10">
             🏆 Competitive Programming Profiles
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
             <CodeforcesWidget handle="sksazid" />
 
             <VJudgeWidget handle="sksazid" />
