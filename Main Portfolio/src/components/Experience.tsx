@@ -6,6 +6,20 @@ import { Calendar, MapPin, CheckCircle, Briefcase, Clock } from 'lucide-react'
 export default function Experience() {
   const experiences = [
     {
+      title: "Web Development Intern",
+      company: "College Samaj",
+      duration: "01/2024 - 02/2024",
+      length: "(1 Month)",
+      type: "💼 Internship",
+      achievements: [
+        "Developed a fully functional JavaScript-based Calculator App with modern UI/UX design",
+        "Built a responsive Personal Portfolio Website using HTML5, CSS3, and JavaScript",
+        "Gained hands-on experience with Git/GitHub for version control and project collaboration",
+        "Worked under guidance of experienced mentors (H. Yadav, Gaurav Rai, Bunty Prasad)",
+        "Successfully completed internship program and received completion certificate"
+      ]
+    },
+    {
       title: "Competitive Programmer",
       company: "CodeForces | VJudge | CodeChef — Handle: sksazid",
       duration: "03/2022 - Present",

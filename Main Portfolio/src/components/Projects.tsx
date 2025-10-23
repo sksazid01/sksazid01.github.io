@@ -7,6 +7,18 @@ export default function Projects() {
   
   const projects = [
     {
+      title: "College Samaj Internship Projects",
+      description: "Web development projects completed during internship at College Samaj. Built a JavaScript Calculator App with modern UI and a responsive Personal Portfolio Website. Demonstrated practical web development skills and collaborative project execution.",
+      icon: <BarChart3 className="w-12 h-12" />,
+      technologies: ["HTML5", "CSS3", "JavaScript", "Git", "GitHub"],
+      color: "from-purple-500 to-pink-500",
+      timeline: "01/2024 - 02/2024",
+      links: {
+        github: "https://github.com/sksazid01/COLLEGESAMAJ",
+        demo: "https://youtu.be/yZfYxbAdTpU"
+      }
+    },
+    {
       title: "E-commerce Marketplace",
       description: "A comprehensive e-commerce platform developed as an academic project. Features include user management, product catalog, shopping cart functionality, and secure transaction processing.",
       icon: <ShoppingCart className="w-12 h-12" />,

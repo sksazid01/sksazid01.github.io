@@ -64,11 +64,51 @@ export default function GitHubStatsWidget({ stats, loading }: GitHubStatsWidgetP
 
   return (
     <motion.div 
-      className="mt-12 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 border border-blue-100 dark:border-gray-700"
+      className="mt-12 relative overflow-hidden bg-gradient-to-r from-blue-50/90 to-cyan-50/90 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-sm rounded-2xl p-8 border border-blue-100/50 dark:border-gray-700/50 shadow-xl"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
+      {/* Diamond glint effect - narrow light slowly sweeping from bottom-left corner to top-right */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10"
+      >
+        {/* Sharp narrow beam */}
+        <motion.div
+          className="absolute w-[150%] h-[2px] left-0 top-0 origin-top-left"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)',
+            transform: 'rotate(45deg)',
+            boxShadow: '0 0 20px rgba(255,255,255,0.6)',
+          }}
+          initial={{ x: '-100%', y: '200%' }}
+          animate={{ x: '200%', y: '-100%' }}
+          transition={{
+            duration: 6,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatDelay: 3
+          }}
+        />
+        
+        {/* Soft glow halo */}
+        <motion.div
+          className="absolute w-[150%] h-[8px] left-0 top-0 origin-top-left blur-sm"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
+            transform: 'rotate(45deg)',
+          }}
+          initial={{ x: '-100%', y: '200%' }}
+          animate={{ x: '200%', y: '-100%' }}
+          transition={{
+            duration: 6,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatDelay: 3
+          }}
+        />
+      </motion.div>      <div className="relative z-20">
       <motion.h3 
         className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-white flex items-center justify-center gap-2"
         initial={{ opacity: 0 }}
@@ -137,6 +177,7 @@ export default function GitHubStatsWidget({ stats, loading }: GitHubStatsWidgetP
           Last activity: {stats.lastCommit}
         </motion.p>
       </motion.div>
+      </div>
     </motion.div>
   )
 }

@@ -22,13 +22,13 @@ export default function About() {
     {
       icon: <Trophy className="w-6 h-6" />,
       title: "Competitive Programmer",
-      description: "CodeForces: 1200+ rating (Pupil), solved 650+ problems using C, C++, Python, and Swift",
+      description: "Codeforces: 1200+ rating (Pupil), solved 650+ problems across platforms using C/C++ and Python",
       color: "blue"
     },
     {
       icon: <Code className="w-6 h-6" />,
       title: "Multi-Platform Problem Solver",
-      description: "VJudge: Solved 325+ problems. CodeChef: Achieved 1474 rating, solved 100+ problems",
+      description: "VJudge: solved 330+ problems. CodeChef: 1474 rating, 100+ problems solved",
       color: "blue"
     },
     {
@@ -64,8 +64,8 @@ export default function About() {
   ]
 
   // const stats = [
-  //   { number: "1230+", label: "CodeForces Problems" },
-  //   { number: "325+", label: "Vjudge Problems" },
+  //   { number: "1230+", label: "Codeforces Problems" },
+  //   { number: "330+", label: "VJudge Problems" },
   //   { number: "1000+", label: "Total Problems Solved" },
   //   { number: "3+", label: "Years Programming" }
   // ]

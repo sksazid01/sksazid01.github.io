@@ -77,6 +77,22 @@ export default function AchievementsSection() {
       }
     },
     {
+      id: '2.5',
+      title: 'College Samaj Internship Projects',
+      description: 'Web development projects completed during internship: JavaScript Calculator App and responsive Personal Portfolio Website',
+      date: '2024-02',
+      category: 'project',
+      icon: <Code className="w-6 h-6" />,
+      color: 'blue',
+      status: 'completed',
+      badge: 'Internship',
+      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Git', 'GitHub'],
+      repoName: 'COLLEGESAMAJ',
+      links: {
+        demo: 'https://youtu.be/yZfYxbAdTpU'
+      }
+    },
+    {
       id: '3',
       title: 'Restaurant Management App',
       description: 'Native Android application for restaurant management and order processing with modern UI/UX',
