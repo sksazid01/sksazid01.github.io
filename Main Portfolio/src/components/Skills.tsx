@@ -5,6 +5,7 @@ import { Trophy, Code, Target, Award, Zap, TrendingUp } from 'lucide-react'
 import CodeforcesWidget from './CodeforcesWidget'
 import VJudgeWidget from './VJudgeWidget'
 import CodeChefWidget from './CodeChefWidget'
+import LeetCodeWidget from './LeetCodeWidget'
 import CodingStatsWidget from './CodingStatsWidget'
 import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
@@ -227,8 +228,9 @@ export default function Skills() {
           <h3 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text relative z-10">
             🏆 Live Platform Statistics
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             <CodeforcesWidget handle="sksazid" />
+            <LeetCodeWidget handle="sksazid" />
             <VJudgeWidget handle="sksazid" />
             <CodeChefWidget handle="sksazid" />
           </div>
@@ -250,7 +252,7 @@ export default function Skills() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">650+</div>
+              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">750+</div>
               <p className="text-gray-600 dark:text-gray-400 font-medium">Total Problems</p>
             </div>
             <div className="text-center">
@@ -258,7 +260,7 @@ export default function Skills() {
               <p className="text-gray-600 dark:text-gray-400 font-medium">Years Experience</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-pink-600 dark:text-pink-400 mb-2">3</div>
+              <div className="text-4xl font-bold text-pink-600 dark:text-pink-400 mb-2">4</div>
               <p className="text-gray-600 dark:text-gray-400 font-medium">Active Platforms</p>
             </div>
             <div className="text-center">

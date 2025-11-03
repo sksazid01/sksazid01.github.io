@@ -61,30 +61,33 @@ export const useDynamicPortfolio = () => {
   const [currentActivity, setCurrentActivity] = useState<string>('')
   const [loading, setLoading] = useState(true)
 
-  // GitHub Projects Integration
-  const fetchGitHubProjects = useCallback(async () => {
+  // GitHub Projects Integration (fallback-first, safe fetch)
+  const fetchGitHubProjects = async () => {
+    // Load fallback first for immediate UI responsiveness
+    loadFallbackProjects()
+
     try {
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
-      
+      const timeoutId = setTimeout(() => controller.abort(), 3000) // shorter timeout
+
       const response = await fetch('https://api.github.com/users/sksazid01/repos', {
         signal: controller.signal
-      })
-      clearTimeout(timeoutId)
-      
-      if (!response.ok) {
-        throw new Error('GitHub API response not ok')
+      }).catch(() => null).finally(() => clearTimeout(timeoutId))
+
+      if (!response || !response.ok) {
+        // keep fallback
+        return
       }
-      
+
       const repos = await response.json()
-      
+
       const filteredRepos = repos
         .filter((repo: any) => !repo.fork && !repo.archived)
         .sort((a: any, b: any) => b.stargazers_count - a.stargazers_count)
         .slice(0, 6)
-      
+
       setGithubRepos(filteredRepos)
-      
+
       // Calculate stats
       const stats: GitHubStats = {
         totalRepos: repos.length,
@@ -93,127 +96,113 @@ export const useDynamicPortfolio = () => {
         languages: getTopLanguages(repos),
         lastCommit: getRecentActivity(repos)
       }
-      
+
       setGithubStats(stats)
     } catch (error) {
-      console.log('GitHub API not available, using fallback data')
-      loadFallbackProjects()
+      // keep fallback silently
+      console.log('Using fallback GitHub data')
     }
-  }, [])
+  }
 
-  // GitHub Activity Stream
-  const fetchGitHubActivity = useCallback(async () => {
-    try {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 5000)
-      
-      const [userResponse, eventsResponse] = await Promise.all([
-        fetch('https://api.github.com/users/sksazid01', { signal: controller.signal }),
-        fetch('https://api.github.com/users/sksazid01/events/public?per_page=10', { signal: controller.signal })
-      ])
-      
-      clearTimeout(timeoutId)
+  // GitHub Activity Stream (fallback-first)
+  const fetchGitHubActivity = async () => {
+    // Show fallback first for immediate UI
+    loadFallbackActivity()
 
-      if (userResponse.ok && eventsResponse.ok) {
-        const user = await userResponse.json()
-        const events = await eventsResponse.json()
-        
-        setGithubActivity({ user, recentEvents: events })
-      } else {
-        loadFallbackActivity()
-      }
-    } catch (error) {
-      console.log('GitHub activity not available')
-      loadFallbackActivity()
-    }
-  }, [])
-
-  // Visitor Counter
-  const initializeVisitorCounter = useCallback(async () => {
-    try {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 3000) // 3 second timeout
-      
-      // Try to get visitor IP for unique counting
-      const ipResponse = await fetch('https://api.ipify.org?format=json', {
-        signal: controller.signal
-      })
-      clearTimeout(timeoutId)
-      
-      if (ipResponse.ok) {
-        const ipData = await ipResponse.json()
-        // Create a simple hash from IP for visitor counting
-        const ipHash = btoa(ipData.ip).slice(0, 8)
-        const baseCount = 2500 // Professional portfolio baseline
-        const ipBasedCount = parseInt(ipHash, 36) % 2000
-        setVisitorCount(baseCount + ipBasedCount)
-        return
-      }
-
-      // Fallback with time-based counting
-      const timeBasedCount = 2000 + (Date.now() % 2500)
-      setVisitorCount(timeBasedCount)
-
-    } catch (error) {
-      console.log('External APIs not available, using fallback')
-      // Generate professional count based on current time
-      const timeBasedCount = 2800 + (Date.now() % 1700) // 2800-4500 range
-      setVisitorCount(timeBasedCount)
-    }
-  }, [])
-
-  // Advanced Visitor Analytics using External APIs
-  const initializeVisitorAnalytics = useCallback(async () => {
     try {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 3000)
-      
+
+      const [userResponse, eventsResponse] = await Promise.all([
+        fetch('https://api.github.com/users/sksazid01', { signal: controller.signal }).catch(() => null),
+        fetch('https://api.github.com/users/sksazid01/events/public?per_page=10', { signal: controller.signal }).catch(() => null)
+      ]).finally(() => clearTimeout(timeoutId))
+
+      if (userResponse && eventsResponse && userResponse.ok && eventsResponse.ok) {
+        const user = await userResponse.json()
+        const events = await eventsResponse.json()
+        setGithubActivity({ user, recentEvents: events })
+      }
+    } catch (error) {
+      // keep fallback
+      console.log('Using fallback GitHub activity')
+    }
+  }
+
+  // Visitor Counter (fallback-first, non-blocking)
+  const initializeVisitorCounter = async () => {
+    // Set a reasonable default immediately
+    const timeBasedCount = 2800 + (Date.now() % 1700) // 2800-4500 range
+    setVisitorCount(timeBasedCount)
+
+    // Optionally attempt to enhance with IP data; don't let failures bubble up
+    try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 2000)
+
       const ipResponse = await fetch('https://api.ipify.org?format=json', {
         signal: controller.signal
-      })
-      
-      clearTimeout(timeoutId)
+      }).catch(() => null).finally(() => clearTimeout(timeoutId))
 
-      if (ipResponse.ok) {
+      if (ipResponse && ipResponse.ok) {
         const ipData = await ipResponse.json()
-        
-        // Use 'Global' since we have IP data
-        const location = ipData?.ip ? 'Global' : 'International'
-
-        // Generate analytics based on IP and current time
         const ipHash = btoa(ipData.ip).slice(0, 8)
-        const uniqueDaily = 75 + (parseInt(ipHash, 36) % 35) // 75-110 unique visitors per day
-        
+        const baseCount = 2500
+        const ipBasedCount = parseInt(ipHash, 36) % 2000
+        setVisitorCount(baseCount + ipBasedCount)
+      }
+    } catch (error) {
+      // ignore and keep the fallback count
+      console.log('Using fallback visitor count')
+    }
+  }
+
+  // Advanced Visitor Analytics using External APIs (fallback-first)
+  const initializeVisitorAnalytics = async () => {
+    // Set fallback analytics immediately
+    const fallbackAnalytics: VisitorData = {
+      count: 3200 + (Date.now() % 1800),
+      uniqueToday: 85 + (Date.now() % 25),
+      location: 'Global',
+      lastVisit: new Date().toLocaleTimeString()
+    }
+
+    setVisitorData(fallbackAnalytics)
+    setVisitorCount(fallbackAnalytics.count)
+
+    // Attempt to enhance with IP-based analytics; don't fail if blocked
+    try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 2000)
+
+      const ipResponse = await fetch('https://api.ipify.org?format=json', {
+        signal: controller.signal
+      }).catch(() => null).finally(() => clearTimeout(timeoutId))
+
+      if (ipResponse && ipResponse.ok) {
+        const ipData = await ipResponse.json()
+        const location = ipData?.ip ? 'Global' : 'International'
+        const ipHash = btoa(ipData.ip).slice(0, 8)
+        const uniqueDaily = 75 + (parseInt(ipHash, 36) % 35)
+
         const visitorAnalytics: VisitorData = {
-          count: 2500 + (parseInt(ipHash, 36) % 2000), // 2500-4500 total visitors
+          count: 2500 + (parseInt(ipHash, 36) % 2000),
           uniqueToday: uniqueDaily,
-          location: location,
+          location,
           lastVisit: new Date().toLocaleTimeString()
         }
 
         setVisitorData(visitorAnalytics)
         setVisitorCount(visitorAnalytics.count)
-      } else {
-        throw new Error('Failed to fetch visitor data')
       }
     } catch (error) {
-      console.log('Visitor analytics APIs not available, using fallback')
-      
-      // Fallback analytics
-      const fallbackAnalytics: VisitorData = {
-        count: 3200 + (Date.now() % 1800), // Professional range: 3200-5000
-        uniqueToday: 85 + (Date.now() % 25), // Daily unique: 85-110
-        location: 'Global',
-        lastVisit: new Date().toLocaleTimeString()
-      }
-      
-      setVisitorData(fallbackAnalytics)
-      setVisitorCount(fallbackAnalytics.count)
+      // keep fallback silently
+      console.log('Using fallback visitor analytics')
     }
-  }, [])
+  }
 
   // Coding Statistics
-  const loadCodingStats = useCallback(() => {
+  const loadCodingStats = () => {
     // Professional development stats reflecting industry standards
     const mockStats: CodingStats = {
       total_seconds: 32400 + Math.random() * 3600, // 9-10 hours (professional work day)
@@ -228,23 +217,23 @@ export const useDynamicPortfolio = () => {
     }
     
     setCodingStats(mockStats)
-  }, [])
+  }
 
   // Current Activity
-  const loadCurrentActivity = useCallback(() => {
+  const loadCurrentActivity = () => {
     const activities = [
-      "� Developing enterprise solutions",
-      "� Architecting scalable systems", 
+      "💻 Developing enterprise solutions",
+      "🏗 Architecting scalable systems", 
       "📊 Analyzing performance metrics",
       "⚡ Implementing optimization strategies",
       "🎯 Delivering client requirements",
       "🔍 Conducting code reviews",
-      "� Enhancing user experience",
-      "�️ Ensuring security best practices",
-      "� Deploying production applications",
+      "🎨 Enhancing user experience",
+      "🛡️ Ensuring security best practices",
+      "🚀 Deploying production applications",
       "📚 Researching emerging technologies",
-      "� Engineering innovative solutions",
-      "� Refactoring legacy codebases"
+      "🔧 Engineering innovative solutions",
+      "♻️ Refactoring legacy codebases"
     ]
 
     const randomActivity = activities[Math.floor(Math.random() * activities.length)]
@@ -257,7 +246,7 @@ export const useDynamicPortfolio = () => {
     }, 180000)
 
     return () => clearInterval(interval)
-  }, [])
+  }
 
   // Helper functions
   const getTopLanguages = (repos: any[]): [string, number][] => {
@@ -379,16 +368,23 @@ export const useDynamicPortfolio = () => {
         fetchGitHubProjects(),
         fetchGitHubActivity(),
         initializeVisitorCounter(),
-        initializeVisitorAnalytics(),
-        loadCodingStats(),
-        loadCurrentActivity()
+        initializeVisitorAnalytics()
       ])
       
+      loadCodingStats()
+      const cleanupActivity = loadCurrentActivity()
+      
       setLoading(false)
+      
+      return cleanupActivity
     }
 
-    initializeFeatures()
-  }, [fetchGitHubProjects, fetchGitHubActivity, initializeVisitorCounter, initializeVisitorAnalytics, loadCodingStats, loadCurrentActivity])
+    const cleanup = initializeFeatures()
+    
+    return () => {
+      cleanup.then(fn => fn && fn())
+    }
+  }, [])
 
   return {
     githubRepos,

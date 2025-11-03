@@ -27,6 +27,18 @@ export interface CodeChefStat {
   institution: string
 }
 
+export interface LeetCodeStat {
+  totalSolved: number
+  easySolved: number
+  easyTotal: number
+  mediumSolved: number
+  mediumTotal: number
+  hardSolved: number
+  hardTotal: number
+  ranking: number
+  handle: string
+}
+
 // Codeforces API - Real-time data
 export async function fetchCodeforcesStats(handle: string): Promise<CodeforcesStat | null> {
   try {
@@ -154,18 +166,61 @@ export async function fetchCodeChefStats(handle: string): Promise<CodeChefStat |
   }
 }
 
+// LeetCode - Using static data since no public API available
+export async function fetchLeetCodeStats(handle: string): Promise<LeetCodeStat | null> {
+  try {
+    // Static data for known handles - replace with your actual stats
+    const staticData: Record<string, LeetCodeStat> = {
+      'sksazid': {
+        totalSolved: 108,
+        easySolved: 55,
+        easyTotal: 910,
+        mediumSolved: 52,
+        mediumTotal: 1944,
+        hardSolved: 1,
+        hardTotal: 881,
+        ranking: 1258278,
+        handle: 'sksazid'
+      }
+    }
+    
+    // Return static data if available, otherwise default values
+    if (staticData[handle]) {
+      return staticData[handle]
+    }
+    
+    // Default values for unknown handles
+    return {
+      totalSolved: 0,
+      easySolved: 0,
+      easyTotal: 910,
+      mediumSolved: 0,
+      mediumTotal: 1944,
+      hardSolved: 0,
+      hardTotal: 881,
+      ranking: 0,
+      handle
+    }
+  } catch (error) {
+    console.error('Error fetching LeetCode stats:', error)
+    return null
+  }
+}
+
 // Utility to refresh all competitive programming data
 export async function refreshAllCompetitiveProgrammingData(handle: string) {
   const results = await Promise.allSettled([
     fetchCodeforcesStats(handle),
     fetchVJudgeStats(handle),
-    fetchCodeChefStats(handle)
+    fetchCodeChefStats(handle),
+    fetchLeetCodeStats(handle)
   ])
 
   return {
     codeforces: results[0].status === 'fulfilled' ? results[0].value : null,
     vjudge: results[1].status === 'fulfilled' ? results[1].value : null,
-    codechef: results[2].status === 'fulfilled' ? results[2].value : null
+    codechef: results[2].status === 'fulfilled' ? results[2].value : null,
+    leetcode: results[3].status === 'fulfilled' ? results[3].value : null
   }
 }
 

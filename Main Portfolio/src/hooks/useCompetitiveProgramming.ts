@@ -5,17 +5,20 @@ import {
   fetchCodeforcesStats, 
   fetchVJudgeStats, 
   fetchCodeChefStats,
+  fetchLeetCodeStats,
   getCachedData,
   setCachedData,
   type CodeforcesStat,
   type VJudgeStat,
-  type CodeChefStat
+  type CodeChefStat,
+  type LeetCodeStat
 } from '@/utils/competitiveProgramming'
 
 interface CompetitiveProgrammingData {
   codeforces: CodeforcesStat | null
   vjudge: VJudgeStat | null
   codechef: CodeChefStat | null
+  leetcode: LeetCodeStat | null
 }
 
 interface UseCompetitiveProgrammingReturn {
@@ -30,7 +33,8 @@ export function useCompetitiveProgramming(handle: string): UseCompetitiveProgram
   const [data, setData] = useState<CompetitiveProgrammingData>({
     codeforces: null,
     vjudge: null,
-    codechef: null
+    codechef: null,
+    leetcode: null
   })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -53,16 +57,18 @@ export function useCompetitiveProgramming(handle: string): UseCompetitiveProgram
       }
 
       // Fetch fresh data from all platforms
-      const [codeforcesResult, vjudgeResult, codechefResult] = await Promise.allSettled([
+      const [codeforcesResult, vjudgeResult, codechefResult, leetcodeResult] = await Promise.allSettled([
         fetchCodeforcesStats(handle),
         fetchVJudgeStats(handle),
-        fetchCodeChefStats(handle)
+        fetchCodeChefStats(handle),
+        fetchLeetCodeStats(handle)
       ])
 
       const newData: CompetitiveProgrammingData = {
         codeforces: codeforcesResult.status === 'fulfilled' ? codeforcesResult.value : null,
         vjudge: vjudgeResult.status === 'fulfilled' ? vjudgeResult.value : null,
-        codechef: codechefResult.status === 'fulfilled' ? codechefResult.value : null
+        codechef: codechefResult.status === 'fulfilled' ? codechefResult.value : null,
+        leetcode: leetcodeResult.status === 'fulfilled' ? leetcodeResult.value : null
       }
 
       // Cache the new data

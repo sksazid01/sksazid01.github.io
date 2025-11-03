@@ -10,7 +10,8 @@ export interface PlatformStats {
 const STORAGE_KEYS = {
   codeforces: 'codeforces_stats',
   vjudge: 'vjudge_stats', 
-  codechef: 'codechef_stats'
+  codechef: 'codechef_stats',
+  leetcode: 'leetcode_stats'
 }
 
 export function getStoredStats(platform: keyof typeof STORAGE_KEYS): PlatformStats | null {
