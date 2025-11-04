@@ -71,10 +71,10 @@ export default function Home() {
       >
         <Hero />
         <About />
+        <ProfessionalAchievements />
         <Projects />
         <Skills />
         <Experience />
-        <ProfessionalAchievements />
         <Contact />
         <Footer />
       </motion.div>
