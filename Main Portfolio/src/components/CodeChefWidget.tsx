@@ -30,7 +30,7 @@ interface CodeChefWidgetProps {
 export default function CodeChefWidget({ 
   handle = 'sksazid', 
   problemsSolved = 100,
-  currentRating = 1474,
+  currentRating = 1437,
   maxRating = 1474,
   enableManualUpdate = true
 }: CodeChefWidgetProps) {

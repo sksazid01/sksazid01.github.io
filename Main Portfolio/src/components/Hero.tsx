@@ -190,18 +190,6 @@ export default function Hero() {
                 </span>
               </motion.button>
               
-              <motion.button
-                onClick={() => scrollToSection('#projects')}
-                className="group px-8 py-4 border-2 border-blue-600 text-blue-600 dark:text-blue-400 font-semibold rounded-full hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 transition-all duration-300"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="flex items-center justify-center gap-2">
-                  <ExternalLink className="w-5 h-5" />
-                  View My Work
-                </span>
-              </motion.button>
-
               {/* Download CV Button */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

@@ -27,11 +27,23 @@ export default function DownloadCVButton({
       case 'secondary':
         return 'bg-gray-600 hover:bg-gray-700 text-white'
       case 'outline':
-        return 'border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white bg-transparent'
+        return 'border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 bg-transparent'
       default:
         return 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white'
     }
   }
 
-  return null
+  return (
+    <motion.button
+      onClick={handleDownload}
+      className={`group px-8 py-4 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${getButtonStyles()} ${className}`}
+      whileHover={{ scale: 1.05, y: -2 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <span className="flex items-center justify-center gap-2">
+        <Download className="w-5 h-5" />
+        Download CV
+      </span>
+    </motion.button>
+  )
 }
