@@ -23,14 +23,14 @@ export default function About() {
     },
     {
       icon: <Database className="w-6 h-6" />,
-      title: "Data Science & ML",
-      description: "Python libraries: Keras, NumPy, Matplotlib, Pandas. Model training, data visualization, and predictive analytics",
+      title: "Data Science & AI/ML",
+      description: "AI Agents (SmythOS), LLM Training, Python libraries: Keras, NumPy, Matplotlib, Pandas. Model training, data visualization, and predictive analytics",
       color: "blue"
     },
     {
       icon: <Globe className="w-6 h-6" />,
       title: "Technical Skills",
-      description: "Languages: C/C++, Python, Java, Kotlin, JavaScript. Web Development, Data Structures & Algorithms",
+      description: "Languages: C/C++, Python, Java, JavaScript, Kotlin. Web & Mobile: React.js, Node.js, Express.js, Spring Boot, REST APIs, Android (Jetpack Compose). AI/ML & Tools: Docker, Git, MySQL, PostgreSQL, MongoDB, PyTest",
       color: "blue"
     },
     {
@@ -42,7 +42,7 @@ export default function About() {
     {
       icon: <Award className="w-6 h-6" />,
       title: "Competitive Programming",
-      description: "Active problem solver with 650+ problems across platforms. Check Skills section for detailed stats",
+      description: "Active problem solver with 850+ problems across platforms (Codeforces Pupil 1200+, CodeChef 2-Star 1437, VJudge 325+). Check Skills section for detailed stats",
       color: "blue"
     },
     {

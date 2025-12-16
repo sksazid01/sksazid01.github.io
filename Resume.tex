@@ -1,0 +1,159 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[pdftex, hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+%--------------------------------
+% Page margins optimized for ATS
+\addtolength{\topmargin}{-0.6in}
+\addtolength{\textheight}{1.2in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\textwidth}{1.0in}
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{10pt}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ATS-optimized colors (minimal, professional)
+\definecolor{primarycolor}{RGB}{0,0,0}        % Black for main text
+\definecolor{linkcolor}{RGB}{0,102,204}       % Blue for links
+\definecolor{headingblue}{RGB}{0,51,153}      % Deep bold blue for headings
+
+% Custom commands for ATS compatibility
+\newcommand{\resumeName}[1]{\begin{center}\textbf{\LARGE #1}\end{center}}
+\newcommand{\resumeContact}[1]{\begin{center}#1\end{center}}
+
+% Section formatting - simple line, ATS-readable
+\titleformat{\section}{\large\bfseries\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+% Subsection environment for experience/projects
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{\color{headingblue}#1} & \textbf{\color{headingblue}#2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+% Simple item command
+\newcommand{\resumeItem}[1]{\item\small{#1}}
+
+% List environments
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.15in]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%--------------------------------
+\begin{document}
+
+%-----------HEADER-----------
+\resumeName{Md Ahasanul Haque Sazid}
+\resumeContact{
+\href{mailto:ahasanulhaque20@gmail.com}{ahasanulhaque20@gmail.com} $|$ +8801787-601667 $|$ \href{https://sksazid.me}{sksazid.me} $|$ \href{https://github.com/sksazid01}{GitHub} $|$ \href{https://linkedin.com/in/sksazid}{LinkedIn}
+}
+\vspace{-8pt}
+
+%-----------EDUCATION-----------
+\section{EDUCATION}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Shahjalal University of Science and Technology}{Sylhet, Bangladesh}
+    {Bachelor of Science in Computer Science \& Engineering; CGPA: 3.48/4.00}{Mar 2022 - Feb 2026}
+\resumeSubHeadingListEnd
+
+%-----------SKILLS-----------
+\section{TECHNICAL SKILLS}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    \textbf{Languages}{: C, C++, Python, Java, JavaScript, Kotlin} \\
+    \textbf{Web \& Mobile}{: React.js, Node.js, Express.js, Spring Boot, REST APIs, Android (Jetpack Compose)} \\
+    \textbf{AI/ML \& Tools}{: AI Agents (SmythOS), LLM Training, Git, SQL, PostgreSQL, Postman, Docker} \\
+    \textbf{Core Competencies}{: Data Structures \& Algorithms, OOP, Software Design Patterns, API Development, Database Design}
+  }}
+\end{itemize}
+
+%-----------EXPERIENCE-----------
+\section{PROFESSIONAL EXPERIENCE}
+\resumeSubHeadingListStart
+
+  \resumeSubheading
+    {\href{https://outlier.ai/}{AI Tester \& Trainer}}{Feb 2024 - Mar 2025}
+    {Outlier.ai}{Remote}
+    \resumeItemListStart
+      \resumeItem{Train and evaluate LLM responses for Bangla processing and coding tasks, improving accuracy with 200+ test cases}
+      \resumeItem{Test API workflows and AI agent systems, ensuring 98\%+ correctness in production environments}
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {\href{https://www.collegesamaj.in}{Web Development Intern}}{Jan 2024 - Feb 2024}
+    {College Samaj}{Remote}
+    \resumeItemListStart
+      \resumeItem{Developed responsive web applications using HTML5, CSS3, and JavaScript, improving user engagement by 30\%}
+      \resumeItem{Conducted UI/UX optimization and cross-browser testing across 5+ browsers to ensure compatibility}
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {\href{https://www.remotasks.com/en}{AI Training Specialist}}{Feb 2023 - Oct 2023}
+    {Remotasks}{Remote}
+    \resumeItemListStart
+      \resumeItem{Created 100+ programming problem editorials and optimized test cases across C++, Python, and Java}
+      \resumeItem{Provided high-quality labeled data for ML models, maintaining 95\%+ accuracy in annotation tasks}
+    \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{PROJECTS}
+\resumeSubHeadingListStart
+
+  \resumeSubheading
+    {\href{https://github.com/sksazid01/research-paper-rag-assessment/tree/submission/Md_Ahasanul_Haque_Sazid}{Research Paper RAG System}}{Nov 2025}
+    {Python, Qdrant, Docker, Ollama, PostgreSQL, Next.js}{}
+    \resumeItemListStart
+      \resumeItem{Built intelligent query system with RAG pipeline, semantic search, and citation extraction with confidence scoring}
+      \resumeItem{Implemented vector database (Qdrant) for semantic search and query analytics with modern Next.js/React UI}
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {\href{https://github.com/sksazid01/Smart-IELTS}{Smart-IELTS: AI-Powered Learning Platform}}{Sep 2024}
+    {React.js, Node.js, SmythOS}{}
+    \resumeItemListStart
+      \resumeItem{AI-powered IELTS platform with adaptive learning and real-time feedback}
+      \resumeItem{Integrated SmythOS AI agents for personalized scoring and analytics; built full-stack with React and Node.js}
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {\href{https://github.com/sksazid01/Project350_CMS}{Club Management System}}{Jan 2024}
+    {MERN Stack}{}
+    \resumeItemListStart
+      \resumeItem{Developed full-stack university club system with event scheduling, role-based access control, and member tracking}
+      \resumeItem{Implemented RESTful APIs and responsive React UI, optimizing database queries for 40\% faster response times}
+    \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------ACHIEVEMENTS-----------
+\section{ACHIEVEMENTS \& COMPETITIVE PROGRAMMING}
+\begin{itemize}[leftmargin=0.15in, label=$\bullet$]
+  \small{\item{
+    \textbf{\href{https://github.com/sksazid01/Smart-IELTS}{HackTheAI 2025 National Finalist}} - 4th place out of 50 teams with Smart-IELTS AI-powered learning platform
+  }}
+  \small{\item{
+    \textbf{\href{https://github.com/sksazid01/sust_prompt_storm_preliminary}{HackTheAI 2025 Preliminary}} - 6th place out of 250+ teams, advanced to national finals (Top 12\%)
+  }}
+  \small{\item{
+    \textbf{850+ Problems Solved} - \href{https://codeforces.com/profile/sksazid}{Codeforces (Pupil, 1200+)}, \href{https://vjudge.net/user/sksazid}{VJudge (325+)}, \href{https://www.codechef.com/users/sksazid}{CodeChef (2-Star, 1437)}
+  }}
+  \small{\item{
+    \textbf{SUST IUPC 2023 Participant} - University-level programming contest
+  }}
+\end{itemize}
+
+\end{document}

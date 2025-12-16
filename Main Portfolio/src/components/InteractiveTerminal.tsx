@@ -38,12 +38,12 @@ Specialties: Competitive Programming, Data Science, Mobile Development`,
     },
     skills: {
       output: `Technical Skills:
-Programming Languages: Python (95%), JavaScript/TypeScript (90%), Java (85%), C++ (80%)
-Web Development: React, Next.js, Django, HTML/CSS
-Mobile Development: Native Android, Kotlin
+Programming Languages: C, C++, Python, Java, JavaScript, Kotlin
+Web & Mobile: React.js, Node.js, Express.js, Spring Boot, REST APIs, Android (Jetpack Compose)
+AI/ML & Tools: AI Agents (SmythOS), LLM Training, Docker, Git, PyTest
+Databases: MySQL, PostgreSQL, MongoDB (NoSQL)
 Data Science: Pandas, NumPy, Matplotlib, Keras
-Tools: Git, VS Code, IntelliJ IDEA, Android Studio
-Databases: SQLite, PostgreSQL
+Core Competencies: Data Structures & Algorithms, OOP, Software Design Patterns, API Development, Database Design
 Languages: English, Bangla, Hindi`,
       type: 'success' as const
     },

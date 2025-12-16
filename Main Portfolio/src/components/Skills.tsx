@@ -23,22 +23,22 @@ export default function Skills() {
     {
       icon: <Code className="w-6 h-6" />,
       title: "Multi-Platform Solver",
-      rating: "650+",
-      description: "Problems solved across Codeforces, VJudge, CodeChef",
+      rating: "850+",
+      description: "Problems solved across Codeforces, VJudge, CodeChef, LeetCode",
       color: "purple"
     },
     {
       icon: <Target className="w-6 h-6" />,
       title: "VJudge Enthusiast",
-      rating: "330+",
+      rating: "325+",
       description: "Diverse problem-solving experience",
       color: "green"
     },
     {
       icon: <Award className="w-6 h-6" />,
       title: "CodeChef Competitor",
-      rating: "1474",
-      description: "100+ problems solved with strong rating",
+      rating: "1437",
+      description: "2-Star rating with consistent problem solving",
       color: "orange"
     },
     {
@@ -252,7 +252,7 @@ export default function Skills() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">750+</div>
+              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">850+</div>
               <p className="text-gray-600 dark:text-gray-400 font-medium">Total Problems</p>
             </div>
             <div className="text-center">

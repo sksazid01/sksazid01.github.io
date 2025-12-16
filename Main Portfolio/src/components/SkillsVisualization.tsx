@@ -87,6 +87,46 @@ export default function SkillsVisualization() {
       projects: 3,
       experience: '1+ years',
       description: 'Statistical analysis and data visualization'
+    },
+    {
+      name: 'Node.js/Express',
+      level: 'Intermediate',
+      category: 'Backend',
+      projects: 2,
+      experience: '1+ years',
+      description: 'RESTful APIs and server-side JavaScript'
+    },
+    {
+      name: 'Tailwind CSS',
+      level: 'Intermediate',
+      category: 'Frontend',
+      projects: 3,
+      experience: '6+ months',
+      description: 'Utility-first CSS framework for modern UIs'
+    },
+    {
+      name: 'Git/GitHub',
+      level: 'Proficient',
+      category: 'Tools',
+      projects: 10,
+      experience: '3+ years',
+      description: 'Version control and collaborative development'
+    },
+    {
+      name: 'SQL/Databases',
+      level: 'Intermediate',
+      category: 'Backend',
+      projects: 4,
+      experience: '2+ years',
+      description: 'Relational databases and query optimization'
+    },
+    {
+      name: 'RESTful APIs',
+      level: 'Intermediate',
+      category: 'Backend',
+      projects: 3,
+      experience: '1+ years',
+      description: 'API design and integration'
     }
   ]
 
