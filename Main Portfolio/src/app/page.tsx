@@ -4,13 +4,8 @@ import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
-import About from '@/components/About'
-import Skills from '@/components/Skills'
-import Experience from '@/components/Experience'
-import Contact from '@/components/Contact'
-import Footer from '@/components/Footer'
 
-// Lazy load heavy components with dynamic imports
+// Background effects - load immediately but render without blocking
 const StarryBackground = dynamic(() => import('@/components/StarryBackground'), {
   ssr: false,
   loading: () => null
@@ -21,14 +16,43 @@ const CursorTrail = dynamic(() => import('@/components/CursorTrail'), {
   loading: () => null
 })
 
+// Below-the-fold sections - lazy load on scroll/intersection
+const About = dynamic(() => import('@/components/About'), {
+  loading: () => <div className="py-20" />,
+  ssr: false
+})
+
 const ProfessionalAchievements = dynamic(() => import('@/components/ProfessionalAchievements'), {
-  loading: () => <div className="py-20 text-center">Loading achievements...</div>
+  loading: () => <div className="py-20" />,
+  ssr: false
 })
 
 const Projects = dynamic(() => import('@/components/Projects'), {
-  loading: () => <div className="py-20 text-center">Loading projects...</div>
+  loading: () => <div className="py-20" />,
+  ssr: false
 })
 
+const Skills = dynamic(() => import('@/components/Skills'), {
+  loading: () => <div className="py-20" />,
+  ssr: false
+})
+
+const Experience = dynamic(() => import('@/components/Experience'), {
+  loading: () => <div className="py-20" />,
+  ssr: false
+})
+
+const Contact = dynamic(() => import('@/components/Contact'), {
+  loading: () => <div className="py-20" />,
+  ssr: false
+})
+
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => <div className="py-10" />,
+  ssr: false
+})
+
+// UI enhancements - load in background
 const AdvancedSettings = dynamic(() => import('@/components/AdvancedSettings'), {
   ssr: false
 })
