@@ -24,9 +24,8 @@ export default function QuickStatsUpdater() {
 
     setStats(getCurrentStats())
     
-    // Show widget after a delay
-    const timer = setTimeout(() => setIsVisible(true), 4000)
-    return () => clearTimeout(timer)
+    // Show widget immediately
+    setIsVisible(true)
   }, [])
 
   return (

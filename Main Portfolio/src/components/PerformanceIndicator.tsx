@@ -61,13 +61,12 @@ export default function PerformanceIndicator() {
     window.addEventListener('online', updateNetworkStatus)
     window.addEventListener('offline', updateNetworkStatus)
 
-    // Show indicator after a delay
-    const timer = setTimeout(() => setIsVisible(true), 3000)
+    // Show indicator immediately
+    setIsVisible(true)
 
     return () => {
       window.removeEventListener('online', updateNetworkStatus)
       window.removeEventListener('offline', updateNetworkStatus)
-      clearTimeout(timer)
     }
   }, [])
 

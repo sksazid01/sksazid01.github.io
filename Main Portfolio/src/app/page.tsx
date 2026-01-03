@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
@@ -10,7 +9,6 @@ import Skills from '@/components/Skills'
 import Experience from '@/components/Experience'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
-import LoadingScreen from '@/components/LoadingScreen'
 
 // Lazy load heavy components with dynamic imports
 const StarryBackground = dynamic(() => import('@/components/StarryBackground'), {
@@ -44,20 +42,6 @@ const PerformanceIndicator = dynamic(() => import('@/components/PerformanceIndic
 })
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1500) // 1.5s Loading
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (isLoading) {
-    return <LoadingScreen />
-  }
-
   return (
     <main className="relative min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-slate-900">
       <StarryBackground />
