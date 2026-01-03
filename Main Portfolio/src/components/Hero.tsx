@@ -261,11 +261,10 @@ export default function Hero() {
               <motion.div
                 className="relative w-80 h-80 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 p-1 shadow-2xl"
                 whileHover={{ 
-                  scale: 1.05,
-                  rotate: 360,
+                  scale: 1.08,
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 255, 0.25)"
                 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <Image
