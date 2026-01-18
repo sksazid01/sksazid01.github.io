@@ -13,14 +13,69 @@ export default function Projects() {
     description: string
     duration: string
     technologies: string[]
-    category: 'Web Development' | 'Android Development' | 'Desktop Development'
+    category: 'Web Development' | 'Android Development' | 'Desktop Development' | 'Game Development'
     keyFeatures: string[]
-    youtubeId: string
+    youtubeId?: string
     githubUrl: string
-    linkedinUrl: string
+    linkedinUrl?: string
   }
 
   const projects: Project[] = [
+    {
+      id: 'smart-ielts',
+      title: 'Smart IELTS — AI-Powered Test Preparation Platform',
+      description: 'An AI-powered IELTS test preparation platform that creates creative questions based on past real IELTS questions and delivers intelligent tutoring and real-time feedback. 🏆 4th Place – Inter-University National Hackathon 2025 (Green University of Bangladesh).',
+      duration: 'January 2025',
+      technologies: ['SmythOS', 'Next.js', 'Node.js', 'Pinecone', 'Gemini API', 'ElevenLabs'],
+      category: 'Web Development',
+      keyFeatures: [
+        'AI-Powered Chatbot for IELTS guidance',
+        'Smart Document Search & Q&A',
+        'Google Drive & Email Integration',
+        'Real-Time Agent Dashboard',
+      ],
+      youtubeId: 'mgMEFtJPmYY',
+      githubUrl: 'https://github.com/BadhonAhmad/Smart-IELTS',
+      linkedinUrl: 'https://smart-ielts.onrender.com'
+    },
+    {
+      id: 'sustclubs',
+      title: 'SUSTclubs — Club Management System',
+      description: 'A web application designed to simplify the management of club activities at SUST (Shahjalal University of Science & Technology, Sylhet). Built using the MERN stack (MongoDB, Express, React, Node.js), making tasks such as club recruitment, member tracking, online payments, and other club needs much easier.',
+      duration: 'University Project',
+      technologies: ['MongoDB', 'Express', 'React', 'Node.js', 'SSLCommerz'],
+      category: 'Web Development',
+      keyFeatures: [
+        'One place for club recruitment and member information',
+        'Online payment system with transaction records',
+        'SSLCommerz NodeJS Payment Gateway for payments',
+        'Member profiles and public pages',
+        'Event planning and reminders',
+        'Automatic email notifications',
+        'Different access levels for different roles'
+      ],
+      youtubeId: '',
+      githubUrl: 'https://github.com/sksazid01/Project350_CMS'
+    },
+  {
+  id: 'research-paper-rag',
+  title: 'Research Paper RAG System — Intelligent PDF Query Platform',
+  description: 'An AI-powered system for querying research papers using a Retrieval-Augmented Generation (RAG) pipeline, featuring PDF ingestion, vector search, citation-backed answers, and confidence scoring.',
+  duration: 'Assessment Project',
+  technologies: ['Next.js', 'FastAPI','Python', 'Docker', 'PostgreSQL', 'Qdrant', 'Ollama'],
+  category: 'Web Development',
+  keyFeatures: [
+    'PDF upload and section-aware document processing',
+    'Citation-backed question answering with confidence scoring',
+    'Advanced re-ranking using cross-encoders (~10–15% accuracy improvement)',
+    'Local LLM integration via Ollama',
+    'Performance optimizations with caching and batch queries',
+    'Real-time streaming responses using SSE'
+  ],
+  youtubeId: '',
+  githubUrl: 'https://github.com/sksazid01/research-paper-rag-assessment/tree/submission/Md_Ahasanul_Haque_Sazid',
+  linkedinUrl: ''
+},
     {
       id: 'collegesamaj',
       title: 'COLLEGESAMAJ — Web Development Internship Project',
@@ -81,7 +136,7 @@ export default function Projects() {
       description: 'Simple yet engaging desktop quiz game built in just one hour using JavaFX. Identify the correct country flag out of four possible options to earn points.',
       duration: '1 Hour Project',
       technologies: ['Java (JavaFX)', 'FXML', 'CSS', 'Maven'],
-      category: 'Desktop Development',
+      category: 'Game Development',
       keyFeatures: [
         'Multiple-choice flag identification',
         'Score tracking and question counter',
@@ -208,7 +263,7 @@ export default function Projects() {
 
               {/* Technologies */}
               <div className="mb-6">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Technologies Used:</h4>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Technologies Used:</h4>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, i) => (
                     <span
@@ -225,15 +280,24 @@ export default function Projects() {
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Left Column: Video */}
                 <div>
-                  {/* YouTube Video Embed */}
+                  {/* YouTube Video Embed or Placeholder */}
                   <div className="relative rounded-xl overflow-hidden shadow-lg aspect-video">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${project.youtubeId}`}
-                      title={project.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                    />
+                    {project.youtubeId ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${project.youtubeId}`}
+                        title={project.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
+                        <div className="text-center p-6">
+                          <Youtube className="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-gray-500" />
+                          <p className="text-gray-500 dark:text-gray-400 font-medium">Project Image Coming Soon</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -268,17 +332,19 @@ export default function Projects() {
                       <ExternalLink className="w-4 h-4 ml-auto text-gray-400 group-hover:text-blue-500" />
                     </a>
 
-                    {/* LinkedIn Link */}
-                    <a
-                      href={project.linkedinUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group"
-                    >
-                      <Linkedin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                      <span className="text-sm font-medium text-blue-700 dark:text-blue-300">LinkedIn Post</span>
-                      <ExternalLink className="w-4 h-4 ml-auto text-blue-400 group-hover:text-blue-500" />
-                    </a>
+                    {/* LinkedIn Link - Only show if linkedinUrl exists */}
+                    {project.linkedinUrl && (
+                      <a
+                        href={project.linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group"
+                      >
+                        <Linkedin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        <span className="text-sm font-medium text-blue-700 dark:text-blue-300">LinkedIn Post</span>
+                        <ExternalLink className="w-4 h-4 ml-auto text-blue-400 group-hover:text-blue-500" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
