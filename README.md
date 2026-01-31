@@ -1,6 +1,8 @@
-# Enhanced Portfolio Website
+# Portfolio Website
 
-A modern, feature-rich portfolio website built with Next.js, TypeScript, and Tailwind CSS.
+A modern, feature-rich portfolio website built with Next.js, TypeScript, and Tailwind CSS. Deployed on GitHub Pages.
+
+🌐 **Live Site**: [sksazid.me](https://sksazid.me)
 
 ## 🚀 New Features Added
 
@@ -55,12 +57,33 @@ A modern, feature-rich portfolio website built with Next.js, TypeScript, and Tai
 
 ## 🛠️ Technologies Used
 
-- **Next.js 15** - React framework
+- **Next.js 15** - React framework with static export
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
 - **Framer Motion** - Animations
 - **Lucide React** - Icons
-- **Formspree** - Contact form handling
+- **EmailJS** - Contact form handling
+- **GitHub Pages** - Hosting platform
+
+## 📂 Project Structure
+
+```
+sksazid01.github.io/
+├── src/
+│   ├── app/           # Next.js app directory
+│   ├── components/    # React components
+│   ├── hooks/         # Custom hooks
+│   ├── services/      # API services
+│   └── utils/         # Utility functions
+├── public/            # Static assets
+│   ├── assets/        # Images and resources
+│   └── workflow/      # Documentation files
+├── docs/              # Build output (GitHub Pages serves from here)
+├── next.config.ts     # Next.js configuration
+├── tailwind.config.ts # Tailwind CSS configuration
+├── package.json       # Dependencies and scripts
+└── deploy.sh          # Deployment script
+```
 
 ## 📱 Features Overview
 
@@ -104,18 +127,58 @@ A modern, feature-rich portfolio website built with Next.js, TypeScript, and Tai
 
 ## 🚀 Getting Started
 
-1. **Install dependencies**:
+### Local Development
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/sksazid01/sksazid01.github.io.git
+   cd sksazid01.github.io
+   ```
+
+2. **Install dependencies**:
    ```bash
    npm install
    ```
 
-2. **Run development server**:
+3. **Run development server**:
    ```bash
    npm run dev
    ```
 
-3. **Open in browser**:
+4. **Open in browser**:
    Navigate to `http://localhost:3000`
+
+### Deployment
+
+The project uses a simplified deployment workflow:
+
+**Option 1: Quick Deploy (Recommended)**
+```bash
+npm run deploy
+```
+This command builds the project, commits changes, and pushes to GitHub in one step.
+
+**Option 2: Manual Deploy**
+```bash
+npm run build    # Builds to docs/ folder
+git add .
+git commit -m "Deploy: Update portfolio"
+git push origin main
+```
+
+**Option 3: Deploy Script**
+```bash
+./deploy.sh
+```
+
+### GitHub Pages Setup
+
+The site is configured to deploy from the `docs` folder:
+1. Repository Settings → Pages
+2. Source: Deploy from a branch
+3. Branch: `main` → `/docs`
+
+All build outputs are stored in the `docs` folder, which GitHub Pages serves automatically.
 
 ## 📊 Performance
 
@@ -123,6 +186,15 @@ A modern, feature-rich portfolio website built with Next.js, TypeScript, and Tai
 - **First Contentful Paint**: < 1.5s
 - **Largest Contentful Paint**: < 2.5s
 - **Cumulative Layout Shift**: < 0.1
+- **Static Export**: Optimized for GitHub Pages
+
+## 🔧 Available Scripts
+
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build static export to `docs` folder
+- `npm run deploy` - Build and deploy to GitHub (automated)
+- `npm run start` - Start production server (for testing)
+- `npm run lint` - Run ESLint
 
 ## 🎯 Interactive Elements
 
@@ -156,14 +228,23 @@ The theme system supports easy customization through CSS variables and the `Them
 ### Adding New Sections
 New sections can be added by:
 1. Creating a new component in `/src/components/`
-2. Adding it to the main page layout
+2. Adding it to the main page layout in `/src/app/`
 3. Including navigation links in the header
 
 ### Performance Optimization
+- Static export for fast loading
 - Lazy loading for images and components
 - Code splitting and tree shaking
 - Optimized bundle size
 - Efficient re-rendering
+
+### Deployment Configuration
+
+The project uses Next.js static export configured in `next.config.ts`:
+- `output: 'export'` - Generates static HTML/CSS/JS
+- `distDir: 'docs'` - Build output directory for GitHub Pages
+- `trailingSlash: true` - Ensures proper routing
+- `images.unoptimized: true` - Compatible with static hosting
 
 ## 📈 Analytics & Monitoring
 
