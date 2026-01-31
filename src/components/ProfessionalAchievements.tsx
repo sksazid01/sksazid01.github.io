@@ -102,6 +102,49 @@ export default function ProfessionalAchievements() {
     },
     {
       id: '2',
+      title: 'BUET CSE FEST 2026 - Top 20 Teams',
+      event: 'AI-Powered Supplementary Learning Platform Competition',
+      organizer: 'Bangladesh University of Engineering and Technology (BUET)',
+      location: 'BUET Campus, Dhaka',
+      date: 'January 2026',
+      category: 'hackathon',
+      icon: <Trophy className="w-8 h-8" />,
+      color: 'from-purple-400/20 to-pink-400/20',
+      teamName: 'Team SUST',
+      results: [
+        {
+          stage: 'Final Round',
+          position: 'Top 20',
+          participants: '150+ Teams',
+          highlight: true
+        }
+      ],
+      description: 'Developed an AI-Powered Supplementary Learning Platform for University Courses using Next.js, Node.js, LlamaIndex, and RAG technology. Successfully secured a position in the top 20 teams out of 150+ participating teams from universities across Bangladesh.',
+      images: [
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_Preliminary.jpg',
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_Judge.jpg'
+      ],
+      technologies: ['Next.js', 'Node.js', 'LlamaIndex', 'RAG', 'AI/ML', 'TypeScript'],
+      teamMembers: [
+        {
+          name: 'Md Ahasanul Haque Sazid',
+          role: 'Strategy Planning, Idea Generation & Presentation',
+          linkedin: 'https://www.linkedin.com/in/sksazid/'
+        },
+        {
+          name: 'Ajor Saha',
+          role: 'Backend Development',
+          linkedin: 'https://www.linkedin.com/in/ajor-saha-5b7832379/'
+        },
+        {
+          name: 'Sanjoy Das',
+          role: 'Frontend Development',
+          linkedin: 'https://www.linkedin.com/in/sanjoy-das-ba774a22a/'
+        }
+      ]
+    },
+    {
+      id: '3',
       title: 'HackTheAI Hackathon - Preliminary Round',
       event: 'Inter-University National Hackathon 2025',
       organizer: 'Green University of Bangladesh',
@@ -147,7 +190,7 @@ export default function ProfessionalAchievements() {
       ]
     },
     {
-      id: '3',
+      id: '4',
       title: 'SUST Inter-University Programming Contest (IUPC)',
       event: 'SUST IUPC Participation',
       organizer: 'Shahjalal University of Science & Technology',
