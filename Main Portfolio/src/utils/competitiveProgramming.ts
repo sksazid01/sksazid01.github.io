@@ -172,14 +172,14 @@ export async function fetchLeetCodeStats(handle: string): Promise<LeetCodeStat |
     // Static data for known handles - replace with your actual stats
     const staticData: Record<string, LeetCodeStat> = {
       'sksazid': {
-        totalSolved: 108,
-        easySolved: 55,
-        easyTotal: 910,
-        mediumSolved: 52,
-        mediumTotal: 1944,
-        hardSolved: 1,
-        hardTotal: 881,
-        ranking: 1258278,
+        totalSolved: 153,
+        easySolved: 80,
+        easyTotal: 922,
+        mediumSolved: 70,
+        mediumTotal: 1997,
+        hardSolved: 3,
+        hardTotal: 903,
+        ranking: 964583,
         handle: 'sksazid'
       }
     }
@@ -193,11 +193,11 @@ export async function fetchLeetCodeStats(handle: string): Promise<LeetCodeStat |
     return {
       totalSolved: 0,
       easySolved: 0,
-      easyTotal: 910,
+      easyTotal: 922,
       mediumSolved: 0,
-      mediumTotal: 1944,
+      mediumTotal: 1997,
       hardSolved: 0,
-      hardTotal: 881,
+      hardTotal: 903,
       ranking: 0,
       handle
     }

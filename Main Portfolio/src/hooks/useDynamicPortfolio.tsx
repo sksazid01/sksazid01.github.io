@@ -60,19 +60,75 @@ export const useDynamicPortfolio = () => {
   const [visitorData, setVisitorData] = useState<VisitorData | null>(null)
   const [currentActivity, setCurrentActivity] = useState<string>('')
   const [loading, setLoading] = useState(true)
+  const [lastGitHubUpdate, setLastGitHubUpdate] = useState<Date | null>(null)
 
-  // GitHub Projects Integration (fallback-first, safe fetch)
-  const fetchGitHubProjects = async () => {
+  // Constants for caching
+  const GITHUB_CACHE_KEY = 'github_stats_cache'
+  const CACHE_DURATION = 30 * 60 * 1000 // 30 minutes
+  const UPDATE_INTERVAL = 30 * 60 * 1000 // Check every 30 minutes
+
+  // Check if cached data is still valid
+  const isCacheValid = (timestamp: string): boolean => {
+    return Date.now() - new Date(timestamp).getTime() < CACHE_DURATION
+  }
+
+  // Save GitHub data to cache
+  const saveToCache = (data: any) => {
+    if (typeof window === 'undefined') return
+    
+    try {
+      localStorage.setItem(GITHUB_CACHE_KEY, JSON.stringify({
+        ...data,
+        timestamp: new Date().toISOString()
+      }))
+    } catch (error) {
+      console.log('Cache save failed, continuing without cache')
+    }
+  }
+
+  // Load GitHub data from cache
+  const loadFromCache = (): any => {
+    if (typeof window === 'undefined') return null
+    
+    try {
+      const cached = localStorage.getItem(GITHUB_CACHE_KEY)
+      if (cached) {
+        const data = JSON.parse(cached)
+        if (isCacheValid(data.timestamp)) {
+          return data
+        }
+      }
+    } catch (error) {
+      console.log('Cache load failed, will fetch fresh data')
+    }
+    return null
+  }
+
+  // GitHub Projects Integration (smart caching + auto-refresh)
+  const fetchGitHubProjects = async (forceRefresh = false) => {
+    // Check cache first unless force refresh
+    if (!forceRefresh) {
+      const cachedData = loadFromCache()
+      if (cachedData && cachedData.repos && cachedData.stats) {
+        setGithubRepos(cachedData.repos)
+        setGithubStats(cachedData.stats)
+        setLastGitHubUpdate(new Date(cachedData.timestamp))
+        return
+      }
+    }
+
     // Load fallback first for immediate UI responsiveness
     loadFallbackProjects()
 
     try {
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 3000) // shorter timeout
+      const timeoutId = setTimeout(() => controller.abort(), 5000) // Longer timeout for better success
 
-      const response = await fetch('https://api.github.com/users/sksazid01/repos', {
+      const response = await fetch('https://api.github.com/users/sksazid01/repos?per_page=100', {
         signal: controller.signal
-      }).catch(() => null).finally(() => clearTimeout(timeoutId))
+      })
+
+      clearTimeout(timeoutId)
 
       if (!response || !response.ok) {
         // keep fallback
@@ -86,46 +142,73 @@ export const useDynamicPortfolio = () => {
         .sort((a: any, b: any) => b.stargazers_count - a.stargazers_count)
         .slice(0, 6)
 
-      setGithubRepos(filteredRepos)
-
-      // Calculate stats
+      // Calculate comprehensive stats
       const stats: GitHubStats = {
-        totalRepos: repos.length,
+        totalRepos: repos.filter((repo: any) => !repo.fork).length,
         totalStars: repos.reduce((sum: number, repo: any) => sum + repo.stargazers_count, 0),
         totalForks: repos.reduce((sum: number, repo: any) => sum + repo.forks_count, 0),
         languages: getTopLanguages(repos),
         lastCommit: getRecentActivity(repos)
       }
 
+      setGithubRepos(filteredRepos)
       setGithubStats(stats)
-    } catch (error) {
-      // keep fallback silently
-      console.log('Using fallback GitHub data')
+      setLastGitHubUpdate(new Date())
+
+      // Cache the fresh data
+      saveToCache({
+        repos: filteredRepos,
+        stats: stats
+      })
+
+    } catch {
+      // Silently handle abort errors and network failures
+      // Keep fallback data
     }
   }
 
-  // GitHub Activity Stream (fallback-first)
-  const fetchGitHubActivity = async () => {
+  // GitHub Activity Stream (enhanced with caching)
+  const fetchGitHubActivity = async (forceRefresh = false) => {
+    // Check cache for activity data
+    if (!forceRefresh) {
+      const cachedData = loadFromCache()
+      if (cachedData && cachedData.activity) {
+        setGithubActivity(cachedData.activity)
+        return
+      }
+    }
+
     // Show fallback first for immediate UI
     loadFallbackActivity()
 
     try {
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 3000)
+      const timeoutId = setTimeout(() => controller.abort(), 5000)
 
       const [userResponse, eventsResponse] = await Promise.all([
-        fetch('https://api.github.com/users/sksazid01', { signal: controller.signal }).catch(() => null),
-        fetch('https://api.github.com/users/sksazid01/events/public?per_page=10', { signal: controller.signal }).catch(() => null)
-      ]).finally(() => clearTimeout(timeoutId))
+        fetch('https://api.github.com/users/sksazid01', { signal: controller.signal }),
+        fetch('https://api.github.com/users/sksazid01/events/public?per_page=10', { signal: controller.signal })
+      ])
+
+      clearTimeout(timeoutId)
 
       if (userResponse && eventsResponse && userResponse.ok && eventsResponse.ok) {
         const user = await userResponse.json()
         const events = await eventsResponse.json()
-        setGithubActivity({ user, recentEvents: events })
+        const activityData = { user, recentEvents: events }
+        
+        setGithubActivity(activityData)
+
+        // Update cache with activity data
+        const existingCache = loadFromCache() || {}
+        saveToCache({
+          ...existingCache,
+          activity: activityData
+        })
       }
-    } catch (error) {
-      // keep fallback
-      console.log('Using fallback GitHub activity')
+    } catch {
+      // Silently handle abort errors and network failures
+      // Keep fallback data
     }
   }
 
@@ -135,70 +218,37 @@ export const useDynamicPortfolio = () => {
     const timeBasedCount = 2800 + (Date.now() % 1700) // 2800-4500 range
     setVisitorCount(timeBasedCount)
 
-    // Optionally attempt to enhance with IP data; don't let failures bubble up
-    try {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 2000)
-
-      const ipResponse = await fetch('https://api.ipify.org?format=json', {
-        signal: controller.signal
-      }).catch(() => null).finally(() => clearTimeout(timeoutId))
-
-      if (ipResponse && ipResponse.ok) {
-        const ipData = await ipResponse.json()
-        const ipHash = btoa(ipData.ip).slice(0, 8)
-        const baseCount = 2500
-        const ipBasedCount = parseInt(ipHash, 36) % 2000
-        setVisitorCount(baseCount + ipBasedCount)
-      }
-    } catch (error) {
-      // ignore and keep the fallback count
-      console.log('Using fallback visitor count')
-    }
+    // Generate a consistent count based on current date
+    const today = new Date().toDateString()
+    const hashCode = today.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0)
+      return a & a
+    }, 0)
+    const baseCount = 2500 + Math.abs(hashCode % 2000)
+    setVisitorCount(baseCount)
   }
 
   // Advanced Visitor Analytics using External APIs (fallback-first)
   const initializeVisitorAnalytics = async () => {
-    // Set fallback analytics immediately
-    const fallbackAnalytics: VisitorData = {
-      count: 3200 + (Date.now() % 1800),
-      uniqueToday: 85 + (Date.now() % 25),
+    // Generate consistent analytics based on current date
+    const today = new Date().toDateString()
+    const hashCode = today.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0)
+      return a & a
+    }, 0)
+    
+    const baseCount = 2500 + Math.abs(hashCode % 2000)
+    const uniqueDaily = 75 + Math.abs(hashCode % 35)
+    
+    const visitorAnalytics: VisitorData = {
+      count: baseCount,
+      uniqueToday: uniqueDaily,
       location: 'Global',
       lastVisit: new Date().toLocaleTimeString()
     }
 
-    setVisitorData(fallbackAnalytics)
-    setVisitorCount(fallbackAnalytics.count)
-
-    // Attempt to enhance with IP-based analytics; don't fail if blocked
-    try {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 2000)
-
-      const ipResponse = await fetch('https://api.ipify.org?format=json', {
-        signal: controller.signal
-      }).catch(() => null).finally(() => clearTimeout(timeoutId))
-
-      if (ipResponse && ipResponse.ok) {
-        const ipData = await ipResponse.json()
-        const location = ipData?.ip ? 'Global' : 'International'
-        const ipHash = btoa(ipData.ip).slice(0, 8)
-        const uniqueDaily = 75 + (parseInt(ipHash, 36) % 35)
-
-        const visitorAnalytics: VisitorData = {
-          count: 2500 + (parseInt(ipHash, 36) % 2000),
-          uniqueToday: uniqueDaily,
-          location,
-          lastVisit: new Date().toLocaleTimeString()
-        }
-
-        setVisitorData(visitorAnalytics)
-        setVisitorCount(visitorAnalytics.count)
-      }
-    } catch (error) {
-      // keep fallback silently
-      console.log('Using fallback visitor analytics')
-    }
+    setVisitorData(visitorAnalytics)
+    setVisitorCount(visitorAnalytics.count)
   }
 
   // Coding Statistics
@@ -273,35 +323,35 @@ export const useDynamicPortfolio = () => {
     const fallbackRepos: GitHubRepo[] = [
       {
         id: 1,
-        name: 'Portfolio-Website',
-        description: 'Modern React portfolio with dynamic features',
-        html_url: 'https://github.com/sksazid01/portfolio',
-        language: 'JavaScript',
-        stargazers_count: 15,
-        forks_count: 3,
+        name: 'RAG-on-Research-Paper',
+        description: 'RAG-based research paper analysis with Python',
+        html_url: 'https://github.com/sksazid01/RAG-on-Research-Paper',
+        language: 'Python',
+        stargazers_count: 2,
+        forks_count: 0,
         updated_at: new Date().toISOString(),
-        topics: ['react', 'portfolio', 'tailwind']
+        topics: ['python', 'rag', 'ai', 'research']
       },
       {
         id: 2,
-        name: 'Restaurant-Management',
-        description: 'Android app for restaurant order management',
-        html_url: 'https://github.com/sksazid01/restaurant-app',
-        language: 'Java',
-        stargazers_count: 8,
-        forks_count: 2,
+        name: 'sksazid01.github.io',
+        description: 'Personal portfolio website',
+        html_url: 'https://github.com/sksazid01/sksazid01.github.io',
+        language: 'TypeScript',
+        stargazers_count: 1,
+        forks_count: 0,
         updated_at: new Date().toISOString(),
-        topics: ['android', 'java', 'sqlite']
+        topics: ['portfolio', 'nextjs', 'typescript']
       }
     ]
 
     setGithubRepos(fallbackRepos)
     
     const stats: GitHubStats = {
-      totalRepos: 15,
-      totalStars: 23,
-      totalForks: 5,
-      languages: [['JavaScript', 6], ['Java', 4], ['Python', 3], ['C++', 2]],
+      totalRepos: 48,
+      totalStars: 12,
+      totalForks: 3,
+      languages: [['Java', 8], ['C++', 6], ['Python', 6], ['TypeScript', 5], ['JavaScript', 4]],
       lastCommit: new Date().toLocaleDateString()
     }
     
@@ -311,23 +361,23 @@ export const useDynamicPortfolio = () => {
   const loadFallbackActivity = () => {
     const fallbackData = {
       user: {
-        name: 'Md Ahasanul Haque',
+        name: 'Md Ahasanul Haque Sazid',
         login: 'sksazid01',
         avatar_url: '/favicon.ico',
-        public_repos: 15,
-        followers: 25,
+        public_repos: 48,
+        followers: 18,
         html_url: 'https://github.com/sksazid01'
       },
       recentEvents: [
         {
           type: 'PushEvent',
-          repo: { name: 'sksazid01/portfolio' },
+          repo: { name: 'sksazid01/RAG-on-Research-Paper' },
           created_at: new Date().toISOString(),
           payload: { commits: [{}] }
         },
         {
           type: 'CreateEvent',
-          repo: { name: 'sksazid01/new-project' },
+          repo: { name: 'sksazid01/sksazid01.github.io' },
           created_at: new Date(Date.now() - 3600000).toISOString(),
           payload: { ref_type: 'repository' }
         }
@@ -386,6 +436,43 @@ export const useDynamicPortfolio = () => {
     }
   }, [])
 
+  // Auto-refresh GitHub data periodically
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      // Only refresh if page is visible to save API calls
+      if (!document.hidden) {
+        fetchGitHubProjects(true) // Force refresh
+        fetchGitHubActivity(true)
+      }
+    }, UPDATE_INTERVAL)
+
+    return () => clearInterval(refreshInterval)
+  }, [])
+
+  // Refresh when page becomes visible (user returns to tab)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        const cachedData = loadFromCache()
+        if (!cachedData || !isCacheValid(cachedData.timestamp)) {
+          fetchGitHubProjects(true)
+          fetchGitHubActivity(true)
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [])
+
+  // Manual refresh function that can be called externally
+  const refreshGitHubData = async () => {
+    await Promise.all([
+      fetchGitHubProjects(true),
+      fetchGitHubActivity(true)
+    ])
+  }
+
   return {
     githubRepos,
     githubStats,
@@ -395,6 +482,8 @@ export const useDynamicPortfolio = () => {
     visitorData,
     currentActivity,
     loading,
+    lastGitHubUpdate,
+    refreshGitHubData,
     getTimeAgo
   }
 }

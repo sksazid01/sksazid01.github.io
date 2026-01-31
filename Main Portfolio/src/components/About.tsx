@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { GraduationCap, Database, Globe, Star, BookOpen, Briefcase, Award, Languages } from 'lucide-react'
 import GitHubStatsWidget from './GitHubStatsWidget'
-import DownloadCVButton from './DownloadCVButton'
 import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
 export default function About() {
@@ -11,52 +10,37 @@ export default function About() {
   const highlights = [
     {
       icon: <GraduationCap className="w-6 h-6" />,
-      title: "BSc in Computer Science and Engineering",
-      description: "Shahjalal University of Science and Technology, Sylhet, Bangladesh",
+      title: "Education",
+      description: "BSc in Computer Science & Engineering at SUST, Bangladesh",
       color: "blue"
     },
     {
       icon: <Briefcase className="w-6 h-6" />,
       title: "Full Stack Developer",
-      description: "Experienced in Web Development, Mobile Apps (Android/Kotlin), and Desktop Applications (JavaFX)",
-      color: "blue"
+      description: "Web, Mobile (Android), and Desktop Applications with modern frameworks",
+      color: "green"
     },
     {
       icon: <Database className="w-6 h-6" />,
-      title: "Data Science & AI/ML",
-      description: "AI Agents (SmythOS), LLM Training, Python libraries: Keras, NumPy, Matplotlib, Pandas. Model training, data visualization, and predictive analytics",
-      color: "blue"
-    },
-    {
-      icon: <Globe className="w-6 h-6" />,
-      title: "Technical Skills",
-      description: "Languages: C/C++, Python, Java, JavaScript, Kotlin. Web & Mobile: React.js, Node.js, Express.js, Spring Boot, REST APIs, Android (Jetpack Compose). AI/ML & Tools: Docker, Git, MySQL, PostgreSQL, MongoDB, PyTest",
-      color: "blue"
-    },
-    {
-      icon: <Star className="w-6 h-6" />,
-      title: "Languages",
-      description: "English (Native or Bilingual Proficiency), Bangla (Native or Bilingual Proficiency), Hindi (Professional Working Proficiency)",
-      color: "blue"
+      title: "AI/ML Systems",
+      description: "RAG pipelines, LLM integration, and predictive analytics",
+      color: "purple"
     },
     {
       icon: <Award className="w-6 h-6" />,
       title: "Competitive Programming",
-      description: "Active problem solver with 850+ problems across platforms (Codeforces Pupil 1200+, CodeChef 2-Star 1437, VJudge 325+). Check Skills section for detailed stats",
-      color: "blue"
-    },
-    {
-      icon: <BookOpen className="w-6 h-6" />,
-      title: "Academic Projects",
-      description: "E-commerce Marketplace (Java, Servlets), Club Management System (Kotlin, Jetpack Compose), Restaurant Management System",
-      color: "blue"
-    },
-    {
-      icon: <Languages className="w-6 h-6" />,
-      title: "Continuous Learning",
-      description: "SUST Programming Training Camp participant, always exploring new technologies and best practices",
-      color: "blue"
+      description: "1200+ Codeforces rating, 850+ problems solved across platforms",
+      color: "orange"
     }
+  ]
+
+  const techStack = [
+    { category: "Frontend", skills: "React, Next.js, TypeScript, Tailwind CSS" },
+    { category: "Backend", skills: "Node.js, Java, Python, REST APIs" },
+    { category: "Mobile", skills: "Android, Kotlin, Jetpack Compose" },
+    { category: "AI/ML", skills: "TensorFlow, Keras, Pandas, NumPy" },
+    { category: "Database", skills: "PostgreSQL, MongoDB, MySQL" },
+    { category: "Tools", skills: "Docker, Git, Linux, AWS" }
   ]
 
   // const stats = [
@@ -100,115 +84,84 @@ export default function About() {
               About Me
             </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
-            Professional background, technical expertise, and development journey
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto mb-8">
+            Final year Computer Science student at SUST with expertise in full-stack development, 
+            AI/ML systems, and competitive programming. Passionate about building scalable solutions 
+            and exploring cutting-edge technologies.
           </p>
         </motion.div>
 
-        {/* Download CV Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8 flex justify-center"
-        >
-          <DownloadCVButton />
-        </motion.div>
-
-        {/* 2x4 Grid Layout */}
+        {/* Main Highlights - 2x2 Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
         >
           {highlights.map((highlight, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
               whileHover={{
-                scale: 1.05,
-                rotateY: 5,
-                z: 50
+                scale: 1.03,
+                y: -5
               }}
-              className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
-              style={{ perspective: '1000px' }}
+              className={`group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 ${
+                highlight.color === 'blue' ? 'border-l-blue-500' :
+                highlight.color === 'green' ? 'border-l-green-500' :
+                highlight.color === 'purple' ? 'border-l-purple-500' :
+                'border-l-orange-500'
+              } relative overflow-hidden`}
             >
-              {/* Top and Bottom Edge Light Animation */}
-              <div className="absolute inset-0 pointer-events-none">
-                {/* Top Edge */}
-                <motion.div
-                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-violet-500/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{
-                    left: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: index * 0.1
-                  }}
-                />
-                {/* Top Edge Glow */}
-                <motion.div
-                  className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-violet-400/40 to-transparent blur-sm"
-                  animate={{
-                    left: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: index * 0.1
-                  }}
-                />
-                {/* Bottom Edge */}
-                <motion.div
-                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-violet-500/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{
-                    right: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: index * 0.1
-                  }}
-                />
-                {/* Bottom Edge Glow */}
-                <motion.div
-                  className="absolute bottom-0 right-0 h-[4px] w-[40%] bg-gradient-to-l from-transparent via-violet-400/40 to-transparent blur-sm"
-                  animate={{
-                    right: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: index * 0.1
-                  }}
-                />
-              </div>
-              
-              <div className="inline-flex p-3 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10">
+              <div className={`inline-flex p-4 rounded-xl mb-6 ${
+                highlight.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
+                highlight.color === 'green' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' :
+                highlight.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' :
+                'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400'
+              } group-hover:scale-110 transition-transform duration-300`}>
                 {highlight.icon}
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors relative z-10">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                 {highlight.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed relative z-10">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 {highlight.description}
               </p>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Technical Expertise */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <h3 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+            Technical Expertise
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {techStack.map((tech, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm p-6 rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:shadow-lg transition-all duration-300"
+              >
+                <h4 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3">
+                  {tech.category}
+                </h4>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  {tech.skills}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Stats Row */}

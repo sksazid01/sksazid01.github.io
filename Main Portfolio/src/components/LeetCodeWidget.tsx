@@ -33,37 +33,39 @@ export default function LeetCodeWidget({
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
   useEffect(() => {
-    // Load data from storage or use defaults
+    // Load data from storage or use current defaults
     const stored = getStoredStats('leetcode')
     
-    if (stored) {
+    if (stored && stored.totalSolved > 0) {
       setStats({
         totalSolved: stored.totalSolved,
-        easySolved: 55,
-        easyTotal: 910,
-        mediumSolved: 52,
-        mediumTotal: 1944,
-        hardSolved: 1,
-        hardTotal: 881,
-        ranking: 1258278,
+        easySolved: 80,
+        easyTotal: 922,
+        mediumSolved: 70,
+        mediumTotal: 1997,
+        hardSolved: 3,
+        hardTotal: 903,
+        ranking: 964583,
         handle: handle,
         lastUpdated: stored.lastUpdated,
         cached: true
       })
       setLastUpdated(new Date(stored.lastUpdated))
     } else {
-      // Default values based on your screenshot
+      // Current known values (manually keep these updated)
       setStats({
-        totalSolved: 108,
-        easySolved: 55,
-        easyTotal: 910,
-        mediumSolved: 52,
-        mediumTotal: 1944,
-        hardSolved: 1,
-        hardTotal: 881,
-        ranking: 1258278,
-        handle: handle
+        totalSolved: 153,
+        easySolved: 80,
+        easyTotal: 922,
+        mediumSolved: 70,
+        mediumTotal: 1997,
+        hardSolved: 3,
+        hardTotal: 903,
+        ranking: 964583,
+        handle: handle,
+        lastUpdated: new Date().toISOString()
       })
+      setLastUpdated(new Date())
     }
     
     setLoading(false)
@@ -124,7 +126,7 @@ export default function LeetCodeWidget({
         <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mx-auto mb-3">
           <Trophy className="w-6 h-6 text-orange-600 dark:text-orange-400" />
         </div>
-        <div className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">108</div>
+        <div className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">Loading...</div>
         <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">Problems Solved</div>
         <div className="font-semibold text-gray-900 dark:text-white">LeetCode</div>
         <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">@{handle}</div>
@@ -243,14 +245,12 @@ export default function LeetCodeWidget({
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Auto-Update Indicator */}
-        {stats?.cached && (
-          <motion.div
-            className="absolute top-1 right-1 w-2 h-2 bg-green-400 rounded-full"
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        )}
+        {/* Updated Indicator */}
+        <motion.div
+          className="absolute top-1 right-1 w-2 h-2 bg-blue-400 rounded-full"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
 
         {/* Total Problems Solved */}
         <motion.div 

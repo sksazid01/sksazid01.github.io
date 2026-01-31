@@ -16,6 +16,7 @@ export default function Projects() {
     category: 'Web Development' | 'Android Development' | 'Desktop Development' | 'Game Development'
     keyFeatures: string[]
     youtubeId?: string
+    imageUrl?: string
     githubUrl: string
     linkedinUrl?: string
   }
@@ -73,7 +74,8 @@ export default function Projects() {
     'Real-time streaming responses using SSE'
   ],
   youtubeId: '',
-  githubUrl: 'https://github.com/sksazid01/research-paper-rag-assessment/tree/submission/Md_Ahasanul_Haque_Sazid',
+  imageUrl: '/assets/rag_architecture.png',
+  githubUrl: 'https://github.com/sksazid01/RAG-on-Research-Paper',
   linkedinUrl: ''
 },
     {
@@ -167,16 +169,6 @@ export default function Projects() {
       githubUrl: 'https://github.com/sksazid01/Facebook_Auto_Poke_Back',
       linkedinUrl: 'https://www.linkedin.com/posts/sksazid_auto-pokeback-program-python-code-activity-7170492870242553856-DLZB'
     }
-  ]
-
-  const skillsSummary = [
-    'Front‑End Web Development (HTML, CSS, JavaScript)',
-    'Python & Web Automation (Selenium, Browser Automation)',
-    'Mobile App Development (Kotlin, Jetpack Compose, Firebase)',
-    'Desktop Development with JavaFX',
-    'UI/UX Design (FXML, CSS, Jetpack Compose)',
-    'Version Control (Git, GitHub)',
-    'Collaboration and Time‑Bound Project Delivery'
   ]
 
   return (
@@ -278,9 +270,9 @@ export default function Projects() {
 
               {/* Grid Layout: Video on Left, Features & Links on Right */}
               <div className="grid md:grid-cols-2 gap-6">
-                {/* Left Column: Video */}
+                {/* Left Column: Video or Image */}
                 <div>
-                  {/* YouTube Video Embed or Placeholder */}
+                  {/* YouTube Video Embed, Image, or Placeholder */}
                   <div className="relative rounded-xl overflow-hidden shadow-lg aspect-video">
                     {project.youtubeId ? (
                       <iframe
@@ -289,6 +281,12 @@ export default function Projects() {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         className="w-full h-full"
+                      />
+                    ) : project.imageUrl ? (
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-full object-contain bg-white dark:bg-gray-800"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
@@ -351,42 +349,6 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
-
-        {/* Skills Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
-        >
-          {/* Top Edge Light Animation */}
-          <div className="absolute inset-0 pointer-events-none">
-            <motion.div
-              className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
-              style={{ filter: 'blur(1px)' }}
-              animate={{ left: ['-40%', '100%'] }}
-              transition={{ duration: 8, ease: 'linear', repeat: Infinity, repeatDelay: 0 }}
-            />
-            <motion.div
-              className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm"
-              animate={{ left: ['-40%', '100%'] }}
-              transition={{ duration: 8, ease: 'linear', repeat: Infinity, repeatDelay: 0 }}
-            />
-          </div>
-
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center relative z-10">
-            🧠 Skills Demonstrated
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
-            {skillsSummary.map((skill, i) => (
-              <div key={i} className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20">
-                <span className="text-blue-500">✓</span>
-                <span className="text-gray-700 dark:text-gray-300 font-medium">{skill}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   )

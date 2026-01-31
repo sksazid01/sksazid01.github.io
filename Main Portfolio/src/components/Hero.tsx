@@ -5,6 +5,7 @@ import { ChevronDown, Mail, ExternalLink, Github, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import DownloadCVButton from './DownloadCVButton'
+import TypingEffect from './TypingEffect'
 
 export default function Hero() {
   // React Hook - this is component memory!
@@ -163,14 +164,29 @@ export default function Hero() {
               </span>
             </motion.h1>
             
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 mb-8 font-medium"
+              className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 mb-8 font-medium min-h-[3rem] flex items-center justify-center lg:justify-start"
             >
-              A dedicated Problem Solver and Quick learner
-            </motion.p>
+              <TypingEffect
+                skills={[
+                  'Full-Stack Developer',
+                  'Competitive Programmer',
+                  'Problem Solver',
+                  'AI/ML Enthusiast',
+                  'Open Source Contributor',
+                  'Quick Learner',
+                  'Android Developer',
+                  'Data Science Practitioner'
+                ]}
+                typingSpeed={80}
+                deletingSpeed={50}
+                delayBetweenWords={500}
+                className="text-xl sm:text-2xl"
+              />
+            </motion.div>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
