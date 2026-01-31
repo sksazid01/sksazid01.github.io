@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# Portfolio Deployment Script
-# This script builds the Next.js portfolio and copies it to the root for GitHub Pages
+# Simplified Portfolio Deployment Script
+# Builds and deploys in one command
 
 echo "🚀 Starting portfolio deployment..."
-
-# Navigate to the Next.js project
-cd nextjs-portfolio
 
 echo "📦 Installing dependencies..."
 npm install
@@ -14,18 +11,13 @@ npm install
 echo "🔨 Building Next.js portfolio..."
 npm run build
 
-echo "📁 Copying static files to root..."
-cp -r out/* ../
-
-echo "🧹 Cleaning up build directory..."
-rm -rf out
-
-cd ..
-
-echo "✅ Deployment ready!"
-echo "💡 Next steps:"
-echo "   1. git add ."
-echo "   2. git commit -m 'Deploy portfolio update'"
-echo "   3. git push origin main"
+echo "✅ Build complete! Static files are in the 'docs' folder."
 echo ""
+echo "📤 Committing and pushing to GitHub..."
+git add .
+git commit -m "Deploy: Portfolio update $(date '+%Y-%m-%d %H:%M:%S')"
+git push origin main
+
+echo ""
+echo "✨ Deployment complete!"
 echo "🌐 Your portfolio will be live at: https://sksazid.me"
