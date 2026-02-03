@@ -23,6 +23,24 @@ export default function Projects() {
 
   const projects: Project[] = [
     {
+      id: 'buet-cse-fest-2026',
+      title: 'Intelligent Learning Companion Platform — BUET CSE Fest 2026 Final Round',
+      description: 'An AI-powered learning platform that turns scattered course materials into a searchable, trustworthy knowledge base with a course-aware AI assistant. Built for BUET CSE Fest 2026 Hackathon (AI & API Segment) by Team CodeOverclock.',
+      duration: 'February 2026',
+      technologies: ['Python', 'FastAPI', 'RAG', 'Pinecone', 'OpenAI', 'LangChain', 'Next.js', 'Docker'],
+      category: 'Web Development',
+      keyFeatures: [
+        'Multimodal document pursing (preserves tables, code, images)',
+        'AI answers grounded in actual course content with citations',
+        'Auto-validation with accuracy & confidence scores',
+        'Generated code is actually executed, not just syntax-checked',
+        'Intelligent Search Engine with semantic understanding'
+      ],
+      youtubeId: 'GPdAra2zaCQ',
+      githubUrl: 'https://github.com/sksazid01/Buet-CSE-FEST-FINAL',
+      linkedinUrl: 'https://www.linkedin.com/posts/sksazid_hackathon-ai-rag-ugcPost-7424442823908925440-smeA?utm_source=share&utm_medium=member_desktop'
+    },
+    {
       id: 'smart-ielts',
       title: 'Smart IELTS — AI-Powered Test Preparation Platform',
       description: 'An AI-powered IELTS test preparation platform that creates creative questions based on past real IELTS questions and delivers intelligent tutoring and real-time feedback. 🏆 4th Place – Inter-University National Hackathon 2025 (Green University of Bangladesh).',

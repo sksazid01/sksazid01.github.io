@@ -119,7 +119,7 @@ export default function ProfessionalAchievements() {
           highlight: true
         }
       ],
-      description: 'Developed an AI-Powered Supplementary Learning Platform for University Courses using Next.js, Node.js, LlamaIndex, and RAG technology. Successfully secured a position in the top 20 teams out of 150+ participating teams from universities across Bangladesh.',
+      description: 'Developed an AI-Powered Supplementary Learning Platform for University Courses',
       images: [
         '/assets/BUET CSE FEST/BUET_CSE_FEST_Preliminary.jpg',
         '/assets/BUET CSE FEST/BUET_CSE_FEST_Judge.jpg'
