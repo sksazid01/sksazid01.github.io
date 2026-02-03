@@ -7,7 +7,8 @@
     "build": "next build",
     "deploy": "npm run build && git add . && git commit -m 'Deploy: Update portfolio' && git push origin main",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preview":"cd docs && python3 -m http.server 3000"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
