@@ -19,7 +19,7 @@ const CursorTrail = dynamic(() => import('@/components/CursorTrail'), {
 
 // Below-the-fold sections - preload after initial render
 const About = dynamic(() => import('@/components/About'))
-const ProfessionalAchievements = dynamic(() => import('@/components/ProfessionalAchievements'))
+const ProfessionalAchievements = dynamic(() => import('../components/ProfessionalAchievements'))
 const Projects = dynamic(() => import('@/components/Projects'))
 const Skills = dynamic(() => import('@/components/Skills'))
 const Experience = dynamic(() => import('@/components/Experience'))

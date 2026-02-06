@@ -4,19 +4,13 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import {
   Trophy,
-  Users,
-  Award,
   Calendar,
   MapPin,
   Github,
   ExternalLink,
   Medal,
-  TrendingUp,
   Code,
-  Briefcase,
-  Target,
-  Star,
-  ChevronRight
+  Star
 } from 'lucide-react'
 
 interface Achievement {
@@ -110,19 +104,21 @@ export default function ProfessionalAchievements() {
       category: 'hackathon',
       icon: <Trophy className="w-8 h-8" />,
       color: 'from-purple-400/20 to-pink-400/20',
-      teamName: 'Team SUST',
+      teamName: 'Code_Over_Clock',
       results: [
         {
-          stage: 'Final Round',
+          stage: 'Preliminary Round',
           position: 'Top 20',
-          participants: '150+ Teams',
+          participants: '200+ Teams',
           highlight: true
         }
       ],
       description: 'Developed an AI-Powered Supplementary Learning Platform for University Courses',
       images: [
         '/assets/BUET CSE FEST/BUET_CSE_FEST_Preliminary.jpg',
-        '/assets/BUET CSE FEST/BUET_CSE_FEST_Judge.jpg'
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_Judge.jpg',
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_team.jpg',
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_intro.jpg'
       ],
       technologies: ['Next.js', 'Node.js', 'LlamaIndex', 'RAG', 'AI/ML', 'TypeScript'],
       teamMembers: [
@@ -141,7 +137,8 @@ export default function ProfessionalAchievements() {
           role: 'Frontend Development',
           linkedin: 'https://www.linkedin.com/in/sanjoy-das-ba774a22a/'
         }
-      ]
+      ],
+      projectLink:'https://github.com/sksazid01/buet-cse-fest-2026-hackathon-preliminary'
     },
     {
       id: '3',
