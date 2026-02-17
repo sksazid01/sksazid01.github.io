@@ -284,7 +284,7 @@ export default function Hero() {
               >
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <Image
-                    src="/sksazid.png"
+                    src="/sksazid.jpg"
                     alt="Md Ahasanul Haque - Problem Solver and Quick Learner"
                     width={320}
                     height={320}

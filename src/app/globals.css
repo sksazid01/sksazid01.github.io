@@ -54,7 +54,7 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-roboto-condensed), sans-serif;
 }
 
 html {
@@ -65,4 +65,26 @@ html {
 /* Enhance scrolling for specific sections */
 #github-projects {
   scroll-margin-top: 120px;
+}
+
+/* Roboto Condensed utility classes (uniquifier = weight) */
+.roboto-condensed-300 {
+  font-family: "Roboto Condensed", var(--font-roboto-condensed), sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-condensed-400 {
+  font-family: "Roboto Condensed", var(--font-roboto-condensed), sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-condensed-700 {
+  font-family: "Roboto Condensed", var(--font-roboto-condensed), sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }
