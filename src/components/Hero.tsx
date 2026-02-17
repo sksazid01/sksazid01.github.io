@@ -160,7 +160,7 @@ export default function Hero() {
               className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 whitespace-nowrap"
             >
               <span className="text-blue-600 dark:text-blue-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 cursor-pointer">
-              Sazid
+              Sk Sazid
               </span>
             </motion.h1>
             
@@ -285,7 +285,7 @@ export default function Hero() {
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <Image
                     src="/sksazid.jpg"
-                    alt="Md Ahasanul Haque - Problem Solver and Quick Learner"
+                    alt="Sk Sazid (Md Ahasanul Haque Sazid) - Full Stack Developer from SUST CSE, sksazid_sust, Competitive Programmer"
                     width={320}
                     height={320}
                     className="w-full h-full object-cover"
