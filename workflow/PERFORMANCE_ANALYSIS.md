@@ -18,7 +18,7 @@ useEffect(() => {
 ## 🟡 HIGH IMPACT ISSUES (Significant Performance Hit)
 
 ### 2. **Massive Profile Image - 555KB** 📸
-**Location:** `/sksazid.png` 
+**Location:** `/sksazid.webp` 
 **Current Size:** 555KB uncompressed PNG
 **Used in:** Hero component (above the fold)
 **Impact:** Blocks initial render, delays LCP (Largest Contentful Paint)

@@ -26,10 +26,10 @@ const robotoCondensed = Roboto_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "Sk Sazid (Md Ahasanul Haque Sazid) - Full Stack Developer | SUST CSE",
-  description: "Sk Sazid (Ahasanul Haque Sazid) - Full Stack Developer from SUST CSE, Bogura. Expert in Next.js, React, TypeScript, Python, Machine Learning. Final year Computer Science student at SUST with expertise in competitive programming.",
+  title: "Md Ahasanul Haque Sazid (Sk Sazid) - Full Stack Developer | SUST CSE",
+  description: "Md Ahasanul Haque Sazid (Sk Sazid) - Full Stack Developer from SUST CSE, Bogura. Expert in Next.js, React, TypeScript, Python, Machine Learning. Final year Computer Science student at SUST with expertise in competitive programming.",
   keywords: "Sk Sazid, Sk Sazid, sk_sazid, sksazid, Sk Sazid sust, sksazid_sust, sazid sust, sazid, sk, sk sust, sazid cse, sk cse, sk bogura, sk bogra, sazid bogura, Md Ahasanul Haque Sazid, ahasanul haque sazid, ahasanul, ahasanul haque, md ahasanul, ahasanul sust, ahasanul cse, ahasanul sazid, ahasanul bogura, Full Stack Developer, SUST CSE, Shahjalal University, React, Next.js, Python, Machine Learning, Competitive Programming, Web Developer SUST, Computer Science SUST, Bogura Developer",
-  authors: [{ name: "Sk Sazid (Md Ahasanul Haque Sazid)" }],
+  authors: [{ name: "Md Ahasanul Haque Sazid (Sk Sazid)" }],
   creator: "Sk Sazid",
   publisher: "Sk Sazid",
   openGraph: {

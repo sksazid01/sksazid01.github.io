@@ -67,12 +67,12 @@ export default function ProfessionalAchievements() {
       ],
       description: 'Developed Smart-IELTS, an AI-powered IELTS preparation platform using SmythOS agents. Secured 4th position in the grand final, competing against 50 top teams from universities across Bangladesh.',
       images: [
-        '/assets/HackTheAI Hackathon/4th at final.png',
-        '/assets/HackTheAI Hackathon/presentation/final photo.jpg',
-        '/assets/HackTheAI Hackathon/presentation/IMG_20250927_192434.jpg',
-        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_191805.jpg',
-        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_192742.jpg',
-        '/assets/HackTheAI Hackathon/presentation/IMG_20250927_192629.jpg'
+        '/assets/HackTheAI Hackathon/4th at final.webp',
+        '/assets/HackTheAI Hackathon/presentation/final photo.webp',
+        '/assets/HackTheAI Hackathon/presentation/IMG_20250927_192434.webp',
+        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_191805.webp',
+        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_192742.webp',
+        '/assets/HackTheAI Hackathon/presentation/IMG_20250927_192629.webp'
       ],
       technologies: ['SmythOS', 'AI Agents', 'React', 'Node.js', 'Machine Learning'],
       projectLink: 'https://github.com/sksazid01/Smart-IELTS',
@@ -115,10 +115,10 @@ export default function ProfessionalAchievements() {
       ],
       description: 'Developed an AI-Powered Supplementary Learning Platform for University Courses',
       images: [
-        '/assets/BUET CSE FEST/BUET_CSE_FEST_Preliminary.jpg',
-        '/assets/BUET CSE FEST/BUET_CSE_FEST_Judge.jpg',
-        '/assets/BUET CSE FEST/BUET_CSE_FEST_team.jpg',
-        '/assets/BUET CSE FEST/BUET_CSE_FEST_intro.jpg'
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_Preliminary.webp',
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_Judge.webp',
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_team.webp',
+        '/assets/BUET CSE FEST/BUET_CSE_FEST_intro.webp'
       ],
       technologies: ['Next.js', 'Node.js', 'LlamaIndex', 'RAG', 'AI/ML', 'TypeScript'],
       teamMembers: [
@@ -161,10 +161,10 @@ export default function ProfessionalAchievements() {
       ],
       description: 'Qualified for the grand final by securing 6th position in the preliminary round, competing against approximately 250 teams from universities nationwide. This achievement secured our spot among the top 50 teams.',
       images: [
-        '/assets/HackTheAI Hackathon/6th at prili.png',
-        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_192712.jpg',
-        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_192816.jpg',
-        '/assets/HackTheAI Hackathon/presentation/IMG20250925082451.jpg'
+        '/assets/HackTheAI Hackathon/6th at prili.webp',
+        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_192712.webp',
+        '/assets/HackTheAI Hackathon/competition_time/IMG_20250927_192816.webp',
+        '/assets/HackTheAI Hackathon/presentation/IMG20250925082451.webp'
       ],
       technologies: ['SmythOS', 'AI Agents', 'React', 'Node.js', 'Machine Learning'],
       projectLink: 'https://github.com/sksazid01/sust_prompt_storm_preliminary',
@@ -207,10 +207,10 @@ export default function ProfessionalAchievements() {
       ],
       description: 'Selected as the top team among all participants in SUST to represent the university at the Inter-University Programming Contest, competing with leading teams from universities across the country.',
       images: [
-        '/assets/SUST IUPC Participation/IMG_20240219_234316.jpg',
-        '/assets/SUST IUPC Participation/photo_1_2025-10-18_23-11-14.jpg',
-        '/assets/SUST IUPC Participation/photo_2_2025-10-18_23-11-14.jpg',
-        '/assets/SUST IUPC Participation/photo_3_2025-10-18_23-11-14.jpg'
+        '/assets/SUST IUPC Participation/IMG_20240219_234316.webp',
+        '/assets/SUST IUPC Participation/photo_1_2025-10-18_23-11-14.webp',
+        '/assets/SUST IUPC Participation/photo_2_2025-10-18_23-11-14.webp',
+        '/assets/SUST IUPC Participation/photo_3_2025-10-18_23-11-14.webp'
       ],
       technologies: ['C++', 'Data Structures', 'Algorithms', 'Problem Solving']
     }

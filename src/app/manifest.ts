@@ -4,16 +4,16 @@ export const dynamic = 'force-static'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Sk Sazid - Full Stack Developer Portfolio',
+    name: 'Md Ahasanul Haque Sazid - Full Stack Developer Portfolio',
     short_name: 'Sk Sazid',
-    description: 'Sk Sazid (sk_sazid, sksazid_sust) - Full Stack Developer from SUST CSE',
+    description: 'Md Ahasanul Haque Sazid (Sk Sazid, sk_sazid, sksazid_sust) - Full Stack Developer from SUST CSE',
     start_url: '/',
     display: 'standalone',
     background_color: '#000000',
     theme_color: '#000000',
     icons: [
       {
-        src: '/sksazid.jpg',
+        src: '/sksazid.webp',
         sizes: 'any',
         type: 'image/jpeg',
       },

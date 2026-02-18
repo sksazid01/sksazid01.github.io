@@ -92,7 +92,7 @@ export default function Projects() {
     'Real-time streaming responses using SSE'
   ],
   youtubeId: '',
-  imageUrl: '/assets/rag_architecture.png',
+  imageUrl: '/assets/rag_architecture.webp',
   githubUrl: 'https://github.com/sksazid01/RAG-on-Research-Paper',
   linkedinUrl: ''
 },
