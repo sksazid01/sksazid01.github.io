@@ -45,7 +45,8 @@ export default function StarryBackground() {
   const particlesRef = useRef<Particle[]>([])
   const shootingRef = useRef<ShootingStar[]>([])
   const animationRef = useRef<number | null>(null)
-  const mouseRef = useRef({ x: 0, y: 0 })
+  const mouseRef = useRef({ x: 0.5, y: 0.5 })
+  const smoothMouseRef = useRef({ x: 0.5, y: 0.5 })
   const nextShootTimeout = useRef<number | null>(null)
   const burstTimeoutsRef = useRef<number[]>([])
   const enableFollow = true // attraction (non-destructive)
@@ -54,7 +55,7 @@ export default function StarryBackground() {
   useEffect(() => {
     if (!enableFollow) return
     const handleMouse = (e: MouseEvent) => {
-      mouseRef.current.x = e.clientX / window.innerWidth
+      mouseRef.current.x = e.clientX / window.innerWidth  // normalize range into 0 → 1.
       mouseRef.current.y = e.clientY / window.innerHeight
     }
     window.addEventListener('mousemove', handleMouse)
@@ -62,7 +63,7 @@ export default function StarryBackground() {
   }, [enableFollow])
 
   useEffect(() => {
-    const canvas = canvasRef.current
+    const canvas = canvasRef.current // HTMLCanvasElement
     if (!canvas) return
 
     const ctx = canvas.getContext('2d')
@@ -75,7 +76,7 @@ export default function StarryBackground() {
 
     const createStars = () => {
       const stars: Star[] = []
-      const numStars = Math.floor((canvas.width * canvas.height) / 12000)
+      const numStars = Math.floor((canvas.width * canvas.height) / 9000)
 
       for (let i = 0; i < numStars; i++) {
         // depth controls size, brightness, speed
@@ -89,8 +90,8 @@ export default function StarryBackground() {
           vy = (Math.random() < 0.5 ? 1 : -1) * baseSpeed * 0.4
         }
         const size = 0.6 + depth * 2.4 // nearer stars larger
-        const opacity = 0.2 + depth * 0.8
-        const twinkleSpeed = 0.008 + Math.random() * 0.02 + depth * 0.015
+        const opacity = 0.2 + depth * 0.9
+        const twinkleSpeed = 0.008 + Math.random() * 0.2 + depth * 0.015
         stars.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
@@ -173,7 +174,33 @@ export default function StarryBackground() {
   const RETURN_EASING = 0.90 // 0-1; closer to 1 = slower return
   const MAX_OFFSET = 120 // clamp displacement
 
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      // Tab hidden: cancel scheduled spawns so they don't pile up
+      if (nextShootTimeout.current) {
+        window.clearTimeout(nextShootTimeout.current)
+        nextShootTimeout.current = null
+      }
+    } else {
+      // Tab visible again: discard all accumulated stars and restart cleanly
+      shootingRef.current = []
+      scheduleNext()
+    }
+  }
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+
+  let lastFrameTime = 0
   const animate = (time: number) => {
+    const delta = lastFrameTime > 0 ? Math.min(time - lastFrameTime, 100) : 16.67 // cap delta to avoid huge jumps
+    lastFrameTime = time
+
+    // Lerp smoothMouse toward real mouse — frame-rate independent (decays ~12% per frame @60fps)
+    const lerpAlpha = 1 - Math.pow(0.88, delta / 16.67)
+    smoothMouseRef.current.x += (mouseRef.current.x - smoothMouseRef.current.x) * lerpAlpha
+    smoothMouseRef.current.y += (mouseRef.current.y - smoothMouseRef.current.y) * lerpAlpha
+    const smx = smoothMouseRef.current.x
+    const smy = smoothMouseRef.current.y
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       if (theme === 'dark') {
@@ -181,8 +208,8 @@ export default function StarryBackground() {
   starsRef.current.forEach((star: Star) => {
           // update position (depth scaled)
           if (enableFollow) {
-            const cursorX = mouseRef.current.x * canvas.width
-            const cursorY = mouseRef.current.y * canvas.height
+            const cursorX = smx * canvas.width
+            const cursorY = smy * canvas.height
             const dx = cursorX - star.x
             const dy = cursorY - star.y
             const dist = Math.hypot(dx, dy)
@@ -221,10 +248,9 @@ export default function StarryBackground() {
           star.opacity = Math.max(0.1, Math.min(1, star.opacity))
 
           ctx.beginPath()
-          // parallax offset based on mouse (subtle for far stars, stronger near)
-          const parallaxStrength = 30 * star.depth // max shift
-          const px = star.x + (mouseRef.current.x - 0.5) * parallaxStrength + (star.offsetX || 0)
-          const py = star.y + (mouseRef.current.y - 0.5) * parallaxStrength + (star.offsetY || 0)
+          // only apply per-star local attraction offset — no global parallax
+          const px = star.x + (star.offsetX || 0)
+          const py = star.y + (star.offsetY || 0)
 
           ctx.arc(px, py, star.size, 0, Math.PI * 2)
           
@@ -245,9 +271,9 @@ export default function StarryBackground() {
         shootingRef.current = shootingRef.current.filter((s) => s.life < s.maxLife)
         shootingRef.current.forEach((s) => {
           // advance
-            s.x += s.vx
-            s.y += s.vy
-            s.life += 16.67 // approximate frame step
+            s.x += s.vx * (delta / 16.67)
+            s.y += s.vy * (delta / 16.67)
+            s.life += delta
 
             // fade in then out
             const half = s.maxLife / 2
@@ -330,6 +356,7 @@ export default function StarryBackground() {
 
     return () => {
   window.removeEventListener('resize', handleResize)
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
   if (nextShootTimeout.current) window.clearTimeout(nextShootTimeout.current)
   burstTimeoutsRef.current.forEach((id) => window.clearTimeout(id))
   burstTimeoutsRef.current = []

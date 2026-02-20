@@ -36,6 +36,7 @@ export default function Hero() {
     // This runs only once when component loads
   }, []) // Empty array means "run once"
   
+
   // useEffect for live clock - runs every second!
   useEffect(() => {
     const updateTime = () => {
@@ -112,22 +113,6 @@ export default function Hero() {
               </span>
             </motion.div>
           )}
-          
-          {/* Interactive Greeting */}
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.9 }}
-            className="pt-1.5 border-t border-gray-200 dark:border-gray-600"
-          >
-            <button
-              onClick={changeGreeting}
-              className="text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 cursor-pointer leading-tight"
-              title={`Clicked ${clickCount} times! Click to change greeting.`}
-            >
-              {greeting}, I'm Sazid {clickCount > 0 && `(${clickCount}!)`}
-            </button>
-          </motion.div> */}
         </div>
       </motion.div>
 
@@ -146,7 +131,7 @@ export default function Hero() {
               className="text-lg text-gray-600 dark:text-gray-300 mb-2 cursor-pointer hover:text-blue-500 transition-colors duration-300"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4, type: "spring", bounce: 0.4 }}
+              transition={{ duration: 2.5, delay: 0.5, type: "spring", bounce: 4 }}
               onClick={changeGreeting}
               title={`Clicked ${clickCount} times! Click to change greeting.`}
             >
@@ -181,8 +166,8 @@ export default function Hero() {
                   'Android Developer',
                   'Data Science Practitioner'
                 ]}
-                typingSpeed={80}
-                deletingSpeed={50}
+                typingSpeed={90}
+                deletingSpeed={30}
                 delayBetweenWords={500}
                 className="text-xl sm:text-2xl"
               />
@@ -196,7 +181,7 @@ export default function Hero() {
             >
               <motion.button
                 onClick={() => scrollToSection('#contact')}
-                className="group relative px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300"
+                className="group relative px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-100"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -210,9 +195,9 @@ export default function Hero() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 1 }}
               >
-                <DownloadCVButton variant="outline" />
+                <DownloadCVButton variant="primary" />
               </motion.div>
             </motion.div>
 
@@ -232,7 +217,7 @@ export default function Hero() {
                   href="https://www.linkedin.com/in/sksazid/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-5 py-3 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300"
+                  className="group flex items-center gap-2 px-5 py-3 bg-gray-800 dark:bg-gray-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200"
                   whileHover={{ scale: 1.08, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -245,7 +230,7 @@ export default function Hero() {
                   href="https://github.com/sksazid01"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-5 py-3 bg-gray-800 dark:bg-gray-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-gray-900 dark:hover:bg-gray-600 transition-all duration-300"
+                  className="group flex items-center gap-2 px-5 py-3 bg-gray-800 dark:bg-gray-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200"
                   whileHover={{ scale: 1.08, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -269,7 +254,7 @@ export default function Hero() {
                 y: [0, -20, 0],
               }}
               transition={{ 
-                duration: 6,
+                duration: 5,
                 repeat: Infinity,
                 ease: 'easeInOut'
               }}
@@ -277,7 +262,7 @@ export default function Hero() {
               <motion.div
                 className="relative w-80 h-80 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 p-1 shadow-2xl"
                 whileHover={{ 
-                  scale: 1.08,
+                  scale: 1.13,
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 255, 0.25)"
                 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -285,7 +270,7 @@ export default function Hero() {
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <Image
                     src="/sksazid.webp"
-                    alt="Sk Sazid (Md Ahasanul Haque Sazid) - Full Stack Developer from SUST CSE, sksazid_sust, Competitive Programmer"
+                    alt="Md Ahasanul Haque Sazid (Sk Sazid) - Full Stack Developer from SUST CSE, sksazid_sust"
                     width={320}
                     height={320}
                     className="w-full h-full object-cover"

@@ -11,12 +11,12 @@ interface DownloadCVButtonProps {
 export default function DownloadCVButton({ 
   className = '', 
   variant = 'primary' 
-}: DownloadCVButtonProps) {
+}: DownloadCVButtonProps) { // defines the props type using interface
   const handleDownload = () => {
     // Create a temporary anchor element to trigger download
     const link = document.createElement('a')
     link.href = "/cv.pdf"
-    link.download = "Md_Ahasanul_Haque_Sazid's_Resume.pdf"
+    link.download = "Md_Ahasanul_Haque_Sazid's_Resume.pdf" // Download the file instead of opening my CV
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
