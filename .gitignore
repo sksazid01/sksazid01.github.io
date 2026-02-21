@@ -19,8 +19,8 @@
 # production
 /build
 
-# GitHub Pages build output - DO NOT IGNORE (needed for deployment)
-# /docs/
+# GitHub Pages build output (built by GitHub Actions)
+/docs/
 
 # misc
 .DS_Store
