@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Clock, TrendingUp } from 'lucide-react'
+import GlossyBorder from './GlossyBorder'
 
 interface CodingStats {
   total_seconds: number
@@ -71,80 +72,7 @@ export default function CodingStatsWidget({ stats, loading }: CodingStatsWidgetP
       transition={{ duration: 0.6 }}
     >
       {/* Perimeter Border Light Animation */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Top Edge */}
-        <motion.div
-          className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            left: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0
-          }}
-        />
-        {/* Top Edge Glow */}
-        <motion.div
-          className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm"
-          animate={{
-            left: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0
-          }}
-        />
-        {/* Right Edge */}
-        <motion.div
-          className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            top: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0,
-            delay: 2
-          }}
-        />
-        {/* Bottom Edge */}
-        <motion.div
-          className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            right: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0,
-            delay: 4
-          }}
-        />
-        {/* Left Edge */}
-        <motion.div
-          className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            bottom: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0,
-            delay: 6
-          }}
-        />
-      </div>
+      <GlossyBorder showGlow />
       
       <motion.h3 
         className="text-xl font-bold text-center mb-4 text-gray-800 dark:text-white flex items-center justify-center gap-2 relative z-10"

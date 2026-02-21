@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Github, Linkedin, Youtube, ExternalLink } from 'lucide-react'
+import GlossyBorder from './GlossyBorder'
 
 export default function Projects() {
   const [activeProject, setActiveProject] = useState<string | null>(null)
@@ -223,37 +224,7 @@ export default function Projects() {
               className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden"
             >
               {/* Full Perimeter Light Animation */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{ left: ['-40%', '100%'] }}
-                  transition={{ duration: 8, ease: 'linear', repeat: Infinity, repeatDelay: 0 }}
-                />
-                <motion.div
-                  className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm"
-                  animate={{ left: ['-40%', '100%'] }}
-                  transition={{ duration: 8, ease: 'linear', repeat: Infinity, repeatDelay: 0 }}
-                />
-                <motion.div
-                  className="absolute top-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{ right: ['-40%', '100%'] }}
-                  transition={{ duration: 8, ease: 'linear', repeat: Infinity, repeatDelay: 0, delay: 2 }}
-                />
-                <motion.div
-                  className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{ right: ['-40%', '100%'] }}
-                  transition={{ duration: 8, ease: 'linear', repeat: Infinity, repeatDelay: 0, delay: 4 }}
-                />
-                <motion.div
-                  className="absolute bottom-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{ left: ['-40%', '100%'] }}
-                  transition={{ duration: 8, ease: 'linear', repeat: Infinity, repeatDelay: 0, delay: 6 }}
-                />
-              </div>
+              <GlossyBorder showGlow />
 
               {/* Project Header */}
               <div className="mb-6">

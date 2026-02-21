@@ -12,6 +12,7 @@ import {
   Code,
   Star
 } from 'lucide-react'
+import GlossyBorder from './GlossyBorder'
 
 interface Achievement {
   id: string
@@ -257,7 +258,7 @@ export default function ProfessionalAchievements() {
             Recognition and accomplishments in competitive programming and hackathons
           </p>
         </motion.div>
-
+        
         {/* Category Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -281,6 +282,8 @@ export default function ProfessionalAchievements() {
             </motion.button>
           ))}
         </motion.div>
+
+
 
         {/* Achievements List */}
         <div className="space-y-12">
@@ -362,22 +365,23 @@ export default function ProfessionalAchievements() {
                     : 'grid-cols-1 md:grid-cols-2'
                   }`}>
                   {achievement.results.map((result, idx) => (
+                    <div key={idx} className="relative">
+                      {result.highlight && (
+                        <div className="absolute -top-3 -right-3 z-10 bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                          🏆 Achievement
+                        </div>
+                      )}
                     <motion.div
-                      key={idx}
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: idx * 0.1 }}
-                      className={`relative p-6 rounded-2xl border-2 flex flex-col items-center justify-center text-center ${result.highlight
+                      className={`relative p-6 rounded-2xl border-2 flex flex-col items-center justify-center text-center overflow-hidden ${result.highlight
                           ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-400 dark:border-blue-600'
                           : 'bg-gray-50 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600'
                         }`}
                     >
-                      {result.highlight && (
-                        <div className="absolute -top-3 -right-3 bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                          🏆 Achievement
-                        </div>
-                      )}
+                      {result.highlight && <GlossyBorder />}
 
                       <div className="flex items-center justify-center gap-3 mb-3">
                         <h4 className="font-bold text-lg text-gray-900 dark:text-white">
@@ -401,6 +405,7 @@ export default function ProfessionalAchievements() {
                         </p>
                       )}
                     </motion.div>
+                    </div>
                   ))}
                 </div>
 

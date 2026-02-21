@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { ExternalLink, Trophy, TrendingUp, Target } from 'lucide-react'
 import { getStoredStats } from '@/utils/localStats'
+import GlossyBorder from './GlossyBorder'
 
 interface LeetCodeStats {
   totalSolved: number
@@ -177,67 +178,7 @@ export default function LeetCodeWidget({
       className="group bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-6 rounded-xl text-center hover:shadow-xl hover:border-orange-500 dark:hover:border-orange-400 transition-all duration-300 block relative overflow-hidden"
     >
       {/* Perimeter Border Light Animation */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Top Edge */}
-        <motion.div
-          className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            left: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0
-          }}
-        />
-        {/* Right Edge */}
-        <motion.div
-          className="absolute top-0 right-0 w-[2px] h-[40%] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            top: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0,
-            delay: 2
-          }}
-        />
-        {/* Bottom Edge */}
-        <motion.div
-          className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            right: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0,
-            delay: 4
-          }}
-        />
-        {/* Left Edge */}
-        <motion.div
-          className="absolute bottom-0 left-0 w-[2px] h-[40%] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-          style={{ filter: 'blur(1px)' }}
-          animate={{
-            bottom: ['-40%', '100%']
-          }}
-          transition={{
-            duration: 8,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatDelay: 0,
-            delay: 6
-          }}
-        />
-      </div>
+      <GlossyBorder />
       
       <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mx-auto mb-3">
         <Trophy className="w-6 h-6 text-orange-600 dark:text-orange-400" />

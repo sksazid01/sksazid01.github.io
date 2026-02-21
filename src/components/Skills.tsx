@@ -8,6 +8,7 @@ import CodeChefWidget from './CodeChefWidget'
 import LeetCodeWidget from './LeetCodeWidget'
 import CodingStatsWidget from './CodingStatsWidget'
 import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
+import GlossyBorder, { GLOSS_BLUE, GLOSS_PURPLE } from './GlossyBorder'
 
 export default function Skills() {
   const { codingStats, loading } = useDynamicPortfolio()
@@ -117,35 +118,7 @@ export default function Skills() {
               style={{ perspective: '1000px' }}
             >
               {/* Animated Border */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
-                  style={{ filter: 'blur(1px)' }}
-                  animate={{
-                    left: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: index * 0.1
-                  }}
-                />
-                <motion.div
-                  className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent blur-sm"
-                  animate={{
-                    left: ['-40%', '100%']
-                  }}
-                  transition={{
-                    duration: 3,
-                    ease: 'linear',
-                    repeat: Infinity,
-                    repeatDelay: 0,
-                    delay: index * 0.1
-                  }}
-                />
-              </div>
+              <GlossyBorder edges={['top']} color={GLOSS_BLUE} duration={3} delay={index * 0.1} showGlow />
 
               <div className={`inline-flex p-3 rounded-xl bg-${highlight.color}-100 dark:bg-${highlight.color}-900/30 text-${highlight.color}-600 dark:text-${highlight.color}-400 mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10`}>
                 {highlight.icon}
@@ -172,58 +145,7 @@ export default function Skills() {
           className="mb-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
         >
           {/* Animated Border */}
-          <div className="absolute inset-0 pointer-events-none">
-            <motion.div
-              className="absolute top-0 left-0 h-[2px] w-[40%] bg-gradient-to-r from-transparent via-purple-500/80 to-transparent"
-              style={{ filter: 'blur(1px)' }}
-              animate={{
-                left: ['-40%', '100%']
-              }}
-              transition={{
-                duration: 3,
-                ease: 'linear',
-                repeat: Infinity,
-                repeatDelay: 0
-              }}
-            />
-            <motion.div
-              className="absolute top-0 left-0 h-[4px] w-[40%] bg-gradient-to-r from-transparent via-purple-400/40 to-transparent blur-sm"
-              animate={{
-                left: ['-40%', '100%']
-              }}
-              transition={{
-                duration: 3,
-                ease: 'linear',
-                repeat: Infinity,
-                repeatDelay: 0
-              }}
-            />
-            <motion.div
-              className="absolute bottom-0 right-0 h-[2px] w-[40%] bg-gradient-to-l from-transparent via-purple-500/80 to-transparent"
-              style={{ filter: 'blur(1px)' }}
-              animate={{
-                right: ['-40%', '100%']
-              }}
-              transition={{
-                duration: 3,
-                ease: 'linear',
-                repeat: Infinity,
-                repeatDelay: 0
-              }}
-            />
-            <motion.div
-              className="absolute bottom-0 right-0 h-[4px] w-[40%] bg-gradient-to-l from-transparent via-purple-400/40 to-transparent blur-sm"
-              animate={{
-                right: ['-40%', '100%']
-              }}
-              transition={{
-                duration: 3,
-                ease: 'linear',
-                repeat: Infinity,
-                repeatDelay: 0
-              }}
-            />
-          </div>
+          <GlossyBorder edges={['top', 'bottom']} color={GLOSS_PURPLE} duration={3} showGlow />
           
           <h3 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text relative z-10">
             🏆 Live Platform Statistics

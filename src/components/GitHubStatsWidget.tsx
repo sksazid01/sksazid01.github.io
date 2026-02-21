@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Github, Star, GitFork, Code, Activity } from 'lucide-react'
+import GlossyBorder from './GlossyBorder'
 
 interface GitHubStats {
   totalRepos: number
@@ -70,110 +71,7 @@ export default function GitHubStatsWidget({ stats, loading }: GitHubStatsWidgetP
       transition={{ duration: 0.6 }}
     >
       {/* Diamond glint effect - light traveling around the entire card perimeter */}
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10"
-      >
-        {/* Animated border light that travels around the card */}
-        <motion.div
-          className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Top edge light */}
-          <motion.div
-            className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent"
-            style={{
-              width: '40%',
-              boxShadow: '0 0 15px rgba(255,255,255,0.5)',
-            }}
-            animate={{
-              left: ['-40%', '100%'],
-            }}
-            transition={{
-              duration: 8,
-              ease: 'linear',
-              repeat: Infinity,
-              repeatDelay: 0
-            }}
-          />
-          
-          {/* Right edge light */}
-          <motion.div
-            className="absolute top-0 right-0 w-[2px] bg-gradient-to-b from-transparent via-white/80 to-transparent"
-            style={{
-              height: '40%',
-              boxShadow: '0 0 15px rgba(255,255,255,0.5)',
-            }}
-            animate={{
-              top: ['-40%', '100%'],
-            }}
-            transition={{
-              duration: 8,
-              ease: 'linear',
-              repeat: Infinity,
-              delay: 2,
-              repeatDelay: 0
-            }}
-          />
-          
-          {/* Bottom edge light */}
-          <motion.div
-            className="absolute bottom-0 right-0 h-[2px] bg-gradient-to-l from-transparent via-white/80 to-transparent"
-            style={{
-              width: '40%',
-              boxShadow: '0 0 15px rgba(255,255,255,0.5)',
-            }}
-            animate={{
-              right: ['-40%', '100%'],
-            }}
-            transition={{
-              duration: 8,
-              ease: 'linear',
-              repeat: Infinity,
-              delay: 4,
-              repeatDelay: 0
-            }}
-          />
-          
-          {/* Left edge light */}
-          <motion.div
-            className="absolute bottom-0 left-0 w-[2px] bg-gradient-to-t from-transparent via-white/80 to-transparent"
-            style={{
-              height: '40%',
-              boxShadow: '0 0 15px rgba(255,255,255,0.5)',
-            }}
-            animate={{
-              bottom: ['-40%', '100%'],
-            }}
-            transition={{
-              duration: 8,
-              ease: 'linear',
-              repeat: Infinity,
-              delay: 6,
-              repeatDelay: 0
-            }}
-          />
-          
-          {/* Soft glow halo following the border */}
-          <motion.div
-            className="absolute top-0 left-0 h-[6px] bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm"
-            style={{
-              width: '40%',
-            }}
-            animate={{
-              left: ['-40%', '100%'],
-            }}
-            transition={{
-              duration: 8,
-              ease: 'linear',
-              repeat: Infinity,
-              repeatDelay: 0
-            }}
-          />
-        </motion.div>
-      </motion.div>      <div className="relative z-20">
+      <GlossyBorder showGlow />      <div className="relative z-20">
       <motion.h3 
         className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-white flex items-center justify-center gap-2"
         initial={{ opacity: 0 }}
