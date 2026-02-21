@@ -42,7 +42,7 @@ Programming Languages: C, C++, Python, Java, JavaScript, Kotlin
 Web & Mobile: React.js, Node.js, Express.js, Spring Boot, REST APIs, Android (Jetpack Compose)
 AI/ML & Tools: AI Agents (SmythOS), LLM Training, Docker, Git, PyTest
 Databases: MySQL, PostgreSQL, MongoDB (NoSQL)
-Data Science: Pandas, NumPy, Matplotlib, Keras
+Data Science: Pandas, NumPy, Matplotlib
 Core Competencies: Data Structures & Algorithms, OOP, Software Design Patterns, API Development, Database Design
 Languages: English, Bangla, Hindi`,
       type: 'success' as const

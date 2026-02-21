@@ -29,18 +29,18 @@ export default function About() {
     {
       icon: <Award className="w-6 h-6" />,
       title: "Competitive Programming",
-      description: "1200+ Codeforces rating, 850+ problems solved across platforms",
+      description: "Codeforces Pupil (max 1228), 1200+ problems solved across platforms",
       color: "orange"
     }
   ]
 
   const techStack = [
-    { category: "Frontend", skills: "React, Next.js, TypeScript, Tailwind CSS" },
-    { category: "Backend", skills: "Node.js, Java, Python, REST APIs" },
-    { category: "Mobile", skills: "Android, Kotlin, Jetpack Compose" },
-    { category: "AI/ML", skills: "TensorFlow, Keras, Pandas, NumPy" },
-    { category: "Database", skills: "PostgreSQL, MongoDB, MySQL" },
-    { category: "Tools", skills: "Docker, Git, Linux, AWS" }
+    { category: "Languages", skills: "C, C++, Python, Java, JavaScript, TypeScript, Kotlin" },
+    { category: "Web / Backend", skills: "React, Next.js, Node.js, Express, Spring Boot, REST APIs, JPA, JDBC" },
+    { category: "AI / ML", skills: "RAG Pipelines, AI Agent Orchestration (SmythOS), YOLO-based Object Detection" },
+    { category: "Databases", skills: "MySQL, PostgreSQL, MongoDB" },
+    { category: "DevOps / MLOps", skills: "Docker, CI/CD (GitHub Actions), Model Evaluation Pipelines" },
+    { category: "Core CS", skills: "DSA, OOP, OS, DBMS, Computer Networks, API Design, Software Testing" }
   ]
 
   // const stats = [

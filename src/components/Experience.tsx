@@ -39,33 +39,33 @@ export default function Experience() {
       length: "(1+ Year)",
       type: "📊 Research & Development",
       achievements: [
-        "Worked with Python libraries including Keras, NumPy, Matplotlib, and Pandas",
+        "Worked with Python libraries including NumPy, Matplotlib, and Pandas",
         "Specialized in data preprocessing and feature engineering",
         "Focused on model training, data visualization, and predictive analytics"
       ]
     },
     {
-      title: "AI Training for Problem Solving",
+      title: "AI Training Specialist",
       company: "Remotasks.com",
-      duration: "11/2023 - 09/2024",
-      length: "(10 Months)",
+      duration: "02/2023 - 10/2023",
+      length: "(8 Months)",
       type: "🤖 AI Training Specialist",
       achievements: [
-        "Contributed to creating editorials, test cases, and solutions",
-        "Specialized in algorithms and code optimization",
-        "Enhanced AI model performance through systematic training"
+        "Delivered labeled ML data by authoring 50+ competitive programming solutions, editorials, and optimized test cases",
+        "Worked primarily in C++, Python, and Java for algorithm implementation",
+        "Specialized in algorithms and code optimization to enhance AI model performance"
       ]
     },
     {
-      title: "AI Tester and Trainer",
-      company: "app.Outlier.ai",
-      duration: "10/2023 - Present",
-      length: "(1+ Year)",
+      title: "AI Model Evaluator & Trainer",
+      company: "Outlier.ai",
+      duration: "02/2024 - 03/2025",
+      length: "(13 Months)",
       type: "🔬 Quality Assurance",
       achievements: [
-        "Trained and tested an AI chatbot for Bangla language and English learning",
-        "Conducted comprehensive evaluation of AI responses",
-        "Performed API testing and validation of agent-calling functionalities"
+        "Evaluated and improved LLM coding responses across multiple rubrics",
+        "Validated natural language prompts to ensure correct AI agent tool calls and API workflows",
+        "Conducted comprehensive evaluation of AI responses for accuracy and reliability"
       ]
     }
   ]

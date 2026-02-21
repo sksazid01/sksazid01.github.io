@@ -23,7 +23,7 @@ export default function Skills() {
     {
       icon: <Code className="w-6 h-6" />,
       title: "Multi-Platform Solver",
-      rating: "850+",
+      rating: "1200+",
       description: "Problems solved across Codeforces, VJudge, CodeChef, LeetCode",
       color: "purple"
     },
@@ -38,8 +38,15 @@ export default function Skills() {
       icon: <Award className="w-6 h-6" />,
       title: "CodeChef Competitor",
       rating: "1437",
-      description: "2-Star rating with consistent problem solving",
+      description: "2-Star coder, max rating 1474",
       color: "orange"
+    },
+    {
+      icon: <Code className="w-6 h-6" />,
+      title: "LeetCode",
+      rating: "150+",
+      description: "Problems solved on LeetCode",
+      color: "yellow"
     },
     {
       icon: <Zap className="w-6 h-6" />,
@@ -47,13 +54,6 @@ export default function Skills() {
       rating: "C/C++",
       description: "Expert in competitive programming with C++ and Python",
       color: "red"
-    },
-    {
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Training Camp",
-      rating: "3+ Years",
-      description: "SUST Programming Training Camp participant since 2022",
-      color: "indigo"
     }
   ]
 
@@ -252,7 +252,7 @@ export default function Skills() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">850+</div>
+              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">1200+</div>
               <p className="text-gray-600 dark:text-gray-400 font-medium">Total Problems</p>
             </div>
             <div className="text-center">
