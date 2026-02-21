@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useTheme } from './ThemeProvider'
 
@@ -49,6 +49,25 @@ export default function StarryBackground() {
   const smoothMouseRef = useRef({ x: 0.5, y: 0.5 })
   const nextShootTimeout = useRef<number | null>(null)
   const burstTimeoutsRef = useRef<number[]>([])
+
+  // Stable random positions — computed once, never reshuffled on re-render
+  const darkOrbPositions = useMemo(
+    () =>
+      Array.from({ length: 4 }, (_, i) => ({
+        left: Math.floor(Math.random() * 86), // 0–85%
+        top: Math.floor(Math.random() * 86),
+        size: 80 + i * 20,
+      })),
+    [],
+  )
+  const lightShapePositions = useMemo(
+    () =>
+      Array.from({ length: 8 }, () => ({
+        left: Math.floor(Math.random() * 86),
+        top: Math.floor(Math.random() * 86),
+      })),
+    [],
+  )
   const enableFollow = true // attraction (non-destructive)
 
   // mouse move listener (normalized 0..1)
@@ -130,7 +149,7 @@ export default function StarryBackground() {
 
   const MIN_DELAY = 2000 // 2s
   const MAX_DELAY = 6000 // 6s
-  const INITIAL_BURST_COUNT = 3
+  const INITIAL_BURST_COUNT = 3 // how many shooting stars appear immediately when dark mode starts.
   const INITIAL_BURST_SPREAD = 450 // ms between initial burst stars
 
   const spawnShootingStar = () => {
@@ -169,9 +188,9 @@ export default function StarryBackground() {
     }
     scheduleNext()
 
-  const ATTRACTION_RADIUS = 260
-  const ATTRACTION_STRENGTH = 0.35 // how strongly stars shift toward cursor inside radius
-  const RETURN_EASING = 0.90 // 0-1; closer to 1 = slower return
+  const ATTRACTION_RADIUS = 250
+  const ATTRACTION_STRENGTH = 0.3 // how strongly stars shift toward cursor inside radius
+  const RETURN_EASING = 0.99 // 0-1; closer to 1 = slower return
   const MAX_OFFSET = 120 // clamp displacement
 
   const handleVisibilityChange = () => {
@@ -190,7 +209,7 @@ export default function StarryBackground() {
   document.addEventListener('visibilitychange', handleVisibilityChange)
 
   let lastFrameTime = 0
-  const animate = (time: number) => {
+  const animate = (time: number) => { //  render loop
     const delta = lastFrameTime > 0 ? Math.min(time - lastFrameTime, 100) : 16.67 // cap delta to avoid huge jumps
     lastFrameTime = time
 
@@ -201,18 +220,18 @@ export default function StarryBackground() {
     const smx = smoothMouseRef.current.x
     const smy = smoothMouseRef.current.y
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvas.width, canvas.height) // clears the entire canvas before drawing the next frame
 
       if (theme === 'dark') {
         // Stars for dark mode
-  starsRef.current.forEach((star: Star) => {
+       starsRef.current.forEach((star: Star) => {
           // update position (depth scaled)
           if (enableFollow) {
             const cursorX = smx * canvas.width
             const cursorY = smy * canvas.height
             const dx = cursorX - star.x
             const dy = cursorY - star.y
-            const dist = Math.hypot(dx, dy)
+            const dist = Math.hypot(dx, dy) // dist = otivuj
             if (dist < ATTRACTION_RADIUS) {
               const influence = (1 - dist / ATTRACTION_RADIUS) ** 2 // ease near edge
               const shiftX = dx * influence * ATTRACTION_STRENGTH * (0.3 + star.depth)
@@ -380,15 +399,15 @@ export default function StarryBackground() {
       <div className="fixed inset-0 pointer-events-none z-0">
         {theme === 'dark' ? (
           // Dark mode: Cosmic orbs
-          [...Array(5)].map((_, i) => (
+          darkOrbPositions.map((pos, i) => (
             <motion.div
               key={`dark-${i}`}
               className="absolute rounded-full bg-gradient-to-r from-blue-400/10 to-cyan-400/10"
               style={{
-                width: `${80 + i * 20}px`,
-                height: `${80 + i * 20}px`,
-                left: `${10 + i * 15}%`,
-                top: `${20 + i * 15}%`,
+                width: `${pos.size}px`,
+                height: `${pos.size}px`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
               }}
               animate={{
                 y: [-20, 20, -20],
@@ -396,7 +415,7 @@ export default function StarryBackground() {
                 scale: [1, 1.1, 1],
               }}
               transition={{
-                duration: 20 + i * 5,
+                duration: 25 + i * 5,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
@@ -405,7 +424,7 @@ export default function StarryBackground() {
         ) : (
           // Light mode: Geometric shapes
           <>
-            {[...Array(8)].map((_, i) => (
+            {lightShapePositions.map((pos, i) => (
               <motion.div
                 key={`light-${i}`}
                 className={`absolute ${
@@ -421,8 +440,8 @@ export default function StarryBackground() {
                 style={{
                   width: `${40 + i * 15}px`,
                   height: `${40 + i * 15}px`,
-                  left: `${5 + i * 11}%`,
-                  top: `${10 + i * 10}%`,
+                  left: `${pos.left}%`,
+                  top: `${pos.top}%`,
                 }}
                 animate={{
                   y: [-15, 15, -15],

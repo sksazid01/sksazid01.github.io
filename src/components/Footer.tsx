@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Heart, ArrowUp, Eye } from 'lucide-react'
+import { Github, Linkedin, Mail, Heart, ArrowUp, Eye, Facebook } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 
@@ -40,6 +40,12 @@ export default function Footer() {
       icon: <Mail className="w-6 h-6" />,
       href: 'mailto:ahasanulhaque20@gmail.com',
       color: 'hover:text-red-500'
+    },
+    {
+      name: 'Facebook',
+      icon: <Facebook className="w-6 h-6" />,
+      href: 'https://www.facebook.com/sksazid01',
+      color: 'hover:text-blue-500'
     }
   ]
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, MapPin, Phone, Github } from 'lucide-react'
+import { Mail, MapPin, Phone, Github, Facebook } from 'lucide-react'
 import DynamicContactForm from './DynamicContactForm'
 
 export default function Contact() {
@@ -14,13 +14,13 @@ export default function Contact() {
       href: "mailto:ahasanulhaque20@gmail.com",
       color: "blue"
     },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      title: "Phone",
-      value: "+880 9697001667",
-      href: "tel:+8809697001667",
-      color: "blue"
-    },
+    // {
+    //   icon: <Phone className="w-6 h-6" />,
+    //   title: "Phone",
+    //   value: "+880 9697001667",
+    //   href: "tel:+8809697001667",
+    //   color: "blue"
+    // },
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Location",
@@ -34,6 +34,13 @@ export default function Contact() {
       value: "sksazid01",
       href: "https://github.com/sksazid01",
       color: "gray"
+    },
+    {
+      icon: <Facebook className="w-6 h-6" />,
+      title: "Facebook",
+      value: "sksazid01",
+      href: "https://www.facebook.com/sksazid01",
+      color: "blue"
     }
   ]
 
