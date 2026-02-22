@@ -55,10 +55,10 @@ export default function LeetCodeWidget({
     } else {
       // Current known values (manually keep these updated)
       setStats({
-        totalSolved: 153,
+        totalSolved: 155,
         easySolved: 80,
         easyTotal: 922,
-        mediumSolved: 70,
+        mediumSolved: 71,
         mediumTotal: 1997,
         hardSolved: 3,
         hardTotal: 903,
@@ -261,8 +261,8 @@ export default function LeetCodeWidget({
           {/* Medium */}
           <div className="text-left">
             <div className="flex items-center justify-between mb-1">
-              <span className={`text-xs font-medium ${getDifficultyColor('medium')}`}>Medium</span>
-              <span className="text-xs text-gray-600 dark:text-gray-400">{stats.mediumSolved}/{stats.mediumTotal}</span>
+              <span className={`text-xs font-medium ${getDifficultyColor('medium')}`}>Medium+Hard</span>
+              <span className="text-xs text-gray-600 dark:text-gray-400">{stats.mediumSolved+stats.hardSolved}/{stats.mediumTotal}</span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
               <motion.div 
@@ -275,7 +275,7 @@ export default function LeetCodeWidget({
           </div>
 
           {/* Hard */}
-          <div className="text-left">
+          {/* <div className="text-left">
             <div className="flex items-center justify-between mb-1">
               <span className={`text-xs font-medium ${getDifficultyColor('hard')}`}>Hard</span>
               <span className="text-xs text-gray-600 dark:text-gray-400">{stats.hardSolved}/{stats.hardTotal}</span>
@@ -288,7 +288,7 @@ export default function LeetCodeWidget({
                 transition={{ duration: 1, delay: 0.8 }}
               />
             </div>
-          </div>
+          </div> */}
         </motion.div>
 
         {/* Ranking */}

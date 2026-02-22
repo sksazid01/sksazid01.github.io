@@ -18,9 +18,12 @@ class EmailService {
   private isInitialized = false
 
   // EmailJS Configuration
-  private readonly SERVICE_ID = 'service_65kgqhp'
-  private readonly TEMPLATE_ID = 'template_7ki2kwt'
-  private readonly PUBLIC_KEY = 'kRx4IwOm1auh5jZWn'
+  private readonly SERVICE_ID = 'service_w0ob2jd'
+  /** Template that sends form data TO YOU (ahasanulhaque20@gmail.com) */
+  private readonly TEMPLATE_ID = 'template_j0nd3w4'
+  /** Template that sends an auto-reply confirmation TO THE USER */
+  private readonly AUTOREPLY_TEMPLATE_ID = 'template_whgq42w'
+  private readonly PUBLIC_KEY = 'DwyklSMHzsEhJW7s5'
 
   private constructor() {}
 
@@ -52,7 +55,7 @@ class EmailService {
 
       // Prepare template parameters
       const templateParams = {
-        title: emailData.title || 'Portfolio Contact Form',
+        title: emailData.title || 'i can use ssg and csr in my node project?Portfolio Contact Form',
         name: emailData.name,
         time: new Date().toLocaleString('en-US', {
           year: 'numeric',
@@ -75,7 +78,28 @@ class EmailService {
         this.PUBLIC_KEY
       )
 
-      console.log('✅ Email sent successfully:', result)
+      console.log('✅ Notification email sent to owner:', result)
+
+      // Send auto-reply confirmation to the user
+      const autoReplyParams = {
+        name: emailData.name,
+        email: emailData.email,
+        message: emailData.message,
+        time: templateParams.time
+      }
+
+      try {
+        const autoReplyResult = await emailjs.send(
+          this.SERVICE_ID,
+          this.AUTOREPLY_TEMPLATE_ID,
+          autoReplyParams,
+          this.PUBLIC_KEY
+        )
+        console.log('✅ Auto-reply sent to user:', autoReplyResult)
+      } catch (autoReplyError) {
+        // Non-critical: log but don't fail the whole operation
+        console.warn('⚠️ Auto-reply failed (notification was still sent):', autoReplyError)
+      }
 
       return {
         success: true,
@@ -86,9 +110,17 @@ class EmailService {
     } catch (error) {
       console.error('❌ Email sending failed:', error)
       
+      // EmailJS throws a plain object {status, text}, not an Error instance
+      let errorMessage = 'Unknown error occurred'
+      if (error instanceof Error) {
+        errorMessage = error.message
+      } else if (typeof error === 'object' && error !== null && 'text' in error) {
+        errorMessage = `EmailJS error ${(error as any).status}: ${(error as any).text}`
+      }
+
       return {
         success: false,
-        message: error instanceof Error ? error.message : 'Unknown error occurred',
+        message: errorMessage,
         data: error
       }
     }
@@ -100,7 +132,7 @@ class EmailService {
   async sendTestEmail(): Promise<EmailResponse> {
     const testData: EmailData = {
       name: 'Test User',
-      email: 'test@example.com',
+      email: '1.sksazid@gmail.com',
       message: 'This is a test message to verify EmailJS setup',
       title: 'Portfolio Contact Test'
     }

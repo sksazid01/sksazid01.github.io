@@ -17,7 +17,7 @@ export default function About() {
     {
       icon: <Briefcase className="w-6 h-6" />,
       title: "Full Stack Developer",
-      description: "Web, Mobile (Android), and Desktop Applications with modern frameworks",
+      description: "End-to-End Web, Mobile (Android) with modern frameworks",
       color: "green"
     },
     {

@@ -97,7 +97,7 @@ export default function Experience() {
             initial={{ height: 0 }}
             whileInView={{ height: 'calc(100% - 80px)' }}
             viewport={{ once: true }}
-            transition={{ duration: 2, ease: 'easeInOut' }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
             className="absolute left-8 md:left-1/2 top-12 w-0.5 bg-gradient-to-b from-blue-500 via-cyan-500 to-purple-500 rounded-full transform md:-translate-x-1/2 z-0"
           />
 

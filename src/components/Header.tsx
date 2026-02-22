@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Moon, Sun, Volume2, VolumeX, Menu, X, Monitor } from 'lucide-react'
+import { Moon, Sun, Volume2, VolumeX, Menu, X} from 'lucide-react'
 import { useTheme } from './ThemeProvider'
 
 export default function Header() {
@@ -102,7 +102,7 @@ export default function Header() {
 
           {/* Controls */}
           <div className="flex items-center space-x-4">
-            <motion.button
+            {/* <motion.button
               onClick={() => setIsSoundEnabled(!isSoundEnabled)}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               whileHover={{ scale: 1.1 }}
@@ -114,7 +114,7 @@ export default function Header() {
               ) : (
                 <VolumeX className="w-5 h-5 text-gray-700 dark:text-gray-300" />
               )}
-            </motion.button>
+            </motion.button> */}
 
             {/* Simple Theme Toggle */}
             <motion.button
