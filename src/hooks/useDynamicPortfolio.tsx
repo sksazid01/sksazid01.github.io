@@ -212,43 +212,43 @@ export const useDynamicPortfolio = () => {
     }
   }
 
-  // Visitor Counter (fallback-first, non-blocking)
+  // Fetch real visitor count from Google Analytics (via pre-built static JSON)
   const initializeVisitorCounter = async () => {
-    // Set a reasonable default immediately
-    const timeBasedCount = 2800 + (Date.now() % 1700) // 2800-4500 range
-    setVisitorCount(timeBasedCount)
-
-    // Generate a consistent count based on current date
-    const today = new Date().toDateString()
-    const hashCode = today.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0)
-      return a & a
-    }, 0)
-    const baseCount = 2500 + Math.abs(hashCode % 2000)
-    setVisitorCount(baseCount)
+    // Show a neutral placeholder while we load
+    setVisitorCount(2000)
+    try {
+      const res = await fetch('/stats/ga-stats.json', { cache: 'no-store' })
+      if (res.ok) {
+        const data = await res.json()
+        const count = typeof data.totalVisitors === 'number' ? data.totalVisitors : 2000
+        setVisitorCount(count)
+      }
+    } catch {
+      // Keep the 2000 placeholder on any network error
+    }
   }
 
-  // Advanced Visitor Analytics using External APIs (fallback-first)
+  // Sync visitor analytics state with the same GA JSON
   const initializeVisitorAnalytics = async () => {
-    // Generate consistent analytics based on current date
-    const today = new Date().toDateString()
-    const hashCode = today.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0)
-      return a & a
-    }, 0)
-    
-    const baseCount = 2500 + Math.abs(hashCode % 2000)
-    const uniqueDaily = 75 + Math.abs(hashCode % 35)
-    
-    const visitorAnalytics: VisitorData = {
-      count: baseCount,
-      uniqueToday: uniqueDaily,
-      location: 'Global',
-      lastVisit: new Date().toLocaleTimeString()
+    try {
+      const res = await fetch('/stats/ga-stats.json', { cache: 'no-store' })
+      if (res.ok) {
+        const data = await res.json()
+        const count = typeof data.totalVisitors === 'number' ? data.totalVisitors : 2000
+        const visitorAnalytics: VisitorData = {
+          count,
+          uniqueToday: 0,
+          location: 'Global',
+          lastVisit: data.lastUpdated
+            ? new Date(data.lastUpdated).toLocaleTimeString()
+            : new Date().toLocaleTimeString(),
+        }
+        setVisitorData(visitorAnalytics)
+        setVisitorCount(count)
+      }
+    } catch {
+      // Silently fall through – initializeVisitorCounter already set a default
     }
-
-    setVisitorData(visitorAnalytics)
-    setVisitorCount(visitorAnalytics.count)
   }
 
   // Coding Statistics
