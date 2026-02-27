@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useVisitorCounter } from './useVisitorCounter'
 
 interface GitHubRepo {
   id: number
@@ -56,8 +57,9 @@ export const useDynamicPortfolio = () => {
   const [githubStats, setGithubStats] = useState<GitHubStats | null>(null)
   const [githubActivity, setGithubActivity] = useState<{ user: GitHubUser; recentEvents: GitHubEvent[] } | null>(null)
   const [codingStats, setCodingStats] = useState<CodingStats | null>(null)
-  const [visitorCount, setVisitorCount] = useState<number>(0)
-  const [visitorData, setVisitorData] = useState<VisitorData | null>(null)
+  // Real-time visitor counter via Upstash Redis
+  const { visitorCount, loading: visitorLoading } = useVisitorCounter()
+  const visitorData = null // kept for API compatibility
   const [currentActivity, setCurrentActivity] = useState<string>('')
   const [loading, setLoading] = useState(true)
   const [lastGitHubUpdate, setLastGitHubUpdate] = useState<Date | null>(null)
@@ -212,44 +214,7 @@ export const useDynamicPortfolio = () => {
     }
   }
 
-  // Fetch real visitor count from Google Analytics (via pre-built static JSON)
-  const initializeVisitorCounter = async () => {
-    // Show a neutral placeholder while we load
-    setVisitorCount(2000)
-    try {
-      const res = await fetch('/stats/ga-stats.json', { cache: 'no-store' })
-      if (res.ok) {
-        const data = await res.json()
-        const count = typeof data.totalVisitors === 'number' ? data.totalVisitors : 2000
-        setVisitorCount(count)
-      }
-    } catch {
-      // Keep the 2000 placeholder on any network error
-    }
-  }
-
-  // Sync visitor analytics state with the same GA JSON
-  const initializeVisitorAnalytics = async () => {
-    try {
-      const res = await fetch('/stats/ga-stats.json', { cache: 'no-store' })
-      if (res.ok) {
-        const data = await res.json()
-        const count = typeof data.totalVisitors === 'number' ? data.totalVisitors : 2000
-        const visitorAnalytics: VisitorData = {
-          count,
-          uniqueToday: 0,
-          location: 'Global',
-          lastVisit: data.lastUpdated
-            ? new Date(data.lastUpdated).toLocaleTimeString()
-            : new Date().toLocaleTimeString(),
-        }
-        setVisitorData(visitorAnalytics)
-        setVisitorCount(count)
-      }
-    } catch {
-      // Silently fall through – initializeVisitorCounter already set a default
-    }
-  }
+  // Visitor counter is now handled by useVisitorCounter (Upstash Redis)
 
   // Coding Statistics
   const loadCodingStats = () => {
@@ -416,9 +381,7 @@ export const useDynamicPortfolio = () => {
       
       await Promise.allSettled([
         fetchGitHubProjects(),
-        fetchGitHubActivity(),
-        initializeVisitorCounter(),
-        initializeVisitorAnalytics()
+        fetchGitHubActivity()
       ])
       
       loadCodingStats()

@@ -25,6 +25,9 @@ jobs:
       - run: npm ci
 
       - run: npm run build
+        env:
+          NEXT_PUBLIC_UPSTASH_REST_URL: ${{ secrets.UPSTASH_REST_URL }}
+          NEXT_PUBLIC_UPSTASH_REST_TOKEN: ${{ secrets.UPSTASH_REST_TOKEN }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
