@@ -40,7 +40,13 @@ async function upstashFetch(command: string[]): Promise<number | null> {
 
     if (!res.ok) return null
     const data = await res.json()
-    return typeof data.result === 'number' ? data.result : null
+    // INCR returns a number; GET returns a string — handle both
+    if (typeof data.result === 'number') return data.result
+    if (typeof data.result === 'string') {
+      const parsed = parseInt(data.result, 10)
+      return isNaN(parsed) ? null : parsed
+    }
+    return null
   } catch {
     return null
   }

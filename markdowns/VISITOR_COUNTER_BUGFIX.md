@@ -137,14 +137,75 @@ refreshes but is wiped on hard refreshes and new tabs.
 
 ---
 
-## Final Behaviour After Both Fixes
+## Bug 3 — `GET` result parsed as `null` (count resets to BASE_OFFSET on normal refresh)
 
-| User action | `INCR` or `GET`? | Counter change |
+### Symptom
+
+After both previous fixes were applied:
+
+- A **new visitor** sees the correct count (e.g. 2040).
+- A **normal refresh** (`F5` / `Ctrl+R`) reverts the displayed count back to
+  **2000** — always exactly the `BASE_OFFSET`, never the real value.
+
+### Root Cause
+
+`upstashFetch` returned `null` whenever the command was `GET`. The guard was:
+
+```typescript
+return typeof data.result === 'number' ? data.result : null
+```
+
+The Upstash REST API returns different JavaScript types depending on the command:
+
+| Command | `data.result` JS type | Example value |
 |---|---|---|
-| First-ever visit (new tab) | `INCR` | +1 |
-| Hard refresh (`Ctrl+Shift+R`) | `INCR` | +1 |
-| Normal refresh (`F5` / `Ctrl+R`) | `GET` | 0 |
-| Second component mounts on same page | awaits singleton | 0 extra requests |
+| `INCR` | `number` | `40` |
+| `GET` | `string` | `"40"` |
+
+Because `typeof "40" === 'string'` (not `'number'`), the ternary always took
+the `null` branch for `GET` responses. Back in the hook, when `raw === null`
+the `setVisitorCount` call was skipped entirely, so the state remained at its
+`useState` initial value — `BASE_OFFSET` (2000):
+
+```typescript
+if (raw !== null) {
+  setVisitorCount(raw + BASE_OFFSET)   // never reached for GET
+}
+// → count stays at 2000
+```
+
+### Fix Applied
+
+The type check in `upstashFetch` was broadened to handle both `number` and
+`string` results:
+
+```typescript
+// Before
+return typeof data.result === 'number' ? data.result : null
+
+// After
+if (typeof data.result === 'number') return data.result
+if (typeof data.result === 'string') {
+  const parsed = parseInt(data.result, 10)
+  return isNaN(parsed) ? null : parsed
+}
+return null
+```
+
+`INCR` still returns a `number` and is handled by the first branch.  
+`GET` now returns a `string`, is parsed with `parseInt`, and falls through to
+the second branch — the correct count is returned instead of `null`.
+
+---
+
+## Final Behaviour After All Three Fixes
+
+| User action | `INCR` or `GET`? | Counter change | Displayed correctly? |
+|---|---|---|---|
+| First-ever visit (new tab) | `INCR` | +1 | Yes |
+| Hard refresh (`Ctrl+Shift+R`) | `INCR` | +1 | Yes |
+| Normal refresh (`F5` / `Ctrl+R`) | `GET` | 0 | Yes (Bug 3 fixed) |
+| Second component mounts on same page | awaits singleton | 0 extra requests | Yes |
 
 ---
 
@@ -152,7 +213,7 @@ refreshes but is wiped on hard refreshes and new tabs.
 
 | File | Change |
 |---|---|
-| `src/hooks/useVisitorCounter.ts` | Both fixes applied; junk text removed |
+| `src/hooks/useVisitorCounter.ts` | All three fixes applied; junk text removed |
 
 ---
 
