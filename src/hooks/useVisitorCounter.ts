@@ -32,7 +32,6 @@ import { useState, useEffect } from 'react'
 const UPSTASH_URL   = process.env.NEXT_PUBLIC_UPSTASH_REST_URL   ?? ''
 const UPSTASH_TOKEN = process.env.NEXT_PUBLIC_UPSTASH_REST_TOKEN ?? ''
 
-const BASE_OFFSET = 2000
 const COUNTER_KEY = 'portfolio:visitors'
 const LOG_KEY     = 'portfolio:visitors:log'
 const SESSION_KEY = 'visitor_counted'
@@ -259,7 +258,7 @@ function resolveCount(): Promise<number | null> {
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useVisitorCounter() {
-  const [visitorCount, setVisitorCount] = useState<number>(BASE_OFFSET)
+  const [visitorCount, setVisitorCount] = useState<number>(0)
   const [loading, setLoading]           = useState(true)
 
   useEffect(() => {
@@ -268,7 +267,7 @@ export function useVisitorCounter() {
     async function run() {
       const raw = await resolveCount()
       if (!cancelled) {
-        if (raw !== null) setVisitorCount(raw + BASE_OFFSET)
+        if (raw !== null) setVisitorCount(raw)
         setLoading(false)
       }
     }

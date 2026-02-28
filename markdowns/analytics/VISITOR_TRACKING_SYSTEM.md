@@ -159,18 +159,6 @@ If ipapi fails entirely (network error or error response with no IP), `api.ipify
 
 ---
 
-## Display Offset
-
-The raw counter stored in Redis starts from `0`, but the displayed count adds a `BASE_OFFSET` of **2000**:
-
-```
-displayed count = Redis counter + 2000
-```
-
-This gives the portfolio a more realistic starting number rather than showing `1` on the first visit.
-
----
-
 ## Singleton Pattern
 
 A module-level `singletonPromise` variable ensures that even if multiple React components mount `useVisitorCounter()` simultaneously, **only one HTTP request** is made per page load:
