@@ -61,9 +61,15 @@ export async function fetchCodeforcesStats(handle: string): Promise<CodeforcesSt
     const user = userData.result[0]
     const submissions = submissionsData.result
 
+    interface CFSubmission {
+      verdict: string
+      problem: { contestId: number; index: string }
+      author: { participantType: string }
+      contestId: number
+    }
     // Count unique solved problems
-    const solvedProblems = new Set()
-    submissions.forEach((submission: any) => {
+    const solvedProblems = new Set<string>()
+    ;(submissions as CFSubmission[]).forEach((submission) => {
       if (submission.verdict === 'OK') {
         const problemId = `${submission.problem.contestId}-${submission.problem.index}`
         solvedProblems.add(problemId)
@@ -71,8 +77,8 @@ export async function fetchCodeforcesStats(handle: string): Promise<CodeforcesSt
     })
 
     // Count contests participated
-    const contestsParticipated = new Set()
-    submissions.forEach((submission: any) => {
+    const contestsParticipated = new Set<number>()
+    ;(submissions as CFSubmission[]).forEach((submission) => {
       if (submission.author.participantType === 'CONTESTANT') {
         contestsParticipated.add(submission.contestId)
       }
@@ -249,7 +255,7 @@ export function getCachedData(handle: string) {
   }
 }
 
-export function setCachedData(handle: string, data: any) {
+export function setCachedData(handle: string, data: unknown) {
   if (typeof window === 'undefined') return
   
   try {

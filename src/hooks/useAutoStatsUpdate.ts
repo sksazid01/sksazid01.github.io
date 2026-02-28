@@ -22,10 +22,16 @@ async function fetchCodeforcesLiveData(handle: string) {
       return null
     }
 
-    const submissions = submissionsData.result
-    const solvedProblems = new Set()
+    interface CFSubmission {
+      verdict: string
+      problem: { contestId: number; index: string }
+      author: { participantType: string }
+      contestId: number
+    }
+    const submissions = submissionsData.result as CFSubmission[]
+    const solvedProblems = new Set<string>()
     
-    submissions.forEach((submission: any) => {
+    submissions.forEach((submission) => {
       if (submission.verdict === 'OK') {
         const problemId = `${submission.problem.contestId}-${submission.problem.index}`
         solvedProblems.add(problemId)

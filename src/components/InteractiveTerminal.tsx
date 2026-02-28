@@ -284,7 +284,7 @@ Type 'help' to see available commands.
           <div className="bg-gray-800 px-4 py-2 border-t border-gray-700">
             <div className="flex items-center justify-between text-xs text-gray-400">
               <span>Interactive Portfolio Terminal</span>
-              <span>Press 'help' for commands</span>
+              <span>Press &apos;help&apos; for commands</span>
             </div>
           </div>
         </motion.div>

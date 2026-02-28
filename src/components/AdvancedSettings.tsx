@@ -72,9 +72,9 @@ export default function AdvancedSettings() {
   }
 
   const themes = [
-    { id: 'light', name: 'Light', icon: Sun },
-    { id: 'dark', name: 'Dark', icon: Moon },
-    { id: 'system', name: 'System', icon: Monitor }
+    { id: 'light' as const, name: 'Light', icon: Sun },
+    { id: 'dark' as const, name: 'Dark', icon: Moon },
+    { id: 'system' as const, name: 'System', icon: Monitor }
   ]
 
   return (
@@ -142,7 +142,7 @@ export default function AdvancedSettings() {
                   {themes.map((themeOption) => (
                     <motion.button
                       key={themeOption.id}
-                      onClick={() => setTheme(themeOption.id as any)}
+                      onClick={() => setTheme(themeOption.id)}
                       className={`p-3 rounded-lg border-2 transition-all ${
                         theme === themeOption.id
                           ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'

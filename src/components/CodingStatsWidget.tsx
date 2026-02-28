@@ -87,7 +87,7 @@ export default function CodingStatsWidget({ stats, loading }: CodingStatsWidgetP
         transition={{ delay: 0.2 }}
       >
         <Clock className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-        This Week's Coding Activity
+        This Week&apos;s Coding Activity
         <span className="text-sm font-normal text-gray-500 bg-white dark:bg-gray-700 px-2 py-1 rounded-full">
           {hours}h {minutes}m total
         </span>

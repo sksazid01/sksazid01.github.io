@@ -10,7 +10,7 @@ export interface EmailData {
 export interface EmailResponse {
   success: boolean
   message: string
-  data?: any
+  data?: unknown
 }
 
 class EmailService {
@@ -108,7 +108,8 @@ class EmailService {
       if (error instanceof Error) {
         errorMessage = error.message
       } else if (typeof error === 'object' && error !== null && 'text' in error) {
-        errorMessage = `EmailJS error ${(error as any).status}: ${(error as any).text}`
+        const ejsError = error as { status: number; text: string }
+        errorMessage = `EmailJS error ${ejsError.status}: ${ejsError.text}`
       }
 
       return {

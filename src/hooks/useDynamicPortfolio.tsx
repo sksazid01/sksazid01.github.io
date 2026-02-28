@@ -13,6 +13,8 @@ interface GitHubRepo {
   forks_count: number
   updated_at: string
   topics: string[]
+  fork?: boolean
+  archived?: boolean
 }
 
 interface GitHubStats {
@@ -36,13 +38,20 @@ interface GitHubEvent {
   type: string
   repo: { name: string }
   created_at: string
-  payload: any
+  payload: Record<string, unknown>
 }
 
 interface CodingStats {
   total_seconds: number
   languages: { name: string; percent: number }[]
   last_heartbeat: string
+}
+
+interface GitHubCache {
+  repos?: GitHubRepo[]
+  stats?: GitHubStats
+  activity?: { user: GitHubUser; recentEvents: GitHubEvent[] }
+  timestamp: string
 }
 
 interface VisitorData {
@@ -75,7 +84,7 @@ export const useDynamicPortfolio = () => {
   }
 
   // Save GitHub data to cache
-  const saveToCache = (data: any) => {
+  const saveToCache = (data: Partial<GitHubCache>) => {
     if (typeof window === 'undefined') return
     
     try {
@@ -89,13 +98,13 @@ export const useDynamicPortfolio = () => {
   }
 
   // Load GitHub data from cache
-  const loadFromCache = (): any => {
+  const loadFromCache = (): GitHubCache | null => {
     if (typeof window === 'undefined') return null
     
     try {
       const cached = localStorage.getItem(GITHUB_CACHE_KEY)
       if (cached) {
-        const data = JSON.parse(cached)
+        const data = JSON.parse(cached) as GitHubCache
         if (isCacheValid(data.timestamp)) {
           return data
         }
@@ -137,18 +146,18 @@ export const useDynamicPortfolio = () => {
         return
       }
 
-      const repos = await response.json()
+      const repos = await response.json() as GitHubRepo[]
 
       const filteredRepos = repos
-        .filter((repo: any) => !repo.fork && !repo.archived)
-        .sort((a: any, b: any) => b.stargazers_count - a.stargazers_count)
+        .filter((repo) => !repo.fork && !repo.archived)
+        .sort((a, b) => b.stargazers_count - a.stargazers_count)
         .slice(0, 6)
 
       // Calculate comprehensive stats
       const stats: GitHubStats = {
-        totalRepos: repos.filter((repo: any) => !repo.fork).length,
-        totalStars: repos.reduce((sum: number, repo: any) => sum + repo.stargazers_count, 0),
-        totalForks: repos.reduce((sum: number, repo: any) => sum + repo.forks_count, 0),
+        totalRepos: repos.filter((repo) => !repo.fork).length,
+        totalStars: repos.reduce((sum, repo) => sum + repo.stargazers_count, 0),
+        totalForks: repos.reduce((sum, repo) => sum + repo.forks_count, 0),
         languages: getTopLanguages(repos),
         lastCommit: getRecentActivity(repos)
       }
@@ -264,7 +273,7 @@ export const useDynamicPortfolio = () => {
   }
 
   // Helper functions
-  const getTopLanguages = (repos: any[]): [string, number][] => {
+  const getTopLanguages = (repos: GitHubRepo[]): [string, number][] => {
     const languages: { [key: string]: number } = {}
     repos.forEach(repo => {
       if (repo.language) {
@@ -277,7 +286,7 @@ export const useDynamicPortfolio = () => {
       .slice(0, 5)
   }
 
-  const getRecentActivity = (repos: any[]): string => {
+  const getRecentActivity = (repos: GitHubRepo[]): string => {
     const recent = repos
       .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())[0]
     
