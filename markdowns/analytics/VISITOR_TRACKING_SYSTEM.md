@@ -77,6 +77,7 @@ sessionStorage["visitor_counted"] === "1" ?
         │   │
         │   ▼
         │  Fetch geo data from ipapi.co
+        │  (if ipapi fails/errors → fallback to api.ipify.org for IP only)
         │  Parse browser / OS / device from User-Agent
         │  Capture screen, referrer, language, timestamp
         │   │
@@ -106,18 +107,36 @@ sessionStorage["visitor_counted"] === "1" ?
 
 ## Data Collected Per Visitor
 
-### Geolocation (via [ipapi.co](https://ipapi.co) — free, no API key required)
+### Geolocation
 
-| Field | Description |
-|---|---|
-| `ip` | Visitor's public IP address |
-| `country` | Full country name (e.g. "Bangladesh") |
-| `country_code` | ISO 2-letter code (e.g. "BD") |
-| `region` | State / division |
-| `city` | City name |
-| `latitude` | Geographic latitude |
-| `longitude` | Geographic longitude |
-| `org` | ISP / organization name |
+Primary source: **[ipapi.co](https://ipapi.co)** — free, no API key required (`GET https://ipapi.co/json/`)  
+Fallback source: **[api.ipify.org](https://api.ipify.org)** — used only if ipapi.co fails or returns an error, captures IP address only.
+
+| Field | Description | Source |
+|---|---|---|
+| `ip` | Visitor's public IP address | ipapi.co → ipify fallback |
+| `country` | Full country name (e.g. "Bangladesh") | ipapi.co |
+| `country_code` | ISO 2-letter code (e.g. "BD") | ipapi.co (`country_code` or `country`) |
+| `region` | State / division | ipapi.co |
+| `city` | City name | ipapi.co |
+| `latitude` | Geographic latitude | ipapi.co |
+| `longitude` | Geographic longitude | ipapi.co |
+| `org` | ISP / organization name | ipapi.co |
+
+#### ipapi.co error handling
+
+ipapi.co returns HTTP 200 even on failure (e.g. rate limit), with `{ "error": true, "reason": "..." }` in the body. The code checks for this and skips the broken field mapping rather than storing empty/`"Unknown"` values:
+
+```typescript
+if (!g.error) {
+  // map all fields normally
+} else if (g.ip) {
+  // error response may still include the IP
+  base.ip = g.ip
+}
+```
+
+If ipapi fails entirely (network error or error response with no IP), `api.ipify.org` is called as a last resort to capture at least the real IP address, ensuring hash keys are real IPs rather than `anon:UUID`.
 
 ### Browser & Device (parsed from `navigator.userAgent`)
 
