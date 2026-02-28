@@ -177,15 +177,17 @@ export default function PerformanceIndicator() {
           </div>
         )}
 
-        {/* Performance Score */}
+        {/* Load time colour-coded score */}
         <div className="pt-1 border-t border-gray-200 dark:border-gray-600">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <TrendingUp className="w-3 h-3 text-blue-500" />
-              <span className="text-xs text-gray-600 dark:text-gray-400">Score</span>
+              <span className="text-xs text-gray-600 dark:text-gray-400">Load</span>
             </div>
             <div className="flex items-center gap-1">
-              <span className="text-xs font-bold text-green-500">98</span>
+              <span className={`text-xs font-bold ${getPerformanceColor(metrics.pageLoadTime)}`}>
+                {metrics.pageLoadTime < 100 ? 'Fast' : metrics.pageLoadTime < 500 ? 'OK' : 'Slow'}
+              </span>
               <Sparkles className="w-2 h-2 text-yellow-500" />
             </div>
           </div>

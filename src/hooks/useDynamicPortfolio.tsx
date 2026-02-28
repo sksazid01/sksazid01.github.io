@@ -376,26 +376,24 @@ export const useDynamicPortfolio = () => {
 
   // Initialize all features
   useEffect(() => {
+    // loadCurrentActivity returns a cleanup fn — must be captured synchronously
+    // so React can call it reliably on unmount.
+    const cleanupActivity = loadCurrentActivity()
+
     const initializeFeatures = async () => {
       setLoading(true)
-      
       await Promise.allSettled([
         fetchGitHubProjects(),
         fetchGitHubActivity()
       ])
-      
       loadCodingStats()
-      const cleanupActivity = loadCurrentActivity()
-      
       setLoading(false)
-      
-      return cleanupActivity
     }
 
-    const cleanup = initializeFeatures()
-    
+    initializeFeatures()
+
     return () => {
-      cleanup.then(fn => fn && fn())
+      cleanupActivity && cleanupActivity()
     }
   }, [])
 

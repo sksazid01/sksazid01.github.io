@@ -58,6 +58,17 @@ export default function Skills() {
     }
   ]
 
+  // Static class map — dynamic template literals like `bg-${color}-100` are not
+  // detected by Tailwind at build time and produce invisible styles in production.
+  const colorClasses: Record<string, string> = {
+    blue:   'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400',
+    purple: 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400',
+    green:  'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400',
+    orange: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400',
+    yellow: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400',
+    red:    'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400',
+  }
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -120,7 +131,7 @@ export default function Skills() {
               {/* Animated Border */}
               <GlossyBorder edges={['top']} color={GLOSS_BLUE} duration={3} delay={index * 0.1} showGlow />
 
-              <div className={`inline-flex p-3 rounded-xl bg-${highlight.color}-100 dark:bg-${highlight.color}-900/30 text-${highlight.color}-600 dark:text-${highlight.color}-400 mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10`}>
+              <div className={`inline-flex p-3 rounded-xl ${colorClasses[highlight.color] ?? colorClasses.blue} mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10`}>
                 {highlight.icon}
               </div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors relative z-10">

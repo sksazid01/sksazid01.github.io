@@ -131,8 +131,13 @@ export default function SkillsVisualization() {
   ]
 
   const getLevelColor = (level: string) => {
-    // All levels use blue color for consistency
-    return 'blue'
+    switch (level) {
+      case 'Beginner':     return 'from-blue-400 to-blue-500'
+      case 'Intermediate': return 'from-blue-500 to-cyan-600'
+      case 'Proficient':   return 'from-blue-600 to-indigo-600'
+      case 'Advanced':     return 'from-indigo-600 to-purple-600'
+      default:             return 'from-blue-500 to-blue-600'
+    }
   }
 
   const getLevelIcon = (level: string) => {

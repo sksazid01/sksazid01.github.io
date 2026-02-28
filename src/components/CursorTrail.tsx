@@ -21,36 +21,25 @@ export default function CursorTrail() {
       return
     }
 
-    let animationFrame: number
     let cursorId = 0
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!isEnabled) return
-
       setCursors(prev => {
         const newCursor: CursorPosition = {
           x: e.clientX,
           y: e.clientY,
           id: cursorId++
         }
-
         // Keep only the last 8 cursor positions
-        const updated = [newCursor, ...prev].slice(0, 8)
-        return updated
+        return [newCursor, ...prev].slice(0, 8)
       })
     }
 
-    const cleanupOldCursors = () => {
-      setCursors(prev => prev.filter((_, index) => index < 8))
-      animationFrame = requestAnimationFrame(cleanupOldCursors)
-    }
-
     document.addEventListener('mousemove', handleMouseMove)
-    animationFrame = requestAnimationFrame(cleanupOldCursors)
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
-      cancelAnimationFrame(animationFrame)
     }
   }, [isEnabled])
 

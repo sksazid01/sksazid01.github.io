@@ -60,8 +60,14 @@ export default function CodingStatsWidget({ stats, loading }: CodingStatsWidgetP
   }
 
   const getLanguageColor = (index: number) => {
-    // All languages use blue color for consistency
-    return 'blue'
+    const gradients = [
+      'from-blue-500 to-cyan-400',
+      'from-purple-500 to-pink-400',
+      'from-green-500 to-emerald-400',
+      'from-orange-500 to-amber-400',
+      'from-red-500 to-rose-400',
+    ]
+    return gradients[index % gradients.length]
   }
 
   return (

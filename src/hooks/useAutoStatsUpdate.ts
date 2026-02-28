@@ -134,7 +134,8 @@ export function useAutoStatsUpdate(handle: string = 'sksazid') {
 
     if (shouldUpdate) {
       // Small delay to let the page load first
-      setTimeout(performAutoUpdate, 2000)
+      const timer = setTimeout(performAutoUpdate, 2000)
+      return () => clearTimeout(timer)
     }
   }, [handle])
 

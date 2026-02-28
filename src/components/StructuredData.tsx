@@ -10,9 +10,9 @@ export default function StructuredData() {
     image: 'https://sksazid.me/sksazid.webp',
     sameAs: [
       'https://github.com/sksazid01',
-      'https://linkedin.com/in/sk-sazid',
+      'https://www.linkedin.com/in/sksazid/',
       'https://twitter.com/sk_sazid',
-      'https://codeforces.com/profile/sk_sazid',
+      'https://codeforces.com/profile/sksazid',
     ],
     alumniOf: {
       '@type': 'CollegeOrUniversity',
