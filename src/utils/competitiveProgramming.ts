@@ -161,43 +161,51 @@ export async function fetchCodeChefStats(handle: string): Promise<CodeChefStat |
   }
 }
 
-// LeetCode - Using static data since no public API available
+// LeetCode - Real-time data via alfa-leetcode-api (https://github.com/alfaarghya/alfa-leetcode-api)
+// Falls back to known static values if the API is unreachable
 export async function fetchLeetCodeStats(handle: string): Promise<LeetCodeStat | null> {
-  try {
-    // Static data for known handles - replace with your actual stats
-    const staticData: Record<string, LeetCodeStat> = {
-      'sksazid': {
-        totalSolved: 153,
-        easySolved: 80,
-        easyTotal: 922,
-        mediumSolved: 70,
-        mediumTotal: 1997,
-        hardSolved: 3,
-        hardTotal: 903,
-        ranking: 964583,
-        handle: 'sksazid'
-      }
-    }
-    
-    // Return static data if available, otherwise default values
-    if (staticData[handle]) {
-      return staticData[handle]
-    }
-    
-    // Default values for unknown handles
-    return {
-      totalSolved: 0,
-      easySolved: 0,
+  // Known fallback values — update manually if the API is ever unavailable long-term
+  const fallback: Record<string, LeetCodeStat> = {
+    sksazid: {
+      totalSolved: 155,
+      easySolved: 82,
       easyTotal: 922,
-      mediumSolved: 0,
+      mediumSolved: 70,
       mediumTotal: 1997,
-      hardSolved: 0,
+      hardSolved: 3,
       hardTotal: 903,
-      ranking: 0,
+      ranking: 964583,
+      handle: 'sksazid'
+    }
+  }
+
+  try {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 8000)
+
+    const response = await fetch(
+      `https://alfa-leetcode-api.onrender.com/${handle}`,
+      { signal: controller.signal }
+    )
+    clearTimeout(timeout)
+
+    if (!response.ok) return fallback[handle] ?? null
+
+    const data = await response.json()
+
+    return {
+      totalSolved:  data.totalSolved  ?? 0,
+      easySolved:   data.easySolved   ?? 0,
+      easyTotal:    data.totalEasy    ?? 922,
+      mediumSolved: data.mediumSolved ?? 0,
+      mediumTotal:  data.totalMedium  ?? 1997,
+      hardSolved:   data.hardSolved   ?? 0,
+      hardTotal:    data.totalHard    ?? 903,
+      ranking:      data.ranking      ?? 0,
       handle
     }
   } catch {
-    return null
+    return fallback[handle] ?? null
   }
 }
 
