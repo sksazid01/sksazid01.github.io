@@ -134,11 +134,8 @@ function parseUserAgent(ua: string): { browser: string; os: string; device: stri
   return { browser, os, device }
 }
 
-async function fetchGeoAndBuild(): Promise<Omit<VisitorRecord, 'count' | 'firstVisit' | 'lastVisit'>> {
-  const ua = navigator.userAgent
-  const { browser, os, device } = parseUserAgent(ua)
-
-  const base = {
+function makeBase(browser: string, os: string, device: string) {
+  return {
     ip: '',
     country: 'Unknown', country_code: '', region: '', city: '',
     latitude: null as number | null, longitude: null as number | null, org: '',
@@ -147,38 +144,61 @@ async function fetchGeoAndBuild(): Promise<Omit<VisitorRecord, 'count' | 'firstV
     referrer: document.referrer || 'Direct',
     language: navigator.language,
   }
+}
 
+/** Apply a parsed ipapi.co JSON response onto the base record. Returns true if geo was populated. */
+function applyGeo(g: Record<string, unknown>, base: ReturnType<typeof makeBase>): boolean {
+  if (g.error) {
+    if (typeof g.ip === 'string' && g.ip) base.ip = g.ip
+    return false
+  }
+  base.ip           = (g.ip           as string)  ?? ''
+  base.country      = (g.country_name as string)  ?? 'Unknown'
+  base.country_code = ((g.country_code ?? g.country) as string) ?? ''
+  base.region       = (g.region       as string)  ?? ''
+  base.city         = (g.city         as string)  ?? ''
+  base.latitude     = (g.latitude     as number)  ?? null
+  base.longitude    = (g.longitude    as number)  ?? null
+  base.org          = (g.org          as string)  ?? ''
+  return !!base.ip
+}
+
+async function fetchGeoAndBuild(): Promise<Omit<VisitorRecord, 'count' | 'firstVisit' | 'lastVisit'>> {
+  const ua = navigator.userAgent
+  const { browser, os, device } = parseUserAgent(ua)
+  const base = makeBase(browser, os, device)
+
+  let geoResolved = false
+
+  // Step 1: try ipapi.co client endpoint (detects IP automatically)
   try {
-    const geo = await fetch('https://ipapi.co/json/', { cache: 'no-store' })
-    if (geo.ok) {
-      const g = await geo.json()
-      // ipapi.co returns { error: true, reason: "..." } with HTTP 200 on rate-limit / block
-      if (!g.error) {
-        base.ip           = g.ip                          ?? ''
-        base.country      = g.country_name                ?? 'Unknown'
-        // client-IP endpoint may return `country` instead of `country_code`
-        base.country_code = g.country_code ?? g.country  ?? ''
-        base.region       = g.region                     ?? ''
-        base.city         = g.city                       ?? ''
-        base.latitude     = g.latitude                   ?? null
-        base.longitude    = g.longitude                  ?? null
-        base.org          = g.org                        ?? ''
-      } else if (g.ip) {
-        // error response still includes the IP
-        base.ip = g.ip
-      }
+    const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' })
+    if (res.ok) {
+      const g = await res.json()
+      geoResolved = applyGeo(g, base)
     }
-  } catch { /* continue without geo */ }
+  } catch { /* continue */ }
 
-  // Fallback: if ipapi failed entirely, at least capture the real IP via ipify
+  // Step 2: if geo failed, get the real IP from ipify
   if (!base.ip) {
     try {
-      const ipRes = await fetch('https://api.ipify.org?format=json', { cache: 'no-store' })
-      if (ipRes.ok) {
-        const { ip } = await ipRes.json()
+      const res = await fetch('https://api.ipify.org?format=json', { cache: 'no-store' })
+      if (res.ok) {
+        const { ip } = await res.json()
         if (ip) base.ip = ip
       }
-    } catch { /* continue without IP */ }
+    } catch { /* continue */ }
+  }
+
+  // Step 3: if we have an IP but no geo, retry ipapi with the specific IP endpoint
+  if (!geoResolved && base.ip) {
+    try {
+      const res = await fetch(`https://ipapi.co/${base.ip}/json/`, { cache: 'no-store' })
+      if (res.ok) {
+        const g = await res.json()
+        applyGeo(g, base)
+      }
+    } catch { /* continue without geo */ }
   }
 
   return base
