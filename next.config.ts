@@ -10,10 +10,10 @@ const nextConfig: NextConfig = {
   basePath: '',
   assetPrefix: '',
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   }
 };
 

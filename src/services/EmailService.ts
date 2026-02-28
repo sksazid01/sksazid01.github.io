@@ -17,13 +17,13 @@ class EmailService {
   private static instance: EmailService
   private isInitialized = false
 
-  // EmailJS Configuration
-  private readonly SERVICE_ID = 'service_w0ob2jd'
-  /** Template that sends form data TO YOU (ahasanulhaque20@gmail.com) */
-  private readonly TEMPLATE_ID = 'template_j0nd3w4'
+  // EmailJS Configuration — values come from .env.local (never hardcoded)
+  private readonly SERVICE_ID          = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID           ?? ''
+  /** Template that sends form data TO YOU */
+  private readonly TEMPLATE_ID         = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID          ?? ''
   /** Template that sends an auto-reply confirmation TO THE USER */
-  private readonly AUTOREPLY_TEMPLATE_ID = 'template_whgq42w'
-  private readonly PUBLIC_KEY = 'DwyklSMHzsEhJW7s5'
+  private readonly AUTOREPLY_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID ?? ''
+  private readonly PUBLIC_KEY           = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY           ?? ''
 
   private constructor() {}
 
@@ -41,7 +41,6 @@ class EmailService {
     if (!this.isInitialized) {
       emailjs.init(this.PUBLIC_KEY)
       this.isInitialized = true
-      console.log('📧 EmailJS initialized successfully')
     }
   }
 
@@ -55,7 +54,7 @@ class EmailService {
 
       // Prepare template parameters
       const templateParams = {
-        title: emailData.title || 'i can use ssg and csr in my node project?Portfolio Contact Form',
+        title: emailData.title || 'Portfolio Contact Form',
         name: emailData.name,
         time: new Date().toLocaleString('en-US', {
           year: 'numeric',
@@ -68,8 +67,6 @@ class EmailService {
         email: emailData.email
       }
 
-      console.log('📧 Sending email with params:', templateParams)
-
       // Send email via EmailJS
       const result = await emailjs.send(
         this.SERVICE_ID,
@@ -77,8 +74,6 @@ class EmailService {
         templateParams,
         this.PUBLIC_KEY
       )
-
-      console.log('✅ Notification email sent to owner:', result)
 
       // Send auto-reply confirmation to the user
       const autoReplyParams = {
@@ -95,10 +90,10 @@ class EmailService {
           autoReplyParams,
           this.PUBLIC_KEY
         )
-        console.log('✅ Auto-reply sent to user:', autoReplyResult)
+        void autoReplyResult
       } catch (autoReplyError) {
-        // Non-critical: log but don't fail the whole operation
-        console.warn('⚠️ Auto-reply failed (notification was still sent):', autoReplyError)
+        // Non-critical: auto-reply failed but notification was still sent
+        void autoReplyError
       }
 
       return {
@@ -108,8 +103,6 @@ class EmailService {
       }
 
     } catch (error) {
-      console.error('❌ Email sending failed:', error)
-      
       // EmailJS throws a plain object {status, text}, not an Error instance
       let errorMessage = 'Unknown error occurred'
       if (error instanceof Error) {
@@ -137,7 +130,6 @@ class EmailService {
       title: 'Portfolio Contact Test'
     }
 
-    console.log('🧪 Sending test email...')
     return this.sendEmail(testData)
   }
 
