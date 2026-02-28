@@ -76,8 +76,16 @@ sessionStorage["visitor_counted"] === "1" ?
         │  Set sessionStorage["visitor_counted"] = "1"
         │   │
         │   ▼
-        │  Fetch geo data from ipapi.co
-        │  (if ipapi fails/errors → fallback to api.ipify.org for IP only)
+        │  Step 1: GET ipapi.co/json/
+        │    ├─ success → IP + full geo captured
+        │    └─ fail/error
+        │         │
+        │         ▼
+        │       Step 2: GET api.ipify.org  → IP only
+        │         │
+        │         ▼
+        │       Step 3: GET ipapi.co/{ip}/json/  → full geo
+        │
         │  Parse browser / OS / device from User-Agent
         │  Capture screen, referrer, language, timestamp
         │   │
@@ -89,6 +97,8 @@ sessionStorage["visitor_counted"] === "1" ?
         │        ▼       ▼
         │  count++   Create new record
         │  lastVisit = now    count = 1
+        │  backfill geo      (full record)
+        │  if still Unknown  
         │        │       │
         │        └───┬───┘
         │            ▼
@@ -97,10 +107,10 @@ sessionStorage["visitor_counted"] === "1" ?
         │     HSET  portfolio:visitors:log <ip> <json>
         │            │
         ▼            ▼
-  GET portfolio:visitors   Return new counter value
+  GET portfolio:visitors   Return counter value
         │
         ▼
-  Display: counter + 2000 (BASE_OFFSET)
+  Display: raw Redis counter (no offset)
 ```
 
 ---
@@ -123,20 +133,37 @@ Fallback source: **[api.ipify.org](https://api.ipify.org)** — used only if ipa
 | `longitude` | Geographic longitude | ipapi.co |
 | `org` | ISP / organization name | ipapi.co |
 
-#### ipapi.co error handling
+#### 3-step geo resolution
 
-ipapi.co returns HTTP 200 even on failure (e.g. rate limit), with `{ "error": true, "reason": "..." }` in the body. The code checks for this and skips the broken field mapping rather than storing empty/`"Unknown"` values:
+Geo is resolved in up to 3 steps per new session:
+
+| Step | Endpoint | What it provides |
+|---|---|---|
+| 1 | `https://ipapi.co/json/` | IP + full geo (client auto-detect) |
+| 2 | `https://api.ipify.org?format=json` | IP only — runs if step 1 failed |
+| 3 | `https://ipapi.co/{ip}/json/` | Full geo via specific-IP endpoint — runs if step 2 ran |
+
+The trailing slash on ipapi.co URLs is **required** — `ipapi.co/{ip}/json` (no slash) returns `RateLimited` even when the quota is not exhausted.
+
+ipapi.co returns HTTP 200 even on rate-limit/block, with `{ "error": true, "reason": "RateLimited" }` in the body. The code detects this and falls through to the next step rather than storing empty/`"Unknown"` values.
+
+If all three steps fail, the IP falls back to `anon:{uuid}` so sessions are still counted and don't overwrite each other in the hash.
+
+#### Geo backfill for returning visitors
+
+When a known IP revisits and its stored record still has `country === "Unknown"` (e.g. created before the geo fix, or when ipapi was rate-limited on first visit), the code automatically backfills the missing geo fields on the next successful visit:
 
 ```typescript
-if (!g.error) {
-  // map all fields normally
-} else if (g.ip) {
-  // error response may still include the IP
-  base.ip = g.ip
+if (record.country === 'Unknown' && baseData.country !== 'Unknown') {
+  record.country      = baseData.country
+  record.country_code = baseData.country_code
+  record.region       = baseData.region
+  record.city         = baseData.city
+  record.latitude     = baseData.latitude
+  record.longitude    = baseData.longitude
+  record.org          = baseData.org
 }
 ```
-
-If ipapi fails entirely (network error or error response with no IP), `api.ipify.org` is called as a last resort to capture at least the real IP address, ensuring hash keys are real IPs rather than `anon:UUID`.
 
 ### Browser & Device (parsed from `navigator.userAgent`)
 
