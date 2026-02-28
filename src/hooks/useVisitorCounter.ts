@@ -3,20 +3,28 @@
 /**
  * useVisitorCounter
  *
- * On a NEW visit (new tab / hard refresh):
- *  1. Fetches IP + geolocation from ipapi.co
- *  2. Collects browser, OS, device, screen, referrer, language, timestamp
- *  3. Runs an Upstash pipeline:
- *       INCR  portfolio:visitors            ← bump the counter
- *       LPUSH portfolio:visitors:log <json> ← store visitor record
- *       LTRIM portfolio:visitors:log 0 999  ← keep last 1 000 entries
+ * Redis data model
+ * ─────────────────────────────────────────────────────────────────────────────
+ * portfolio:visitors            STRING  – total unique-IP visitor count
+ * portfolio:visitors:log        HASH    – field = IP address
+ *                                         value = JSON {
+ *                                           ip, country, country_code, region,
+ *                                           city, latitude, longitude, org,
+ *                                           browser, os, device, screen,
+ *                                           referrer, language,
+ *                                           count,        ← visit count for this IP
+ *                                           firstVisit,   ← ISO timestamp
+ *                                           lastVisit     ← ISO timestamp
+ *                                         }
  *
- * On a NORMAL refresh (F5 / Ctrl+R):
- *  - sessionStorage flag is still set → only GET the counter, no write.
+ * Logic per new session (sessionStorage flag absent):
+ *  1. Collect browser/device data + fetch IP+geolocation from ipapi.co
+ *  2. HGET portfolio:visitors:log <ip>
+ *     • IP is NEW  → INCR portfolio:visitors + HSET the full record (count=1)
+ *     • IP is KNOWN → INCR portfolio:visitors + update count++ and lastVisit via HSET
+ *  → Counter ALWAYS increments for every new session regardless of IP.
  *
- * Data stored per visit (all in one JSON string inside the Redis list):
- *  ip, country, country_code, region, city, latitude, longitude, org,
- *  browser, os, device, screen, referrer, language, timestamp
+ * Normal refresh (F5/Ctrl+R) → sessionStorage flag present → GET counter only.
  */
 
 import { useState, useEffect } from 'react'
@@ -24,59 +32,53 @@ import { useState, useEffect } from 'react'
 const UPSTASH_URL   = process.env.NEXT_PUBLIC_UPSTASH_REST_URL   ?? ''
 const UPSTASH_TOKEN = process.env.NEXT_PUBLIC_UPSTASH_REST_TOKEN ?? ''
 
-const BASE_OFFSET    = 2000
-const COUNTER_KEY    = 'portfolio:visitors'
-const LOG_KEY        = 'portfolio:visitors:log'
-const SESSION_KEY    = 'visitor_counted'
-const MAX_LOG        = 1000   // keep last N visits in the Redis list
+const BASE_OFFSET = 2000
+const COUNTER_KEY = 'portfolio:visitors'
+const LOG_KEY     = 'portfolio:visitors:log'
+const SESSION_KEY = 'visitor_counted'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface VisitorData {
-  // Geolocation
-  ip?:           string
-  country?:      string
-  country_code?: string
-  region?:       string
-  city?:         string
-  latitude?:     number
-  longitude?:    number
-  org?:          string
-  // Browser / device
-  browser:   string
-  os:        string
-  device:    string
-  screen:    string
-  referrer:  string
-  language:  string
-  timestamp: string
+interface VisitorRecord {
+  ip:           string
+  country:      string
+  country_code: string
+  region:       string
+  city:         string
+  latitude:     number | null
+  longitude:    number | null
+  org:          string
+  browser:      string
+  os:           string
+  device:       string
+  screen:       string
+  referrer:     string
+  language:     string
+  count:        number
+  firstVisit:   string
+  lastVisit:    string
 }
 
 // ─── Upstash helpers ──────────────────────────────────────────────────────────
 
-/** GET / INCR via URL-based REST (returns a single number). */
-async function upstashFetch(command: string[]): Promise<number | null> {
+/** Single command via URL-path REST API. */
+async function upstashFetch(command: string[]): Promise<unknown> {
   if (!UPSTASH_URL || !UPSTASH_TOKEN) return null
   try {
-    const res = await fetch(`${UPSTASH_URL}/${command.join('/')}`, {
+    const res = await fetch(`${UPSTASH_URL}/${command.map(encodeURIComponent).join('/')}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${UPSTASH_TOKEN}` },
       cache: 'no-store',
     })
     if (!res.ok) return null
     const data = await res.json()
-    if (typeof data.result === 'number') return data.result
-    if (typeof data.result === 'string') {
-      const parsed = parseInt(data.result, 10)
-      return isNaN(parsed) ? null : parsed
-    }
-    return null
+    return data.result ?? null
   } catch {
     return null
   }
 }
 
-/** Run multiple commands in one round-trip via the pipeline endpoint. */
+/** Pipeline: multiple commands in one HTTP request. */
 async function upstashPipeline(
   commands: (string | number)[][],
 ): Promise<Array<{ result: unknown }> | null> {
@@ -99,6 +101,15 @@ async function upstashPipeline(
   }
 }
 
+function toNumber(raw: unknown): number | null {
+  if (typeof raw === 'number') return raw
+  if (typeof raw === 'string') {
+    const n = parseInt(raw, 10)
+    return isNaN(n) ? null : n
+  }
+  return null
+}
+
 // ─── Visitor data collection ──────────────────────────────────────────────────
 
 function parseUserAgent(ua: string): { browser: string; os: string; device: string } {
@@ -106,63 +117,57 @@ function parseUserAgent(ua: string): { browser: string; os: string; device: stri
   let os      = 'Unknown'
   let device  = 'Desktop'
 
-  // Browser (order matters — Edge/OPR embed "Chrome" too)
-  if      (ua.includes('Edg/'))                              browser = 'Edge'
-  else if (ua.includes('Firefox/'))                          browser = 'Firefox'
-  else if (ua.includes('OPR/') || ua.includes('Opera'))     browser = 'Opera'
-  else if (ua.includes('Chrome/'))                           browser = 'Chrome'
-  else if (ua.includes('Safari/') && !ua.includes('Chrome')) browser = 'Safari'
+  if      (ua.includes('Edg/'))                               browser = 'Edge'
+  else if (ua.includes('Firefox/'))                           browser = 'Firefox'
+  else if (ua.includes('OPR/') || ua.includes('Opera'))      browser = 'Opera'
+  else if (ua.includes('Chrome/'))                            browser = 'Chrome'
+  else if (ua.includes('Safari/') && !ua.includes('Chrome'))  browser = 'Safari'
 
-  // OS
-  if      (ua.includes('Windows NT'))                        os = 'Windows'
-  else if (ua.includes('Mac OS X'))                          os = 'macOS'
-  else if (ua.includes('Android'))                           os = 'Android'
-  else if (ua.includes('iPhone') || ua.includes('iPad'))     os = 'iOS'
-  else if (ua.includes('Linux'))                             os = 'Linux'
+  if      (ua.includes('Windows NT'))                         os = 'Windows'
+  else if (ua.includes('Mac OS X'))                           os = 'macOS'
+  else if (ua.includes('Android'))                            os = 'Android'
+  else if (ua.includes('iPhone') || ua.includes('iPad'))      os = 'iOS'
+  else if (ua.includes('Linux'))                              os = 'Linux'
 
-  // Device
   if      (ua.includes('Mobile') || ua.includes('Android') || ua.includes('iPhone')) device = 'Mobile'
-  else if (ua.includes('Tablet') || ua.includes('iPad'))     device = 'Tablet'
+  else if (ua.includes('Tablet') || ua.includes('iPad'))      device = 'Tablet'
 
   return { browser, os, device }
 }
 
-async function collectVisitorData(): Promise<VisitorData> {
+async function fetchGeoAndBuild(): Promise<Omit<VisitorRecord, 'count' | 'firstVisit' | 'lastVisit'>> {
   const ua = navigator.userAgent
   const { browser, os, device } = parseUserAgent(ua)
 
-  const data: VisitorData = {
-    browser,
-    os,
-    device,
-    screen:    `${window.screen.width}x${window.screen.height}`,
-    referrer:  document.referrer || 'Direct',
-    language:  navigator.language,
-    timestamp: new Date().toISOString(),
+  const base = {
+    ip: '',
+    country: 'Unknown', country_code: '', region: '', city: '',
+    latitude: null as number | null, longitude: null as number | null, org: '',
+    browser, os, device,
+    screen:   `${window.screen.width}x${window.screen.height}`,
+    referrer: document.referrer || 'Direct',
+    language: navigator.language,
   }
 
-  // IP + geolocation via ipapi.co (free, no API key required)
   try {
     const geo = await fetch('https://ipapi.co/json/', { cache: 'no-store' })
     if (geo.ok) {
       const g = await geo.json()
-      data.ip           = g.ip
-      data.country      = g.country_name
-      data.country_code = g.country_code
-      data.region       = g.region
-      data.city         = g.city
-      data.latitude     = g.latitude
-      data.longitude    = g.longitude
-      data.org          = g.org
+      base.ip           = g.ip           ?? ''
+      base.country      = g.country_name ?? 'Unknown'
+      base.country_code = g.country_code ?? ''
+      base.region       = g.region       ?? ''
+      base.city         = g.city         ?? ''
+      base.latitude     = g.latitude     ?? null
+      base.longitude    = g.longitude    ?? null
+      base.org          = g.org          ?? ''
     }
-  } catch {
-    // geolocation unavailable — continue without it
-  }
+  } catch { /* continue without geo */ }
 
-  return data
+  return base
 }
 
-// ─── Singleton promise (one request per page load) ────────────────────────────
+// ─── Core logic ───────────────────────────────────────────────────────────────
 
 let singletonPromise: Promise<number | null> | null = null
 
@@ -174,31 +179,58 @@ function resolveCount(): Promise<number | null> {
     sessionStorage.getItem(SESSION_KEY) === '1'
 
   if (alreadyCounted) {
-    // Normal refresh — just read the current value, no write
-    singletonPromise = upstashFetch(['get', COUNTER_KEY])
-  } else {
-    // New visit — collect data, then pipeline INCR + LPUSH + LTRIM
-    if (typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem(SESSION_KEY, '1')
-    }
-    singletonPromise = (async (): Promise<number | null> => {
-      const visitorData = await collectVisitorData()
-      const jsonString  = JSON.stringify(visitorData)
+    // Normal refresh — read-only
+    singletonPromise = upstashFetch(['get', COUNTER_KEY]).then(toNumber)
+    return singletonPromise
+  }
+
+  // New session — flag immediately to prevent double-counting
+  if (typeof sessionStorage !== 'undefined') {
+    sessionStorage.setItem(SESSION_KEY, '1')
+  }
+
+  singletonPromise = (async (): Promise<number | null> => {
+    const baseData = await fetchGeoAndBuild()
+    const ip       = baseData.ip || 'unknown'
+    const now      = new Date().toISOString()
+
+    // Check if this IP has visited before
+    const existing = await upstashFetch(['hget', LOG_KEY, ip])
+
+    if (existing && typeof existing === 'string') {
+      // ── Returning IP: increment counter + update count & lastVisit ──
+      try {
+        const record: VisitorRecord = JSON.parse(existing)
+        record.count    += 1
+        record.lastVisit = now
+
+        const results = await upstashPipeline([
+          ['INCR', COUNTER_KEY],
+          ['HSET', LOG_KEY, ip, JSON.stringify(record)],
+        ])
+
+        return toNumber(results?.[0]?.result)
+      } catch {
+        return toNumber(await upstashFetch(['get', COUNTER_KEY]))
+      }
+    } else {
+      // ── Brand-new IP: store full record + increment total counter ──
+      const record: VisitorRecord = {
+        ...baseData,
+        ip,
+        count:      1,
+        firstVisit: now,
+        lastVisit:  now,
+      }
 
       const results = await upstashPipeline([
         ['INCR', COUNTER_KEY],
-        ['LPUSH', LOG_KEY, jsonString],
-        ['LTRIM', LOG_KEY, '0', String(MAX_LOG - 1)],
+        ['HSET', LOG_KEY, ip, JSON.stringify(record)],
       ])
 
-      // results[0] is the INCR response — the new counter value
-      if (results && typeof (results[0]?.result) === 'number') {
-        return results[0].result as number
-      }
-      // Fallback: GET the counter if pipeline failed
-      return upstashFetch(['get', COUNTER_KEY])
-    })()
-  }
+      return toNumber(results?.[0]?.result)
+    }
+  })()
 
   return singletonPromise
 }
@@ -207,7 +239,7 @@ function resolveCount(): Promise<number | null> {
 
 export function useVisitorCounter() {
   const [visitorCount, setVisitorCount] = useState<number>(BASE_OFFSET)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading]           = useState(true)
 
   useEffect(() => {
     let cancelled = false
