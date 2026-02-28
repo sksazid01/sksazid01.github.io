@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Code, Target, X } from 'lucide-react'
+import { Code, Target } from 'lucide-react'
 import { getStoredStats } from '@/utils/localStats'
 
 export default function QuickStatsUpdater() {

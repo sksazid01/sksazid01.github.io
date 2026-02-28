@@ -48,7 +48,6 @@ export async function fetchCodeforcesStats(handle: string): Promise<CodeforcesSt
     ])
 
     if (!userResponse.ok || !submissionsResponse.ok) {
-      console.error('Failed to fetch Codeforces data')
       return null
     }
 
@@ -56,7 +55,6 @@ export async function fetchCodeforcesStats(handle: string): Promise<CodeforcesSt
     const submissionsData = await submissionsResponse.json()
 
     if (userData.status !== 'OK' || submissionsData.status !== 'OK') {
-      console.error('Codeforces API returned error')
       return null
     }
 
@@ -88,8 +86,7 @@ export async function fetchCodeforcesStats(handle: string): Promise<CodeforcesSt
       handle: user.handle,
       contests: contestsParticipated.size
     }
-  } catch (error) {
-    console.error('Error fetching Codeforces stats:', error)
+  } catch {
     return null
   }
 }
@@ -119,8 +116,7 @@ export async function fetchVJudgeStats(handle: string): Promise<VJudgeStat | nul
       school: 'Unknown',
       membership: 'Member'
     }
-  } catch (error) {
-    console.error('Error fetching VJudge stats:', error)
+  } catch {
     return null
   }
 }
@@ -160,8 +156,7 @@ export async function fetchCodeChefStats(handle: string): Promise<CodeChefStat |
       country: 'Unknown',
       institution: 'Unknown'
     }
-  } catch (error) {
-    console.error('Error fetching CodeChef stats:', error)
+  } catch {
     return null
   }
 }
@@ -201,8 +196,7 @@ export async function fetchLeetCodeStats(handle: string): Promise<LeetCodeStat |
       ranking: 0,
       handle
     }
-  } catch (error) {
-    console.error('Error fetching LeetCode stats:', error)
+  } catch {
     return null
   }
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { GraduationCap, Database, Globe, Star, BookOpen, Briefcase, Award, Languages } from 'lucide-react'
+import { GraduationCap, Database, Globe, Briefcase, Award } from 'lucide-react'
 import GitHubStatsWidget from './GitHubStatsWidget'
 import { useDynamicPortfolio } from '@/hooks/useDynamicPortfolio'
 

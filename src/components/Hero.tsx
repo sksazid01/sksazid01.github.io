@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ChevronDown, Mail, ExternalLink, Github, Linkedin } from 'lucide-react'
+import { ChevronDown, Mail, Github, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import DownloadCVButton from './DownloadCVButton'

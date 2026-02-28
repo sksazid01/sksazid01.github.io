@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Trophy, Code, Target, Award, Zap, TrendingUp } from 'lucide-react'
+import { Trophy, Code, Target, Award, Zap } from 'lucide-react'
 import CodeforcesWidget from './CodeforcesWidget'
 import VJudgeWidget from './VJudgeWidget'
 import CodeChefWidget from './CodeChefWidget'

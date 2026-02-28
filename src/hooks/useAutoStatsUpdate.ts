@@ -39,7 +39,7 @@ async function fetchCodeforcesLiveData(handle: string) {
       handle: handle
     }
   } catch (error) {
-    console.error('Error fetching Codeforces data:', error)
+
     return null
   }
 }
@@ -75,7 +75,7 @@ async function fetchVJudgeLiveData(handle: string) {
     
     return null
   } catch (error) {
-    console.error('VJudge fetch blocked by CORS or network error:', error)
+
     return null
   }
 }
@@ -117,7 +117,6 @@ export function useAutoStatsUpdate(handle: string = 'sksazid') {
       setTimeout(() => setUpdateStatus(''), 3000)
       
     } catch (error) {
-      console.error('Auto-update error:', error)
       setUpdateStatus('Update failed - using cached data')
       setTimeout(() => setUpdateStatus(''), 3000)
     } finally {

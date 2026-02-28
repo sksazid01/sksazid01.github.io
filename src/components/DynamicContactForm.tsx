@@ -28,9 +28,6 @@ export default function DynamicContactForm() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    console.log('=== CONTACT FORM SUBMISSION ===')
-    console.log('Form data:', formData)
-
     // Validate form data
     const validation = emailService.validateEmailData(formData)
     if (!validation.isValid) {
@@ -52,7 +49,6 @@ export default function DynamicContactForm() {
       })
 
       if (result.success) {
-        console.log('✅ Email sent successfully:', result)
         setFeedback({
           type: 'success',
           message: '✅ Message sent successfully! I will get back to you soon.'
@@ -62,12 +58,9 @@ export default function DynamicContactForm() {
         throw new Error(result.message)
       }
 
-    } catch (emailError) {
-      console.error('❌ EmailJS Error:', emailError)
-      
+    } catch {
       // Try Formspree as backup
       try {
-        console.log('🔄 Trying Formspree as backup...')
         const formspreeResponse = await fetch('https://formspree.io/f/xjkwpwgr', {
           method: 'POST',
           headers: {
@@ -82,23 +75,16 @@ export default function DynamicContactForm() {
           }),
         })
 
-        console.log('Formspree response status:', formspreeResponse.status)
-        
         if (formspreeResponse.ok) {
-          console.log('✅ Formspree success!')
           setFeedback({
             type: 'success',
             message: '✅ Message sent successfully via backup service! I will get back to you soon.'
           })
           setFormData({ name: '', email: '', message: '' })
         } else {
-          const errorText = await formspreeResponse.text()
-          console.error('Formspree error response:', errorText)
           throw new Error(`Formspree failed with status ${formspreeResponse.status}`)
         }
-      } catch (formspreeError) {
-        console.error('❌ Formspree also failed:', formspreeError)
-        
+      } catch {
         setFeedback({
           type: 'error',
           message: '❌ Failed to send message via both email services. Please contact me directly at ahasanulhaque20@gmail.com'

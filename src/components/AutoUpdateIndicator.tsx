@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { RefreshCw, CheckCircle, AlertCircle, Wifi } from 'lucide-react'
+import { RefreshCw, CheckCircle, Wifi } from 'lucide-react'
 import { useAutoStatsUpdate } from '@/hooks/useAutoStatsUpdate'
 
 export default function AutoUpdateIndicator() {

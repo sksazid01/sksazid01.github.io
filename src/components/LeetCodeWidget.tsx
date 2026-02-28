@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { ExternalLink, Trophy, TrendingUp, Target } from 'lucide-react'
+import { ExternalLink, Trophy, Target } from 'lucide-react'
 import { getStoredStats } from '@/utils/localStats'
 import GlossyBorder from './GlossyBorder'
 

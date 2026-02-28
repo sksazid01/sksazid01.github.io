@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, MapPin, Phone, Github, Facebook } from 'lucide-react'
+import { Mail, MapPin, Github, Facebook } from 'lucide-react'
 import DynamicContactForm from './DynamicContactForm'
 
 export default function Contact() {

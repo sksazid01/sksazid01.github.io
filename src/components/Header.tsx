@@ -2,12 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Moon, Sun, Volume2, VolumeX, Menu, X} from 'lucide-react'
+import { Moon, Sun, Menu, X } from 'lucide-react'
 import { useTheme } from './ThemeProvider'
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
 

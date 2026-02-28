@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Terminal, X, Minus, Square, ChevronRight } from 'lucide-react'
+import { Terminal, X, ChevronRight } from 'lucide-react'
 
 export default function InteractiveTerminal() {
   const [isOpen, setIsOpen] = useState(false)

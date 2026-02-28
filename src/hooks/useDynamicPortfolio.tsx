@@ -84,7 +84,7 @@ export const useDynamicPortfolio = () => {
         timestamp: new Date().toISOString()
       }))
     } catch (error) {
-      console.log('Cache save failed, continuing without cache')
+
     }
   }
 
@@ -101,7 +101,7 @@ export const useDynamicPortfolio = () => {
         }
       }
     } catch (error) {
-      console.log('Cache load failed, will fetch fresh data')
+
     }
     return null
   }

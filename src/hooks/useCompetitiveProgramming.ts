@@ -82,7 +82,7 @@ export function useCompetitiveProgramming(handle: string): UseCompetitiveProgram
       setLastUpdated(new Date())
 
     } catch (err) {
-      console.error('Error fetching competitive programming data:', err)
+
       setError('Failed to fetch competitive programming data')
     } finally {
       setLoading(false)

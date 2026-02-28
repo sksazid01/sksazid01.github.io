@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { ExternalLink, Code, TrendingUp, Trophy, RefreshCw, Plus } from 'lucide-react'
-import { getStoredStats, setStoredStats, updatePlatformStats } from '@/utils/localStats'
+import { ExternalLink, Code, TrendingUp, Trophy, Plus } from 'lucide-react'
+import { getStoredStats, updatePlatformStats } from '@/utils/localStats'
 import GlossyBorder from './GlossyBorder'
 
 interface VJudgeStats {
