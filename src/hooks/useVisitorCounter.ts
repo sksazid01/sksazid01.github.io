@@ -239,10 +239,23 @@ function resolveCount(): Promise<number | null> {
 
     if (existing && typeof existing === 'string') {
       // ── Returning IP: increment counter + update count & lastVisit ──
+      // Also backfill geo if the stored record is still missing it.
       try {
         const record: VisitorRecord = JSON.parse(existing)
         record.count    += 1
         record.lastVisit = now
+
+        // Backfill geo fields if they were never populated (e.g. old records
+        // created before the geo fix, or when ipapi was rate-limited on first visit)
+        if (record.country === 'Unknown' && baseData.country !== 'Unknown') {
+          record.country      = baseData.country
+          record.country_code = baseData.country_code
+          record.region       = baseData.region
+          record.city         = baseData.city
+          record.latitude     = baseData.latitude
+          record.longitude    = baseData.longitude
+          record.org          = baseData.org
+        }
 
         const results = await upstashPipeline([
           ['INCR', COUNTER_KEY],
