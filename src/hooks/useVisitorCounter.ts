@@ -5,8 +5,8 @@
  *
  * Redis data model
  * ─────────────────────────────────────────────────────────────────────────────
- * portfolio:visitors            STRING  – total unique-IP visitor count
- * portfolio:visitors:log        HASH    – field = IP address
+ * portfolio:visitors            STRING  – total visit counter (increments every new session)
+ * portfolio:visitors:log        HASH    – field = IP address (or fallback session ID)
  *                                         value = JSON {
  *                                           ip, country, country_code, region,
  *                                           city, latitude, longitude, org,
@@ -191,8 +191,11 @@ function resolveCount(): Promise<number | null> {
 
   singletonPromise = (async (): Promise<number | null> => {
     const baseData = await fetchGeoAndBuild()
-    const ip       = baseData.ip || 'unknown'
-    const now      = new Date().toISOString()
+    // Fallback: if geo lookup failed and no IP was returned, generate a
+    // random session ID so visitors without an IP don't overwrite each other
+    // in the Hash. Prefix with 'anon:' to distinguish from real IPs.
+    const ip  = baseData.ip || `anon:${crypto.randomUUID()}`
+    const now = new Date().toISOString()
 
     // Check if this IP has visited before
     const existing = await upstashFetch(['hget', LOG_KEY, ip])
