@@ -7,6 +7,18 @@ import GlossyBorder from './GlossyBorder'
 export default function Experience() {
   const experiences = [
     {
+      title: "Trainee Assistant Software Engineer",
+      company: "Millennium Information Solution Ltd",
+      duration: "04/2026 - Present",
+      length: "(Current)",
+      type: "💼 Full-time",
+      achievements: [
+        "Contributing to enterprise-level software engineering",
+        "Assisting in the development of scalable software solutions",
+        "Collaborating with cross-functional teams"
+      ]
+    },
+    {
       title: "Web Development Intern",
       company: "College Samaj",
       duration: "01/2024 - 02/2024",

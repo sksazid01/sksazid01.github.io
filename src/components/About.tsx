@@ -9,28 +9,28 @@ export default function About() {
   const { githubStats, loading } = useDynamicPortfolio()
   const highlights = [
     {
-      icon: <GraduationCap className="w-6 h-6" />,
-      title: "Education",
-      description: "BSc in Computer Science & Engineering at SUST, Bangladesh",
-      color: "blue"
-    },
-    {
       icon: <Briefcase className="w-6 h-6" />,
-      title: "Full Stack Developer",
-      description: "End-to-End Web, Mobile (Android) with modern frameworks",
+      title: "Software Engineer",
+      description: "Contributing on Islamic Fintech Software Development at MISL, Dhaka",
       color: "green"
     },
     {
-      icon: <Database className="w-6 h-6" />,
-      title: "AI/ML Systems",
-      description: "RAG pipelines, LLM integration, and predictive analytics",
-      color: "purple"
+      icon: <GraduationCap className="w-6 h-6" />,
+      title: "Education",
+      description: "BSc in CSE at SUST, Sylhet (2022–2026) with 3.50/4.00 CGPA",
+      color: "blue"
     },
     {
       icon: <Award className="w-6 h-6" />,
       title: "Competitive Programming",
       description: "Codeforces Pupil (max 1228), 1200+ problems solved across platforms",
       color: "orange"
+    },
+    {
+      icon: <Database className="w-6 h-6" />,
+      title: "AI/ML Systems",
+      description: "RAG pipelines, LLM integration, and predictive analytics",
+      color: "purple"
     }
   ]
 
@@ -85,9 +85,10 @@ export default function About() {
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto mb-8">
-            Final year Computer Science student at SUST with expertise in full-stack development, 
-            AI/ML systems, and competitive programming. Passionate about building scalable solutions 
-            and exploring cutting-edge technologies.
+            Computer Science graduate and Trainee Assistant Software Engineer at
+            Millennium Information Solution Ltd. Experienced in full-stack development,
+            AI systems, and competitive programming. Passionate about building
+            efficient and scalable software solutions.
           </p>
         </motion.div>
 
@@ -97,35 +98,34 @@ export default function About() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16"
         >
           {highlights.map((highlight, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
               whileHover={{
-                scale: 1.03,
                 y: -5
               }}
-              className={`group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 ${
-                highlight.color === 'blue' ? 'border-l-blue-500' :
-                highlight.color === 'green' ? 'border-l-green-500' :
-                highlight.color === 'purple' ? 'border-l-purple-500' :
-                'border-l-orange-500'
-              } relative overflow-hidden`}
+              className={`group bg-white dark:bg-[#1C2331] p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden border border-gray-100 dark:border-none`}
             >
-              <div className={`inline-flex p-4 rounded-xl mb-6 ${
-                highlight.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
-                highlight.color === 'green' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' :
-                highlight.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' :
-                'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400'
-              } group-hover:scale-110 transition-transform duration-300`}>
+              <div className={`absolute top-0 left-0 w-1.5 h-full ${highlight.color === 'blue' ? 'bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]' :
+                  highlight.color === 'green' ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]' :
+                    highlight.color === 'purple' ? 'bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]' :
+                      'bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.5)]'
+                }`}></div>
+
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-5 ${highlight.color === 'blue' ? 'bg-blue-50 dark:bg-[#252D3F] text-blue-600 dark:text-blue-400' :
+                  highlight.color === 'green' ? 'bg-green-50 dark:bg-[#252D3F] text-green-600 dark:text-green-400' :
+                    highlight.color === 'purple' ? 'bg-purple-50 dark:bg-[#252D3F] text-purple-600 dark:text-purple-400' :
+                      'bg-orange-50 dark:bg-[#252D3F] text-orange-600 dark:text-orange-400'
+                } transition-transform duration-300`}>
                 {highlight.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                 {highlight.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
                 {highlight.description}
               </p>
             </motion.div>
