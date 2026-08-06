@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-portfolio",
-  "version": "0.1.0",
+  "name": "sazid-portfolio",
+  "version": "2.2.5",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
