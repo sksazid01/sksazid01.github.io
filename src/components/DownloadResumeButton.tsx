@@ -8,14 +8,14 @@ interface DownloadCVButtonProps {
   variant?: 'primary' | 'secondary' | 'outline'
 }
 
-export default function DownloadCVButton({ 
+export default function DownloadResumeButton({ 
   className = '', 
   variant = 'primary' 
 }: DownloadCVButtonProps) { // defines the props type using interface
   const handleDownload = () => {
     // Create a temporary anchor element to trigger download
     const link = document.createElement('a')
-    link.href = "/cv.pdf"
+    link.href = "/resume.pdf"
     link.download = "Md_Ahasanul_Haque_Sazid's_Resume.pdf" // Download the file instead of opening my CV
     document.body.appendChild(link)
     link.click()
@@ -42,7 +42,7 @@ export default function DownloadCVButton({
     >
       <span className="flex items-center justify-center gap-2">
         <Download className="w-5 h-5" />
-        Download CV
+        My Resume
       </span>
     </motion.button>
   )

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ChevronDown, Mail, Github, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import DownloadCVButton from './DownloadCVButton'
+import DownloadResumeButton from './DownloadResumeButton'
 import TypingEffect from './TypingEffect'
 
 export default function Hero() {
@@ -197,7 +197,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
               >
-                <DownloadCVButton variant="primary" />
+                <DownloadResumeButton/>
               </motion.div>
             </motion.div>
 
